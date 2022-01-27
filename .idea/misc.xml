@@ -4,9 +4,28 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/admin/AndroidStudioProjects/Android2021/app/src/main/res/layout/activity_main.xml" value="0.3625" />
+        <entry key="app/src/main/res/drawable/ic_create.xml" value="0.3927083333333333" />
+        <entry key="app/src/main/res/drawable/ic_home.xml" value="0.3927083333333333" />
+        <entry key="app/src/main/res/drawable/ic_material_color_1.xml" value="0.24802631578947368" />
+        <entry key="app/src/main/res/drawable/ic_material_color_10.xml" value="0.24802631578947368" />
+        <entry key="app/src/main/res/drawable/ic_material_color_11.xml" value="0.24802631578947368" />
+        <entry key="app/src/main/res/drawable/ic_material_color_12.xml" value="0.24802631578947368" />
+        <entry key="app/src/main/res/drawable/ic_material_color_2.xml" value="0.24802631578947368" />
+        <entry key="app/src/main/res/drawable/ic_material_color_3.xml" value="0.24802631578947368" />
+        <entry key="app/src/main/res/drawable/ic_material_color_4.xml" value="0.24802631578947368" />
+        <entry key="app/src/main/res/drawable/ic_material_color_5.xml" value="0.24802631578947368" />
+        <entry key="app/src/main/res/drawable/ic_material_color_6.xml" value="0.24802631578947368" />
+        <entry key="app/src/main/res/drawable/ic_material_color_7.xml" value="0.24802631578947368" />
+        <entry key="app/src/main/res/drawable/ic_material_color_8.xml" value="0.24802631578947368" />
+        <entry key="app/src/main/res/drawable/ic_material_color_9.xml" value="0.24802631578947368" />
+        <entry key="app/src/main/res/drawable/ic_profiles.xml" value="0.3927083333333333" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.38697916666666665" />
+        <entry key="app/src/main/res/layout/create_fragment.xml" value="0.35602094240837695" />
         <entry key="app/src/main/res/layout/dialog_progress.xml" value="0.38697916666666665" />
+        <entry key="app/src/main/res/layout/home_fragment.xml" value="0.36302083333333335" />
         <entry key="app/src/main/res/layout/login_fragment.xml" value="0.38697916666666665" />
+        <entry key="app/src/main/res/layout/profile_fragment.xml" value="0.25" />
+        <entry key="app/src/main/res/menu/menu_app.xml" value="0.3765625" />
       </map>
     </option>
   </component>

@@ -1,3 +1,18 @@
 <resources>
-    <string name="app_name">Android-2021</string>
+    <string name="app_name">Meme App</string>
+
+    //bottom bar
+    <string name="home">Community</string>
+    <string name="create">Create</string>
+    <string name="settings">Settings</string>
+
+    //settings
+    <string name="light_themes">Light Themes</string>
+    <string name="dark_themes">Dark Themes</string>
+    <string name="disable_dark_enable_light">Disable dark themes and enable light themes</string>
+    <string name="disable_light_enable_dark">Disable light themes and enable dark themes</string>
+    <string name="support_product">Support and donation product</string>
+    <string name="support_product_desc">You can help me continue develop product</string>
+    <string name="material_you">Material you</string>
+    <string name="select_your_color">Select your color</string>
 </resources>

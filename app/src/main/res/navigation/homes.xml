@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.base.android_2021.ui.main.login.LoginFragment"
+        android:name="com.minhnv.meme_app.ui.main.home.HomeFragment"
         android:label="login_fragment"
         tools:layout="@layout/login_fragment" />
 </navigation>
