@@ -16,7 +16,7 @@ import com.minhnv.meme_app.R
 import com.minhnv.meme_app.databinding.VideoToGifFragmentBinding
 import com.minhnv.meme_app.ui.base.BaseFragment
 import com.minhnv.meme_app.ui.main.MainActivity
-import com.minhnv.meme_app.ui.main.create.video_to_gif.utils.URIPathHelper
+import com.minhnv.meme_app.utils.URIPathHelper
 import com.minhnv.meme_app.utils.Constants
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope

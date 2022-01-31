@@ -1,4 +1,4 @@
-package com.minhnv.meme_app.ui.main.create.video_to_gif.utils
+package com.minhnv.meme_app.utils
 
 import android.content.ContentUris
 import android.content.Context
