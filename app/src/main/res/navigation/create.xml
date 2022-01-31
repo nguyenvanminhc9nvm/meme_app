@@ -10,4 +10,14 @@
         android:name="com.minhnv.meme_app.ui.main.create.CreateFragment"
         android:label="create_fragment"
         tools:layout="@layout/create_fragment" />
+    <fragment
+        android:id="@+id/videoToGifFragment"
+        android:name="com.minhnv.meme_app.ui.main.create.video_to_gif.VideoToGifFragment"
+        android:label="video_to_gif_fragment"
+        tools:layout="@layout/video_to_gif_fragment" />
+    <fragment
+        android:id="@+id/exportVideoFragment"
+        android:name="com.minhnv.meme_app.ui.main.create.video_to_gif.export.ExportVideoFragment"
+        android:label="export_video_fragment"
+        tools:layout="@layout/export_video_fragment" />
 </navigation>

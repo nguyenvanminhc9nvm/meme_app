@@ -12,4 +12,42 @@
     <color name="overlay_light_onPrimary">#FFFFFF</color>
     <color name= "overlay_light_primaryContainer">#FFDADB</color>
     <color name="overlay_light_onPrimaryContainer">#400008</color>
+
+    <color name="overlay_material_1_primary">#F44336</color>
+    <color name="overlay_material_1_OnPrimary">#FFCDD2</color>
+
+    <color name="overlay_material_2_primary">#E91E63</color>
+    <color name="overlay_material_2_OnPrimary">#F48FB1</color>
+
+    <color name="overlay_material_3_primary">#9C27B0</color>
+    <color name="overlay_material_3_OnPrimary">#CE93D8</color>
+
+    <color name="overlay_material_4_primary">#673AB7</color>
+    <color name="overlay_material_4_OnPrimary">#B39DDB</color>
+
+    <color name="overlay_material_5_primary">#3F51B5</color>
+    <color name="overlay_material_5_OnPrimary">#9FA8DA</color>
+
+    <color name="overlay_material_6_primary">#2196F3</color>
+    <color name="overlay_material_6_OnPrimary">#90CAF9</color>
+
+    <color name="overlay_material_7_primary">#03A9F4</color>
+    <color name="overlay_material_7_OnPrimary">#81D4FA</color>
+
+    <color name="overlay_material_8_primary">#00BCD4</color>
+    <color name="overlay_material_8_OnPrimary">#80DEEA</color>
+
+    <color name="overlay_material_9_primary">#009688</color>
+    <color name="overlay_material_9_OnPrimary">#80CBC4</color>
+
+    <color name="overlay_material_10_primary">#4CAF50</color>
+    <color name="overlay_material_10_OnPrimary">#A5D6A7</color>
+
+    <color name="overlay_material_11_primary">#8BC34A</color>
+    <color name="overlay_material_11_OnPrimary">#C5E1A5</color>
+
+    <color name="overlay_material_12_primary">#CDDC39</color>
+    <color name="overlay_material_12_OnPrimary">#E6EE9C</color>
+
+    <color name="color_edittext">#FFADAD</color>
 </resources>

@@ -13,8 +13,10 @@ class CreateFragment : BaseFragment<CreateFragmentBinding>() {
         get() = CreateFragmentBinding::inflate
 
     override fun setup() {
-
+        binding.llVideoToGif.setOnClickListener {
+            switchFragment(R.id.videoToGifFragment)
+        }
     }
 
-    override val title: Int = R.string.create
+    override val title: Int = com.minhnv.meme_app.R.string.create
 }

@@ -15,4 +15,26 @@
     <string name="support_product_desc">You can help me continue develop product</string>
     <string name="material_you">Material you</string>
     <string name="select_your_color">Select your color</string>
+
+    //donation
+    <string name="donation">Donation</string>
+    <string name="bank_acc">8968227</string>
+    <string name="bank_name">ACB</string>
+    <string name="desc_bank_payment">1. Thank you for supporting us during this difficult time. I am very grateful for your kindness, help and generosity. Wish you always happy, healthy and successful.</string>
+    <string name="desc_bank_payment_2">2. I don\'t know what to say but my sincere thanks when you get help in difficult times. Thank you very much. Your help is very valuable to me at this time.</string>
+
+    //create
+    <string name="video_to_gif">Video To Gif</string>
+    <string name="meme_template">Meme Template</string>
+    <string name="select_image">Select Image</string>
+    <string name="discovery">Discovery</string>
+    <string name="preview">Preview</string>
+    <string name="export">Export</string>
+    <string name="progress">Start the conversion process…</string>
+    <string name="select_video">Select video to converter</string>
+    <string name="file_size_smaller_than_10mb">Select files smaller than 10 mb</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="time">00:00:00</string>
+    <string name="post_to_community">Post To Community</string>
 </resources>

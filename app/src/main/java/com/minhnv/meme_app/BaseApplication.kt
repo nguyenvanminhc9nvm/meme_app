@@ -6,9 +6,6 @@ import android.content.SharedPreferences
 import com.google.android.material.color.DynamicColors
 import dagger.hilt.android.HiltAndroidApp
 
-
-
-
 @HiltAndroidApp
 class BaseApplication: Application() {
 

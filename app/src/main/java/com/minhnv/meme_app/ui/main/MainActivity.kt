@@ -22,6 +22,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), INavigatorActivity {
     private var currentNavController: LiveData<NavController>? = null
 
     override fun setup() {
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,10 +40,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), INavigatorActivity {
 
     override fun navigateFragment(fragmentId: Int, bundle: Bundle?) {
         val navBuilder = NavOptions.Builder()
-        navBuilder.setEnterAnim(android.R.anim.slide_in_left)
-            .setExitAnim(android.R.anim.slide_out_right)
-            .setPopEnterAnim(android.R.anim.slide_out_right)
-            .setPopExitAnim(android.R.anim.slide_in_left)
+        navBuilder.setEnterAnim(R.anim.slide_in)
+            .setExitAnim(R.anim.fade_out)
+            .setPopEnterAnim(R.anim.fade_in)
+            .setPopExitAnim(R.anim.slide_out)
 
         if (bundle != null) {
             currentNavController?.value?.navigate(fragmentId, bundle, navBuilder.build())

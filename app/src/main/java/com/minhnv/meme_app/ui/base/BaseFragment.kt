@@ -81,7 +81,7 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
         if (bundle != null) {
             mINavigatorActivity.navigateFragment(fragmentId, bundle)
         } else {
-            mINavigatorActivity.navigateFragment(fragmentId, bundle)
+            mINavigatorActivity.navigateFragment(fragmentId, null)
         }
     }
 

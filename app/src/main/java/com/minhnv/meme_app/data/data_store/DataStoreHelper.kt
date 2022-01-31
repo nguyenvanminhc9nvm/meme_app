@@ -10,4 +10,8 @@ interface DataStoreHelper {
     suspend fun saveToken(token: String)
 
     suspend fun token(): String
+
+    suspend fun themeSystem(): Boolean
+
+    suspend fun setThemeSystem(isDark: Boolean)
 }

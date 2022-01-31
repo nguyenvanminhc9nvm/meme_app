@@ -12,6 +12,8 @@
         <!-- Status bar color. -->
         <item name="android:fontFamily">@font/poppins_medium</item>
         <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/ic_logo</item>
+        <item name="android:windowSplashScreenBackground">@android:color/system_accent1_600</item>
         <!-- Customize your theme here. -->
     </style>
 
@@ -27,6 +29,8 @@
         <!-- Status bar color. -->
         <item name="android:fontFamily">@font/poppins_medium</item>
         <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/ic_logo</item>
+        <item name="android:windowSplashScreenBackground">@android:color/system_accent1_200</item>
         <!-- Customize your theme here. -->
     </style>
 

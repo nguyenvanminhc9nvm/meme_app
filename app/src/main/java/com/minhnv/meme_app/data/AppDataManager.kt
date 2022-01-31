@@ -19,4 +19,10 @@ class AppDataManager @Inject constructor(
     suspend fun doSaveToken(token: String) {
         return dataStoreHelper.saveToken(token)
     }
+
+    suspend fun themeSystem() = dataStoreHelper.themeSystem()
+
+    suspend fun changeThemeSystem(isDark: Boolean) {
+        dataStoreHelper.setThemeSystem(isDark)
+    }
 }

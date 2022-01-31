@@ -10,4 +10,9 @@
         android:name="com.minhnv.meme_app.ui.main.profile.ProfileFragment"
         android:label="profile_fragment"
         tools:layout="@layout/profile_fragment" />
+    <fragment
+        android:id="@+id/donationFragment"
+        android:name="com.minhnv.meme_app.ui.main.profile.donation.DonationFragment"
+        android:label="donation_fragment"
+        tools:layout="@layout/donation_fragment" />
 </navigation>

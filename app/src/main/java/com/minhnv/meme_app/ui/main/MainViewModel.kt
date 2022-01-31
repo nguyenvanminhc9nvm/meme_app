@@ -11,5 +11,4 @@ class MainViewModel @Inject constructor(
     private val dataManager: AppDataManager,
     private val trackingErrorHelper: TrackingError
 ) : ViewModel() {
-
 }

@@ -40,4 +40,149 @@
         <item name="android:layout_weight">1</item>
         <item name="android:contentDescription">@string/select_your_color</item>
     </style>
+
+    <style name="Theme.Android2021.Material1" parent="Theme.Material3.Light.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/overlay_material_1_primary</item>
+        <item name="colorOnPrimary">@color/overlay_material_1_OnPrimary</item>
+    </style>
+
+    <style name="Theme.Android2021.Material1.Dark" parent="Theme.Material3.Dark.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/overlay_material_1_primary</item>
+        <item name="colorOnPrimary">@color/overlay_material_1_OnPrimary</item>
+    </style>
+
+    <style name="Theme.Android2021.Material2" parent="Theme.Material3.Light.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/overlay_material_2_primary</item>
+        <item name="colorOnPrimary">@color/overlay_material_2_OnPrimary</item>
+    </style>
+
+    <style name="Theme.Android2021.Material2_Dark" parent="Theme.Material3.Dark.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/overlay_material_2_primary</item>
+        <item name="colorOnPrimary">@color/overlay_material_2_OnPrimary</item>
+    </style>
+
+    <style name="Theme.Android2021.Material3" parent="Theme.Material3.Light.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/overlay_material_3_primary</item>
+        <item name="colorOnPrimary">@color/overlay_material_3_OnPrimary</item>
+    </style>
+
+    <style name="Theme.Android2021.Material3.Dark" parent="Theme.Material3.Dark.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/overlay_material_3_primary</item>
+        <item name="colorOnPrimary">@color/overlay_material_3_OnPrimary</item>
+    </style>
+
+    <style name="Theme.Android2021.Material4" parent="Theme.Material3.Light.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/overlay_material_4_primary</item>
+        <item name="colorOnPrimary">@color/overlay_material_4_OnPrimary</item>
+    </style>
+
+    <style name="Theme.Android2021.Material4.Dark" parent="Theme.Material3.Dark.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/overlay_material_4_primary</item>
+        <item name="colorOnPrimary">@color/overlay_material_4_OnPrimary</item>
+    </style>
+
+    <style name="Theme.Android2021.Material5" parent="Theme.Material3.Light.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/overlay_material_5_primary</item>
+        <item name="colorOnPrimary">@color/overlay_material_5_OnPrimary</item>
+    </style>
+
+    <style name="Theme.Android2021.Material5.Dark" parent="Theme.Material3.Dark.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/overlay_material_5_primary</item>
+        <item name="colorOnPrimary">@color/overlay_material_5_OnPrimary</item>
+    </style>
+
+    <style name="Theme.Android2021.Material6" parent="Theme.Material3.Light.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/overlay_material_6_primary</item>
+        <item name="colorOnPrimary">@color/overlay_material_6_OnPrimary</item>
+    </style>
+
+    <style name="Theme.Android2021.Material6.Dark" parent="Theme.Material3.Dark.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/overlay_material_6_primary</item>
+        <item name="colorOnPrimary">@color/overlay_material_6_OnPrimary</item>
+    </style>
+
+    <style name="Theme.Android2021.Material7" parent="Theme.Material3.Light.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/overlay_material_7_primary</item>
+        <item name="colorOnPrimary">@color/overlay_material_7_OnPrimary</item>
+    </style>
+
+    <style name="Theme.Android2021.Material7.Dark" parent="Theme.Material3.Dark.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/overlay_material_7_primary</item>
+        <item name="colorOnPrimary">@color/overlay_material_7_OnPrimary</item>
+    </style>
+
+    <style name="Theme.Android2021.Material8" parent="Theme.Material3.Light.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/overlay_material_8_primary</item>
+        <item name="colorOnPrimary">@color/overlay_material_8_OnPrimary</item>
+    </style>
+
+    <style name="Theme.Android2021.Material8.Dark" parent="Theme.Material3.Dark.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/overlay_material_8_primary</item>
+        <item name="colorOnPrimary">@color/overlay_material_8_OnPrimary</item>
+    </style>
+
+    <style name="Theme.Android2021.Material9" parent="Theme.Material3.Light.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/overlay_material_9_primary</item>
+        <item name="colorOnPrimary">@color/overlay_material_9_OnPrimary</item>
+    </style>
+
+    <style name="Theme.Android2021.Material9.Dark" parent="Theme.Material3.Dark.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/overlay_material_9_primary</item>
+        <item name="colorOnPrimary">@color/overlay_material_9_OnPrimary</item>
+    </style>
+
+    <style name="Theme.Android2021.Material10" parent="Theme.Material3.Light.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/overlay_material_10_primary</item>
+        <item name="colorOnPrimary">@color/overlay_material_10_OnPrimary</item>
+    </style>
+
+    <style name="Theme.Android2021.Material10.Dark" parent="Theme.Material3.Dark.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/overlay_material_10_primary</item>
+        <item name="colorOnPrimary">@color/overlay_material_10_OnPrimary</item>
+    </style>
+
+    <style name="Theme.Android2021.Material11" parent="Theme.Material3.Light.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/overlay_material_11_primary</item>
+        <item name="colorOnPrimary">@color/overlay_material_11_OnPrimary</item>
+    </style>
+
+    <style name="Theme.Android2021.Material11.Dark" parent="Theme.Material3.Dark.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/overlay_material_11_primary</item>
+        <item name="colorOnPrimary">@color/overlay_material_11_OnPrimary</item>
+    </style>
+
+    <style name="Theme.Android2021.Material12" parent="Theme.Material3.Light.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/overlay_material_12_primary</item>
+        <item name="colorOnPrimary">@color/overlay_material_12_OnPrimary</item>
+    </style>
+
+    <style name="Theme.Android2021.Material12.Dark" parent="Theme.Material3.Dark.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/overlay_material_12_primary</item>
+        <item name="colorOnPrimary">@color/overlay_material_12_OnPrimary</item>
+    </style>
+
 </resources>
