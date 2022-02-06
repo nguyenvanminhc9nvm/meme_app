@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:id="@+id/nsvExportMeme"
+    tools:context=".ui.main.create.meme_template.export.ExportMemeFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_margin="@dimen/_10sdp">
+
+        <com.minhnv.meme_app.ui.main.create.meme_template.export.MemeEditView
+            android:id="@+id/memeEdt"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="5"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.minhnv.meme_app.ui.main.create.meme_template.export.MemeToolTextView
+            android:id="@+id/btnChange"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_weight="2"
+            android:orientation="vertical"
+            app:layout_constraintDimensionRatio="1:0.4"
+            app:layout_constraintEnd_toEndOf="@+id/memeEdt"
+            app:layout_constraintStart_toStartOf="@+id/memeEdt"
+            app:layout_constraintTop_toBottomOf="@+id/memeEdt" />
+
+        <ImageView
+            android:id="@+id/btnTextSelection"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_weight="4"
+            android:src="@drawable/ic_text_selection"
+            app:layout_constraintDimensionRatio="1:0.2"
+            app:layout_constraintStart_toStartOf="@id/btnChange"
+            app:layout_constraintTop_toBottomOf="@id/btnChange"
+            tools:ignore="NestedWeights" />
+
+        <ImageView
+            android:id="@+id/btnMemeIconSelection"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="4"
+            android:src="@drawable/ic_meme_icon"
+            app:layout_constraintBottom_toBottomOf="@id/btnTextSelection"
+            app:layout_constraintDimensionRatio="1:0.2"
+            app:layout_constraintEnd_toEndOf="@id/btnChange"
+            app:layout_constraintStart_toEndOf="@+id/btnTextSelection"
+            app:layout_constraintTop_toTopOf="@id/btnTextSelection"
+            tools:layout_editor_absoluteY="13dp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnExportMeme"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="@dimen/_70sdp"
+            android:layout_marginVertical="@dimen/_10sdp"
+            android:background="@drawable/ic_button_background"
+            android:text="@string/export"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1:0.5"
+            app:layout_constraintEnd_toEndOf="@+id/btnMemeIconSelection"
+            app:layout_constraintHorizontal_bias="0.533"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnMemeIconSelection"
+            app:layout_constraintVertical_bias="0.0" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

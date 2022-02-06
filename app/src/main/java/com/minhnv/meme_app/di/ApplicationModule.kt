@@ -28,7 +28,7 @@ import javax.inject.Singleton
 class ApplicationModule {
 
     @Provides
-    fun providerApiHost() = "http://192.168.1.100:6969/api/v1/"
+    fun providerApiHost() = "https://api.imgur.com/"
 
     @Provides
     @Singleton

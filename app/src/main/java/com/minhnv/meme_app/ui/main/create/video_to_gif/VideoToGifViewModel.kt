@@ -22,6 +22,9 @@ class VideoToGifViewModel @Inject constructor() : ViewModel() {
     private val _startConvert = MutableLiveData<Boolean>()
     val startConvert get() = _startConvert
 
+    private val _videoSelected = MutableLiveData<String>()
+    val videoSelected get() = _videoSelected
+
     private val _outputVideo = MutableLiveData("")
     val outputVideo get() = _outputVideo
 
@@ -41,8 +44,10 @@ class VideoToGifViewModel @Inject constructor() : ViewModel() {
             _startConvert.value = true
             val file = File(outputVideo)
             if (file.exists()) {
+                println("#deleteFile")
                 file.delete()
             }
+            _videoSelected.value = inputVideo
             val query = convertVideoToGIF(inputVideo, outputVideo)
             val responseCode = withContext(Dispatchers.IO) { FFmpeg.execute(query) }
             if (responseCode == Config.RETURN_CODE_SUCCESS) {

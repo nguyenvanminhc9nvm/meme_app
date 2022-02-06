@@ -25,4 +25,8 @@ class AppDataManager @Inject constructor(
     suspend fun changeThemeSystem(isDark: Boolean) {
         dataStoreHelper.setThemeSystem(isDark)
     }
+
+    suspend fun doGetListMemeTemplates() = apiHelper.doFetchListMeme()
+
+    suspend fun doGetListMemeIcon() = apiHelper.doFetchListMemeIcon()
 }

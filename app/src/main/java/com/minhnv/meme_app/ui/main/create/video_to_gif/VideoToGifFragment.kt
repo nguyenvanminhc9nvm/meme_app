@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.MediaController
 import androidx.activity.result.contract.ActivityResultContracts
@@ -16,8 +17,8 @@ import com.minhnv.meme_app.R
 import com.minhnv.meme_app.databinding.VideoToGifFragmentBinding
 import com.minhnv.meme_app.ui.base.BaseFragment
 import com.minhnv.meme_app.ui.main.MainActivity
-import com.minhnv.meme_app.utils.URIPathHelper
 import com.minhnv.meme_app.utils.Constants
+import com.minhnv.meme_app.utils.URIPathHelper
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -39,7 +40,6 @@ class VideoToGifFragment : BaseFragment<VideoToGifFragmentBinding>() {
         val dialog = alertDialog.create()
         dialog.setCancelable(false)
         binding.btnGetVideo.setOnClickListener {
-            binding.btnExport.isEnabled = false
             when (PackageManager.PERMISSION_GRANTED) {
                 ContextCompat.checkSelfPermission(
                     mActivity,
@@ -65,11 +65,25 @@ class VideoToGifFragment : BaseFragment<VideoToGifFragmentBinding>() {
             }
         }
         viewModel.outputVideo.observe(viewLifecycleOwner) { path ->
+            if (path.isEmpty()) {
+                binding.btnExport.visibility = View.GONE
+                binding.btnGetVideo.visibility = View.VISIBLE
+            } else {
+                binding.btnExport.visibility = View.VISIBLE
+                binding.btnGetVideo.visibility = View.GONE
+            }
             binding.btnExport.setOnClickListener {
                 val bundle = Bundle()
-                bundle.putString(Constants.ARGUMENT_1, path)
-                switchFragment(R.id.exportVideoFragment, bundle)
+                bundle.putString(Constants.ARGUMENT_2, path)
+                switchFragment(R.id.publishMemeFragment, bundle)
             }
+        }
+        viewModel.videoSelected.observe(viewLifecycleOwner) { uri ->
+            val mediaController = MediaController(mActivity)
+            binding.vvPreview.setMediaController(mediaController)
+            binding.vvPreview.setVideoPath(uri)
+            binding.vvPreview.requestFocus()
+            binding.vvPreview.start()
         }
     }
 
@@ -102,22 +116,6 @@ class VideoToGifFragment : BaseFragment<VideoToGifFragmentBinding>() {
                         .setPositiveButton(R.string.cancel, null)
                         .show()
                     return@launch
-                }
-                binding.btnExport.isEnabled = true
-                val mediaController = MediaController(mActivity)
-                binding.vvPreview.setMediaController(mediaController)
-                binding.vvPreview.setVideoURI(uri)
-                binding.vvPreview.requestFocus()
-                binding.vvPreview.start()
-                isStart = true
-                binding.vvPreview.setOnClickListener {
-                    isStart = if (isStart) {
-                        binding.vvPreview.pause()
-                        false
-                    } else {
-                        binding.vvPreview.start()
-                        true
-                    }
                 }
                 val inputVideo = URIPathHelper.getPath(mActivity, uri) ?: ""
                 val outputVideo = mActivity.filesDir.path + "/videoConverting.gif"

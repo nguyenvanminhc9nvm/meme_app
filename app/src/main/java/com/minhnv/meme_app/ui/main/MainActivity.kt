@@ -70,7 +70,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), INavigatorActivity {
     }
 
     private fun setupBottomNavigationBar() {
-        val navGraphIds = listOf(R.navigation.homes, R.navigation.create, R.navigation.profiles)
+        val navGraphIds = listOf(R.navigation.homes, R.navigation.deep, R.navigation.create, R.navigation.profiles, )
 
         val controller = binding.bottomNavigationView.setupWithNavController(
             navGraphIds = navGraphIds,

@@ -4,7 +4,7 @@
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/overlay_light_primary</item>
         <item name="colorPrimaryVariant">@color/overlay_light_primaryContainer</item>
-        <item name="colorOnPrimary">@color/overlay_light_onPrimary</item>
+        <item name="colorOnPrimary">@color/overlay_light_primaryContainer</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@android:color/holo_green_light</item>
         <item name="colorSecondaryVariant">@android:color/holo_green_dark</item>

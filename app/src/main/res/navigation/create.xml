@@ -16,8 +16,18 @@
         android:label="video_to_gif_fragment"
         tools:layout="@layout/video_to_gif_fragment" />
     <fragment
-        android:id="@+id/exportVideoFragment"
-        android:name="com.minhnv.meme_app.ui.main.create.video_to_gif.export.ExportVideoFragment"
-        android:label="export_video_fragment"
-        tools:layout="@layout/export_video_fragment" />
+        android:id="@+id/memeTemplateListFragment"
+        android:name="com.minhnv.meme_app.ui.main.create.meme_template.MemeTemplateListFragment"
+        android:label="meme_template_list_fragment"
+        tools:layout="@layout/meme_template_list_fragment" />
+    <fragment
+        android:id="@+id/exportMemeFragment"
+        android:name="com.minhnv.meme_app.ui.main.create.meme_template.export.ExportMemeFragment"
+        android:label="export_meme_fragment"
+        tools:layout="@layout/export_meme_fragment" />
+    <fragment
+        android:id="@+id/publishMemeFragment"
+        android:name="com.minhnv.meme_app.ui.main.create.publish.PublishMemeFragment"
+        android:label="publish_meme_fragment"
+        tools:layout="@layout/publish_meme_fragment" />
 </navigation>
