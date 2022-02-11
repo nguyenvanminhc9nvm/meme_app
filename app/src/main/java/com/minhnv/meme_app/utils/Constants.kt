@@ -1,5 +1,7 @@
 package com.minhnv.meme_app.utils
 
+import kotlin.random.Random
+
 object Constants {
     const val TB_USER = "TABLE_USER"
     const val DB_APP = "DB_APP_NAME"
@@ -10,5 +12,5 @@ object Constants {
     const val ARGUMENT_3 = "ARGUMENT_3"
     const val ARGUMENT_SERIALIZABLE = "ARGUMENT_SERIALIZABLE"
 
-    const val ID_GENERATOR = 1
+    val ID_GENERATOR = Random.nextInt()
 }

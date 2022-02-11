@@ -18,8 +18,8 @@ val memeTemplates = mutableListOf(
     MemeTemplate(
         id = 2,
         memeUrl = "https://i.imgflip.com/4/1g8my4.jpg",
-        areaRectText1st = Rect(250, 250, 300, 300),
-        areaRectText2nd = Rect(),
+        areaRectText1st = Rect(254, 39, 436, 188),
+        areaRectText2nd = Rect(478, 0, 643, 149),
         areaRectText3rd = null,
         areaRectText4th = null,
     ),

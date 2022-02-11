@@ -28,7 +28,6 @@ class VideoToGifViewModel @Inject constructor() : ViewModel() {
     private val _outputVideo = MutableLiveData("")
     val outputVideo get() = _outputVideo
 
-
     fun getFileSize(context: Context, fileUri: Uri): Long {
         val returnCursor = context.contentResolver.query(fileUri, null, null, null, null)
         val sizeIndex: Int = returnCursor?.getColumnIndex(OpenableColumns.SIZE) ?: 0
@@ -44,7 +43,6 @@ class VideoToGifViewModel @Inject constructor() : ViewModel() {
             _startConvert.value = true
             val file = File(outputVideo)
             if (file.exists()) {
-                println("#deleteFile")
                 file.delete()
             }
             _videoSelected.value = inputVideo

@@ -50,4 +50,22 @@
     <color name="overlay_material_12_OnPrimary">#E6EE9C</color>
 
     <color name="color_edittext">#FFADAD</color>
+    <color name="orange">#FFC207</color>
+    <color name="green">#24FF00</color>
+    <color name="blue">#00D1FF</color>
+    <color name="blue_1">#28C7DA</color>
+    <color name="violet">#987EFC</color>
+    <color name="green_2">#2CE449</color>
+    <color name="red">#FF0A0A</color>
+    <color name="gray">#524E43</color>
+    <color name="pink">#EF5DA8</color>
+    <color name="violet_2">#A5A6F6</color>
+    <color name="blue_8">#00A3FF</color>
+    <color name="green_8">#2CE449</color>
+    <color name="orange_2">#FCA47E</color>
+    <color name="blue_3">#00D1FF</color>
+    <color name="green_9">#2CE449</color>
+    <color name="blue_4">#00D1FF</color>
+    <color name="yellow">#FFEF99</color>
+    <color name="violet_3">#CC00FF</color>
 </resources>

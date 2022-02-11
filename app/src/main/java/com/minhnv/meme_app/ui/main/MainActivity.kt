@@ -1,7 +1,12 @@
 package com.minhnv.meme_app.ui.main
 
+import android.content.Context
+import android.graphics.Rect
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
+import android.view.Window
+import android.view.WindowManager
 import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.LiveData
 import androidx.navigation.NavController
@@ -15,6 +20,9 @@ import com.minhnv.meme_app.ui.base.INavigatorActivity
 import com.minhnv.meme_app.utils.Constants
 import com.minhnv.meme_app.utils.setupWithNavController
 import dagger.hilt.android.AndroidEntryPoint
+
+
+
 
 
 @AndroidEntryPoint
@@ -70,7 +78,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), INavigatorActivity {
     }
 
     private fun setupBottomNavigationBar() {
-        val navGraphIds = listOf(R.navigation.homes, R.navigation.deep, R.navigation.create, R.navigation.profiles, )
+        val navGraphIds = listOf(
+            R.navigation.homes,
+            R.navigation.deep,
+            R.navigation.create,
+            R.navigation.profiles
+        )
 
         val controller = binding.bottomNavigationView.setupWithNavController(
             navGraphIds = navGraphIds,
@@ -98,5 +111,19 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), INavigatorActivity {
         val application = application as BaseApplication
         application.preferencePutInteger(Constants.KEY_THEMES, themes)
         recreate()
+    }
+
+    val collapsingToolbarHeight get() = binding.collapsingToolbar.height + statusBarHeight()
+
+    private fun statusBarHeight() : Int {
+        val rect = Rect()
+        val window: Window = window
+        window.decorView.getWindowVisibleDisplayFrame(rect)
+        val v: View = window.findViewById(Window.ID_ANDROID_CONTENT)
+        val display =
+            (getSystemService(Context.WINDOW_SERVICE) as WindowManager).defaultDisplay
+
+        //return result title bar height
+        return display.height - v.bottom + rect.top
     }
 }

@@ -4,18 +4,22 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.graphics.Bitmap
 import android.graphics.Color
+import android.graphics.Rect
 import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.size
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.tabs.TabLayout
 import com.minhnv.meme_app.R
 import com.minhnv.meme_app.data.networking.model.local.MemeTemplate
 import com.minhnv.meme_app.databinding.ExportMemeFragmentBinding
 import com.minhnv.meme_app.ui.base.BaseFragment
+import com.minhnv.meme_app.ui.main.MainActivity
 import com.minhnv.meme_app.ui.main.create.meme_template.ItemDecorationAlbumColumns
 import com.minhnv.meme_app.utils.Constants
 import dagger.hilt.android.AndroidEntryPoint
@@ -30,52 +34,26 @@ class ExportMemeFragment : BaseFragment<ExportMemeFragmentBinding>() {
     private val memeIconAdapter = MemeIconAdapter()
     private lateinit var dialog: Dialog
     private val bundle = Bundle()
+    private lateinit var memeToolAdapter: MemeToolAdapter
+    private val rectDefault = Rect(
+        100,
+        100,
+        300,
+        300
+    )
+
     override fun setup() {
+        memeToolAdapter = MemeToolAdapter(mActivity).apply {
+            set(memeToolsAlign)
+        }
         val memeTemplate =
             arguments?.getSerializable(Constants.ARGUMENT_SERIALIZABLE) as? MemeTemplate
         binding.memeEdt.loadImage(mActivity, memeTemplate?.memeUrl!!)
         binding.memeEdt.set(mActivity, memeTemplate.getListRect())
+        binding.memeEdt.collapsingToolbarLayoutHeight =
+            (mActivity as MainActivity).collapsingToolbarHeight
         binding.memeEdt.selectEditText = { selected ->
             binding.btnChange.isEnabled = selected
-        }
-        binding.btnChange.btnAlignLeft.setOnClickListener {
-            binding.memeEdt.changeAlign(Gravity.START)
-        }
-        binding.btnChange.btnAlignCenter.setOnClickListener {
-            binding.memeEdt.changeAlign(Gravity.CENTER)
-        }
-        binding.btnChange.btnAlignRight.setOnClickListener {
-            binding.memeEdt.changeAlign(Gravity.END)
-        }
-        binding.btnChange.btnFontBold.setOnClickListener {
-            binding.memeEdt.changeFont(R.font.poppins_bold)
-        }
-        binding.btnChange.btnFontGothic.setOnClickListener {
-            binding.memeEdt.changeFont(R.font.poppins_gothic)
-        }
-        binding.btnChange.btnFontRegular.setOnClickListener {
-            binding.memeEdt.changeFont(R.font.poppins_regular)
-        }
-        binding.btnChange.btnFontGreen.setOnClickListener {
-            binding.memeEdt.changeColor(Color.GREEN)
-        }
-        binding.btnChange.btnFontRed.setOnClickListener {
-            binding.memeEdt.changeColor(Color.RED)
-        }
-        binding.btnChange.btnFontYellow.setOnClickListener {
-            binding.memeEdt.changeColor(Color.YELLOW)
-        }
-        binding.btnChange.btnFontWhite.setOnClickListener {
-            binding.memeEdt.changeColor(Color.WHITE)
-        }
-        binding.btnChange.btnTextBoundFilled.setOnClickListener {
-            binding.memeEdt.changeBound(R.drawable.ic_text_bound_background_filled)
-        }
-        binding.btnChange.btnTextBoundStroke.setOnClickListener {
-            binding.memeEdt.changeBound(R.drawable.ic_text_bound_background_stroke)
-        }
-        binding.btnChange.btnTextBoundTextOnly.setOnClickListener {
-            binding.memeEdt.changeBound(R.drawable.ic_text_bound_background_text_only)
         }
         binding.btnMemeIconSelection.setOnClickListener {
             val alertDialog = AlertDialog.Builder(mActivity)
@@ -109,9 +87,13 @@ class ExportMemeFragment : BaseFragment<ExportMemeFragmentBinding>() {
             Toast.makeText(mActivity, getString(R.string.select_text_to_edit), Toast.LENGTH_SHORT)
                 .show()
         }
+        binding.memeEdt.didIconAddIntoView = { memeIcon, rect ->
+            viewModel.setMemeEdtValue(memeIcon, rect)
+        }
         memeIconAdapter.onItemMemeSelected = { memeIcon ->
-            binding.memeEdt.addIcon(mActivity, memeIcon.meme)
+            binding.memeEdt.didIconAddIntoView?.invoke(memeIcon, rectDefault)
             dialog.dismiss()
+            binding.nsvExportMeme.smoothScrollTo(0, 0)
         }
 
         viewModel.memeIcons.observe(viewLifecycleOwner) {
@@ -131,6 +113,74 @@ class ExportMemeFragment : BaseFragment<ExportMemeFragmentBinding>() {
             }
         }
 
+        binding.vpToolIcon.apply {
+            layoutManager = GridLayoutManager(mActivity, 5)
+            setHasFixedSize(true)
+            adapter = memeToolAdapter
+        }
+
+        binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                when (tab?.position) {
+                    0 -> memeToolAdapter.set(memeToolsAlign)
+                    1 -> memeToolAdapter.set(memeIconsFont)
+                    2 -> memeToolAdapter.set(memeIconsSpacing)
+                    3 -> memeToolAdapter.set(memeIconsBound)
+                }
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+            }
+
+        })
+        memeToolAdapter.didSelectedToolIcon = { memeToolIcon ->
+            when (memeToolIcon.type) {
+                TypedValueTool.FONT -> {
+                    binding.memeEdt.changeFont(
+                        memeToolIcon.attributes ?: R.font.poppins_medium
+                    )
+                }
+                TypedValueTool.COLOR -> {
+                    binding.memeEdt.changeColor(
+                        memeToolIcon.colorPrimary ?: Color.BLACK,
+                        memeToolIcon.colorSecondary ?: Color.BLACK
+                    )
+                }
+                TypedValueTool.SIZE -> {
+                    binding.memeEdt.changeSize(
+                        memeToolIcon.attributes ?: 100
+                    )
+                }
+                TypedValueTool.SPACING -> {
+                    binding.memeEdt.changeLineSpacingExtra(
+                        memeToolIcon.attributes ?: 6
+                    )
+                }
+                TypedValueTool.BOUND -> {
+                    binding.memeEdt.changeBound(
+                        memeToolIcon.attributes ?: R.drawable.ic_place_holder,
+                        memeToolIcon.colorPrimary ?: R.color.black
+                    )
+                }
+                TypedValueTool.ALIGN -> {
+                    binding.memeEdt.changeAlign(
+                        memeToolIcon.attributes ?: Gravity.CENTER
+                    )
+                }
+            }
+        }
+
+        viewModel.memeEdtValue.observe(viewLifecycleOwner) { list ->
+            println("#memeMaple: $list")
+            list.forEach {
+                binding.memeEdt.addIcon(mActivity, it.value.first, it.value.second)
+            }
+            println("#memeMaple ${binding.memeEdt.size}")
+        }
     }
 
     override val title: Int
