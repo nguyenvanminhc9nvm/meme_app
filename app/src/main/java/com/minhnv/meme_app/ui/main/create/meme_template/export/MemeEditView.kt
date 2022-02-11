@@ -39,6 +39,7 @@ class MemeEditView @JvmOverloads constructor(
     var didIconAddIntoView: DidIconAddIntoView? = null
     var collapsingToolbarLayoutHeight = 0
 
+
     fun set(context: Context, rect: MutableList<Rect?>) {
         listRect.clear()
         listRect.addAll(rect)
@@ -59,27 +60,22 @@ class MemeEditView @JvmOverloads constructor(
     private fun addViewWithRect(context: Context, rect: Rect?) {
         val displayMetrics = DisplayMetrics()
         (context as MainActivity).windowManager.defaultDisplay.getMetrics(displayMetrics)
-        val width = displayMetrics.widthPixels
-        val height = displayMetrics.heightPixels - collapsingToolbarLayoutHeight
-        val widthDefault = 1000
+        val widthScreen = displayMetrics.widthPixels
+        val baseWidth = 1070 * 1.0
+        val baseHeight = 1070 * 1.0
         val oldLeft = rect?.left ?: 0
         val oldTop = rect?.top ?: 0
         val oldRight = rect?.right ?: 0
         val oldBottom = rect?.bottom ?: 0
-        val widthRect = rect?.width() ?: 0
-        val heightRect = rect?.height() ?: 0
-
-        val conflictSize = (width - widthDefault) / 2
-        val newLeft = oldLeft + (widthRect - oldLeft)
-        val newTop = if (oldTop == 0) 0 else oldTop - (heightRect + oldTop)
-        val newRight = oldRight + (widthRect - oldRight)
-        val newBottom = oldBottom + (heightRect - oldBottom)
-
-        Log.d("#rectInfos", "addViewWithRect: \n" +
-                "width: $width, height: $height \n" +
-                "old: left: $oldLeft, top: $oldTop, right: $oldRight, bottom: $oldBottom \n" +
-                "new: left: $newLeft, top: $newTop, right: $newRight, bottom: $newBottom \n")
-        val newRect = Rect(newLeft, oldTop, newRight, newBottom)
+        val ratioLeft = if (oldLeft == 0) 0.0 else (baseWidth / oldLeft)
+        val ratioRight = if (oldRight == 0) 0.0 else (baseWidth / oldRight)
+        val ratioTop = if (oldTop == 0) 0.0 else (baseHeight / oldTop)
+        val ratioBottom = if (oldBottom == 0) 0.0 else (baseHeight / oldBottom)
+        val left = if (ratioLeft == 0.0) 0 else widthScreen / ratioLeft
+        val top = if (ratioTop == 0.0) 0 else widthScreen / ratioTop
+        val right = if (ratioRight == 0.0) 0 else widthScreen / ratioRight
+        val bottom = if (ratioBottom == 0.0) 0 else widthScreen / ratioBottom
+        val newRect = Rect(left.toInt(), top.toInt(), right.toInt(), bottom.toInt())
         if (rect == null) {
             return
         }
@@ -176,12 +172,13 @@ class MemeEditView @JvmOverloads constructor(
         imgView.setImageResource(icon)
         imgView.setOnClickListener {
             imageViewAttention = it as ImageView
-            imageViewAttention!!.background = ResourcesCompat.getDrawable(resources, R.drawable.ic_pin_image, null)
+            imageViewAttention!!.background =
+                ResourcesCompat.getDrawable(resources, R.drawable.ic_pin_image, null)
             imageViewAttention!!.setPadding(20)
         }
         imgView.tag = icon
         // Measure the view at the exact dimensions (otherwise the text won't center correctly)
-        val widthSpec = MeasureSpec.makeMeasureSpec(rect.width(), MeasureSpec.EXACTLY)
+        val widthSpec = View.MeasureSpec.makeMeasureSpec(rect.width(), MeasureSpec.EXACTLY)
         val heightSpec = MeasureSpec.makeMeasureSpec(rect.height(), MeasureSpec.EXACTLY)
         val params = LayoutParams(widthSpec, heightSpec)
         imgView.layoutParams = params
@@ -202,12 +199,15 @@ class MemeEditView @JvmOverloads constructor(
                     val left = locationArray[0]
                     val top = locationArray[1] - collapsingToolbarLayoutHeight
                     val right = locationArray[0] + imageViewAttention!!.width
-                    val bottom = (locationArray[1] + imageViewAttention!!.height) - collapsingToolbarLayoutHeight
+                    val bottom =
+                        (locationArray[1] + imageViewAttention!!.height) - collapsingToolbarLayoutHeight
 
-                    Log.d("#Location", "onTouchEvent: " +
-                            " x: ${ev.x}, y: ${ev.y}" +
-                            "old: left: $left, top: $top right: $right, bottom: $bottom " +
-                            "new: left: ")
+                    Log.d(
+                        "#Location", "onTouchEvent: " +
+                                " x: ${ev.x}, y: ${ev.y}" +
+                                "old: left: $left, top: $top right: $right, bottom: $bottom " +
+                                "new: left: "
+                    )
                 }
             }
         }
@@ -260,15 +260,5 @@ class MemeEditView @JvmOverloads constructor(
 
     override fun performClick(): Boolean {
         return super.performClick()
-    }
-}
-
-class ImageViewIcon @JvmOverloads constructor(
-    context: Context, attrs: AttributeSet? = null
-) : ConstraintLayout(context, attrs) {
-    private val imageView = ImageView(context)
-
-    init {
-        addView(imageView)
     }
 }
