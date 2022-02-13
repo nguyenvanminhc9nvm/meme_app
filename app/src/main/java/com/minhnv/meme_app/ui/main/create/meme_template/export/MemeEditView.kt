@@ -7,7 +7,6 @@ import android.util.DisplayMetrics
 import android.util.Log
 import android.util.TypedValue
 import android.view.MotionEvent
-import android.view.View
 import android.widget.ImageView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
@@ -76,6 +75,7 @@ class MemeEditView @JvmOverloads constructor(
         val right = if (ratioRight == 0.0) 0 else widthScreen / ratioRight
         val bottom = if (ratioBottom == 0.0) 0 else widthScreen / ratioBottom
         val newRect = Rect(left.toInt(), top.toInt(), right.toInt(), bottom.toInt())
+        println("#positionInfo rect: left: $left, top: $top, right: $right, bottom: $bottom")
         if (rect == null) {
             return
         }
@@ -90,7 +90,7 @@ class MemeEditView @JvmOverloads constructor(
         val idView = (rect.top + rect.bottom + rect.left + rect.right) / 4
         editText.id = idView
         // Measure the view at the exact dimensions (otherwise the text won't center correctly)
-        val widthSpec = View.MeasureSpec.makeMeasureSpec(newRect.width(), View.MeasureSpec.EXACTLY)
+        val widthSpec = MeasureSpec.makeMeasureSpec(newRect.width(), MeasureSpec.EXACTLY)
         val heightSpec = MeasureSpec.makeMeasureSpec(newRect.height(), MeasureSpec.EXACTLY)
         val params = LayoutParams(widthSpec, heightSpec)
         editText.layoutParams = params
@@ -178,12 +178,14 @@ class MemeEditView @JvmOverloads constructor(
         }
         imgView.tag = icon
         // Measure the view at the exact dimensions (otherwise the text won't center correctly)
-        val widthSpec = View.MeasureSpec.makeMeasureSpec(rect.width(), MeasureSpec.EXACTLY)
+        val widthSpec = MeasureSpec.makeMeasureSpec(rect.width(), MeasureSpec.EXACTLY)
         val heightSpec = MeasureSpec.makeMeasureSpec(rect.height(), MeasureSpec.EXACTLY)
         val params = LayoutParams(widthSpec, heightSpec)
         imgView.layoutParams = params
-        imgView.translationX = rect.left.toFloat()
-        imgView.translationY = rect.top.toFloat()
+        val posX = rect.left + (rect.right / 2)
+        val posY = rect.top + (rect.bottom / 2)
+        imgView.x = posX.toFloat()
+        imgView.y = posY.toFloat()
         this.addView(imgView)
         invalidate()
     }
@@ -210,52 +212,69 @@ class MemeEditView @JvmOverloads constructor(
                     )
                 }
             }
+            MotionEvent.ACTION_UP -> {
+                performClick()
+            }
         }
         return true
     }
+
+    var xFirst = 0F
+    var yFirst = 0F
 
     override fun onInterceptTouchEvent(ev: MotionEvent): Boolean {
         // Let the ScaleGestureDetector inspect all events.
         when (ev.action) {
             MotionEvent.ACTION_DOWN -> {
+                if (imageViewAttention != null) {
+                    xFirst = ev.x
+                    yFirst = ev.y
+                }
                 isMoveIcon = false
                 actionUserMoveImage?.invoke(true)
             }
             MotionEvent.ACTION_MOVE -> {
                 actionUserMoveImage?.invoke(true)
                 if (imageViewAttention != null) {
-                    imageViewAttention!!.x = ev.x
-                    imageViewAttention!!.y = ev.y
-                    isMoveIcon = true
+                    moveImgView(imageViewAttention!!, ev.x, ev.y)
                 } else {
                     notifyUserSelectEditView?.invoke(Unit)
                 }
             }
             MotionEvent.ACTION_UP -> {
-                if (imageViewAttention != null && isMoveIcon) {
-                    val icon = imageViewAttention!!.tag.toString().toInt()
-                    val locationArray = IntArray(2)
-                    imageViewAttention!!.getLocationOnScreen(locationArray)
-                    val rectOutLocation = Rect(
-                        locationArray[0],
-                        locationArray[1] - collapsingToolbarLayoutHeight,
-                        locationArray[0] + imageViewAttention!!.width,
-                        (locationArray[1] + imageViewAttention!!.height) - collapsingToolbarLayoutHeight
-                    )
-                    memeIcons.firstOrNull { it.meme == icon }?.let {
-                        didIconAddIntoView?.invoke(it, rectOutLocation)
-                    }
-                }
-                imageViewAttention = null
+                xFirst = 0F
+                yFirst = 0F
                 actionUserMoveImage?.invoke(false)
                 performClick()
-                isMoveIcon = false
+
             }
             MotionEvent.ACTION_POINTER_UP -> {
                 actionUserMoveImage?.invoke(false)
             }
         }
         return false
+    }
+
+    private fun moveImgView(imageViewAttention: ImageView, newX: Float, newY: Float) {
+        if (xFirst == 0F || yFirst == 0F) {
+            return
+        }
+        val xImg = imageViewAttention.x
+        val yImg = imageViewAttention.y
+        imageViewAttention.x = if (newX > xFirst) {
+            xImg + (newX - xFirst)
+        } else {
+            xImg - (xFirst - newX)
+        }
+
+        imageViewAttention.y = if (newY > yFirst) {
+            yImg + (newY - yFirst)
+        } else {
+            yImg - (yFirst - newY)
+        }
+        xFirst = newX
+        yFirst = newY
+        println("newPosition: x: ${imageViewAttention.x}, y: ${imageViewAttention.y}")
     }
 
     override fun performClick(): Boolean {
