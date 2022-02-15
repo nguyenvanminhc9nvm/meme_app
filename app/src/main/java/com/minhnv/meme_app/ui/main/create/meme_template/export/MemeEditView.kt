@@ -4,7 +4,6 @@ import android.content.Context
 import android.graphics.Rect
 import android.util.AttributeSet
 import android.util.DisplayMetrics
-import android.util.Log
 import android.util.TypedValue
 import android.view.MotionEvent
 import android.widget.ImageView
@@ -170,11 +169,12 @@ class MemeEditView @JvmOverloads constructor(
         }
         val imgView = ImageView(context)
         imgView.setImageResource(icon)
+        val x = rect.left.toFloat()
+        val y = rect.top.toFloat()
         imgView.setOnClickListener {
             imageViewAttention = it as ImageView
-            imageViewAttention!!.background =
-                ResourcesCompat.getDrawable(resources, R.drawable.ic_pin_image, null)
             imageViewAttention!!.setPadding(20)
+            addIconIntoImg(imageViewAttention!!)
         }
         imgView.tag = icon
         // Measure the view at the exact dimensions (otherwise the text won't center correctly)
@@ -182,49 +182,20 @@ class MemeEditView @JvmOverloads constructor(
         val heightSpec = MeasureSpec.makeMeasureSpec(rect.height(), MeasureSpec.EXACTLY)
         val params = LayoutParams(widthSpec, heightSpec)
         imgView.layoutParams = params
-        val posX = rect.left + (rect.right / 2)
-        val posY = rect.top + (rect.bottom / 2)
-        imgView.x = posX.toFloat()
-        imgView.y = posY.toFloat()
+        imgView.x = x
+        imgView.y = y
         this.addView(imgView)
         invalidate()
     }
 
     private var isMoveIcon = false
 
-    override fun onTouchEvent(ev: MotionEvent): Boolean {
-        when (ev.action) {
-            MotionEvent.ACTION_MOVE -> {
-                if (imageViewAttention != null) {
-                    val locationArray = IntArray(2)
-                    imageViewAttention!!.getLocationOnScreen(locationArray)
-                    val left = locationArray[0]
-                    val top = locationArray[1] - collapsingToolbarLayoutHeight
-                    val right = locationArray[0] + imageViewAttention!!.width
-                    val bottom =
-                        (locationArray[1] + imageViewAttention!!.height) - collapsingToolbarLayoutHeight
-
-                    Log.d(
-                        "#Location", "onTouchEvent: " +
-                                " x: ${ev.x}, y: ${ev.y}" +
-                                "old: left: $left, top: $top right: $right, bottom: $bottom " +
-                                "new: left: "
-                    )
-                }
-            }
-            MotionEvent.ACTION_UP -> {
-                performClick()
-            }
-        }
-        return true
-    }
-
     var xFirst = 0F
     var yFirst = 0F
 
     override fun onInterceptTouchEvent(ev: MotionEvent): Boolean {
         // Let the ScaleGestureDetector inspect all events.
-        when (ev.action) {
+        when (ev.actionMasked) {
             MotionEvent.ACTION_DOWN -> {
                 if (imageViewAttention != null) {
                     xFirst = ev.x
@@ -235,21 +206,35 @@ class MemeEditView @JvmOverloads constructor(
             }
             MotionEvent.ACTION_MOVE -> {
                 actionUserMoveImage?.invoke(true)
-                if (imageViewAttention != null) {
-                    moveImgView(imageViewAttention!!, ev.x, ev.y)
-                } else {
-                    notifyUserSelectEditView?.invoke(Unit)
+                when {
+                    imageViewAttention != null -> {
+                        moveImgView(imageViewAttention!!, ev.x, ev.y)
+                        isMoveIcon = true
+                    }
+                    else -> {
+                        notifyUserSelectEditView?.invoke(Unit)
+                    }
                 }
             }
             MotionEvent.ACTION_UP -> {
+                if (imageViewAttention != null && isMoveIcon) {
+                    val icon = imageViewAttention!!.tag.toString().toInt()
+                    val left = imageViewAttention!!.x
+                    val top = imageViewAttention!!.y
+                    val right = left + imageViewAttention!!.width
+                    val bottom = top + imageViewAttention!!.height
+                    val rect = Rect(left.toInt(), top.toInt(), right.toInt(), bottom.toInt())
+                    memeIcons.firstOrNull { it.meme == icon }?.let {
+                        removeMarkView()
+                        didIconAddIntoView?.invoke(it, rect)
+                    }
+                }
+                imageViewAttention = null
+                isMoveIcon = false
                 xFirst = 0F
                 yFirst = 0F
                 actionUserMoveImage?.invoke(false)
                 performClick()
-
-            }
-            MotionEvent.ACTION_POINTER_UP -> {
-                actionUserMoveImage?.invoke(false)
             }
         }
         return false
@@ -272,12 +257,49 @@ class MemeEditView @JvmOverloads constructor(
         } else {
             yImg - (yFirst - newY)
         }
+        addIconIntoImg(imageViewAttention)
         xFirst = newX
         yFirst = newY
-        println("newPosition: x: ${imageViewAttention.x}, y: ${imageViewAttention.y}")
     }
 
     override fun performClick(): Boolean {
         return super.performClick()
+    }
+
+    private val blueMarkView = BlueMarkView(context)
+    private val blueMarkView1 = BlueMarkView(context)
+    private val blueMarkView2 = BlueMarkView(context)
+    private val blueMarkView3 = BlueMarkView(context)
+
+    private fun addIconIntoImg(imageView: ImageView) {
+        val firstLeft = imageView.x
+        val firstTop = imageView.y
+        val firstRight = imageView.x + imageView.width
+        val firstBottom = imageView.y + imageView.bottom
+        blueMarkView.cx = firstLeft.toInt()
+        blueMarkView.cy = firstTop.toInt()
+
+        blueMarkView1.cx = firstRight.toInt()
+        blueMarkView1.cy = firstTop.toInt()
+
+        blueMarkView2.cx = firstLeft.toInt()
+        blueMarkView2.cy = firstBottom.toInt()
+
+        blueMarkView3.cx = firstRight.toInt()
+        blueMarkView3.cy = firstBottom.toInt()
+
+        removeMarkView()
+
+        this.addView(blueMarkView)
+        this.addView(blueMarkView1)
+        this.addView(blueMarkView2)
+        this.addView(blueMarkView3)
+    }
+
+    private fun removeMarkView() {
+        removeView(blueMarkView)
+        removeView(blueMarkView1)
+        removeView(blueMarkView2)
+        removeView(blueMarkView3)
     }
 }
