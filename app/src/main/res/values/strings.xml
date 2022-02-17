@@ -42,7 +42,7 @@
     <string name="select_image_to_move">Picker an MemeIcon to Move</string>
     <string name="select_text_to_edit">Picker an Text to edit</string>
     <string name="title">Title</string>
-    <string name="description">Description</string>
+    <string name="description">Geometric sans serif typefaces have been a popular design tool ever since these actors took to the world’s stage. Poppins is one of the new comers to this long tradition. With support for the Devanagari and Latin writing systems, it is an internationalist take on the genre.</string>
     <string name="loading">Loading…</string>
     <string name="align">Align</string>
     <string name="color">Color</string>
@@ -51,4 +51,13 @@
 
     //deep
     <string name="deep">Deep</string>
+
+    //home
+    <string name="section">Section</string>
+    <string name="sort">Sort</string>
+    <string name="window">Window</string>
+    <string name="search">Search</string>
+    <string name="text_form_image">Text form Image</string>
+    <string name="no_internet">Network disconnect? try again</string>
+    <string name="retry">retry</string>
 </resources>

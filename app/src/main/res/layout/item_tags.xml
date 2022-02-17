@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/_70sdp"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/_1sdp"
+    android:paddingHorizontal="@dimen/_5sdp"
+    android:layout_marginStart="@dimen/_5sdp"
+    android:layout_marginBottom="@dimen/_5sdp"
+    android:background="@drawable/ic_button_stroke">
+
+    <TextView
+        android:id="@+id/tvNameTags"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/title"
+        android:textAlignment="center"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:textSize="@dimen/_12sdp"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

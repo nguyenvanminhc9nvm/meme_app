@@ -13,4 +13,10 @@ object Constants {
     const val ARGUMENT_SERIALIZABLE = "ARGUMENT_SERIALIZABLE"
 
     val ID_GENERATOR = Random.nextInt()
+
+    const val CLIENT_ID = "1ebeac3db16d689"
+    const val CLIENT_SECRET = "e01223af38cf90d79a38bc45c51c57e5a9614db0"
+    const val REFRESH_TOKEN = "8d239c51a064ce7d976ede51a5919a0fdf35a48b"
+
+    const val Bearer  = "Bearer "
 }

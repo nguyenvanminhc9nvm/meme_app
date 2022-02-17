@@ -12,19 +12,27 @@
         <entry key="app/src/main/res/drawable/ic_align_left.xml" value="0.24802631578947368" />
         <entry key="app/src/main/res/drawable/ic_align_right.xml" value="0.24802631578947368" />
         <entry key="app/src/main/res/drawable/ic_align_top.xml" value="0.39692307692307693" />
+        <entry key="app/src/main/res/drawable/ic_auto_scroll.xml" value="0.33076923076923076" />
         <entry key="app/src/main/res/drawable/ic_background_corner.xml" value="0.24802631578947368" />
         <entry key="app/src/main/res/drawable/ic_background_meme_icon.xml" value="0.24802631578947368" />
         <entry key="app/src/main/res/drawable/ic_background_preview.xml" value="0.1444078947368421" />
+        <entry key="app/src/main/res/drawable/ic_blur.xml" value="0.33076923076923076" />
+        <entry key="app/src/main/res/drawable/ic_btn_up.xml" value="0.33076923076923076" />
         <entry key="app/src/main/res/drawable/ic_button_background.xml" value="0.24802631578947368" />
         <entry key="app/src/main/res/drawable/ic_button_background_circle.xml" value="0.24802631578947368" />
         <entry key="app/src/main/res/drawable/ic_button_background_circle_border.xml" value="0.24802631578947368" />
         <entry key="app/src/main/res/drawable/ic_button_background_circle_bordẻ.xml" value="0.24802631578947368" />
         <entry key="app/src/main/res/drawable/ic_button_background_corner_5.xml" value="0.24802631578947368" />
+        <entry key="app/src/main/res/drawable/ic_button_down.xml" value="0.33076923076923076" />
+        <entry key="app/src/main/res/drawable/ic_button_see.xml" value="0.33076923076923076" />
+        <entry key="app/src/main/res/drawable/ic_button_stroke.xml" value="0.33076923076923076" />
+        <entry key="app/src/main/res/drawable/ic_button_up.xml" value="0.33076923076923076" />
         <entry key="app/src/main/res/drawable/ic_change_size.xml" value="0.24802631578947368" />
         <entry key="app/src/main/res/drawable/ic_create.xml" value="0.3927083333333333" />
         <entry key="app/src/main/res/drawable/ic_edit_meme.xml" value="0.24802631578947368" />
         <entry key="app/src/main/res/drawable/ic_edittext.xml" value="0.24802631578947368" />
         <entry key="app/src/main/res/drawable/ic_edittext_meme_template.xml" value="0.24802631578947368" />
+        <entry key="app/src/main/res/drawable/ic_expanded_sort.xml" value="0.33076923076923076" />
         <entry key="app/src/main/res/drawable/ic_gallery.xml" value="0.24802631578947368" />
         <entry key="app/src/main/res/drawable/ic_home.xml" value="0.3927083333333333" />
         <entry key="app/src/main/res/drawable/ic_logo.xml" value="0.24802631578947368" />
@@ -66,6 +74,9 @@
         <entry key="app/src/main/res/drawable/ic_pin_image.xml" value="0.24802631578947368" />
         <entry key="app/src/main/res/drawable/ic_place_holder.xml" value="0.3265822784810127" />
         <entry key="app/src/main/res/drawable/ic_profiles.xml" value="0.3927083333333333" />
+        <entry key="app/src/main/res/drawable/ic_search.xml" value="0.33076923076923076" />
+        <entry key="app/src/main/res/drawable/ic_section.xml" value="0.33076923076923076" />
+        <entry key="app/src/main/res/drawable/ic_sort.xml" value="0.33076923076923076" />
         <entry key="app/src/main/res/drawable/ic_space_5.xml" value="0.39692307692307693" />
         <entry key="app/src/main/res/drawable/ic_spacing_text_15.xml" value="0.39692307692307693" />
         <entry key="app/src/main/res/drawable/ic_spacing_text_2.xml" value="0.39692307692307693" />
@@ -79,27 +90,35 @@
         <entry key="app/src/main/res/drawable/ic_text_bound_stroke.xml" value="0.24802631578947368" />
         <entry key="app/src/main/res/drawable/ic_text_bound_text_only.xml" value="0.24802631578947368" />
         <entry key="app/src/main/res/drawable/ic_text_selection.xml" value="0.24802631578947368" />
+        <entry key="app/src/main/res/drawable/ic_translate.xml" value="0.33076923076923076" />
         <entry key="app/src/main/res/drawable/ic_video_to_gif.xml" value="0.24802631578947368" />
+        <entry key="app/src/main/res/drawable/ic_window.xml" value="0.33076923076923076" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_splash.xml" value="0.2292763157894737" />
         <entry key="app/src/main/res/layout/create_fragment.xml" value="0.25" />
         <entry key="app/src/main/res/layout/dialog_progress.xml" value="0.38697916666666665" />
         <entry key="app/src/main/res/layout/dialog_progress_bar.xml" value="0.23782894736842106" />
         <entry key="app/src/main/res/layout/dialog_select_meme_icon.xml" value="0.23782894736842106" />
+        <entry key="app/src/main/res/layout/dialog_sort_tool.xml" value="0.3175213675213675" />
         <entry key="app/src/main/res/layout/donation_fragment.xml" value="0.23782894736842106" />
         <entry key="app/src/main/res/layout/export_meme_fragment.xml" value="0.23782894736842106" />
         <entry key="app/src/main/res/layout/export_video_fragment.xml" value="0.23782894736842106" />
         <entry key="app/src/main/res/layout/gallery_selected_fragment.xml" value="0.23782894736842106" />
-        <entry key="app/src/main/res/layout/home_fragment.xml" value="0.36302083333333335" />
+        <entry key="app/src/main/res/layout/home_fragment.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/item_community.xml" value="0.3175213675213675" />
+        <entry key="app/src/main/res/layout/item_images_adapter.xml" value="0.3175213675213675" />
         <entry key="app/src/main/res/layout/item_meme_data.xml" value="0.3135021097046414" />
         <entry key="app/src/main/res/layout/item_meme_icon.xml" value="0.23782894736842106" />
         <entry key="app/src/main/res/layout/item_meme_template.xml" value="0.23782894736842106" />
+        <entry key="app/src/main/res/layout/item_network_state.xml" value="0.3175213675213675" />
+        <entry key="app/src/main/res/layout/item_tags.xml" value="0.3175213675213675" />
         <entry key="app/src/main/res/layout/login_fragment.xml" value="0.38697916666666665" />
         <entry key="app/src/main/res/layout/meme_template_list_fragment.xml" value="0.25" />
         <entry key="app/src/main/res/layout/profile_fragment.xml" value="0.25" />
         <entry key="app/src/main/res/layout/publish_meme_fragment.xml" value="0.23782894736842106" />
         <entry key="app/src/main/res/layout/video_to_gif_fragment.xml" value="0.23782894736842106" />
         <entry key="app/src/main/res/menu/menu_app.xml" value="0.3765625" />
+        <entry key="app/src/main/res/menu/menu_sort.xml" value="0.3175213675213675" />
       </map>
     </option>
   </component>

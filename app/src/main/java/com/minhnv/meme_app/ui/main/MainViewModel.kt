@@ -11,4 +11,17 @@ class MainViewModel @Inject constructor(
     private val dataManager: AppDataManager,
     private val trackingErrorHelper: TrackingError
 ) : ViewModel() {
+    init {
+//        viewModelScope.launch(trackingErrorHelper.coroutineExceptionHandler()) {
+//            val accessTokenRequest = AccessTokenRequest(
+//                Constants.REFRESH_TOKEN,
+//                Constants.CLIENT_ID,
+//                Constants.CLIENT_SECRET,
+//                "refresh_token"
+//            )
+//            dataManager.doRefreshToken(accessTokenRequest).accessToken?.let {
+//                dataManager.doSaveToken(it)
+//            }
+//        }
+    }
 }

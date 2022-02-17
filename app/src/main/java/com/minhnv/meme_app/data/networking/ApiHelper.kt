@@ -1,14 +1,23 @@
 package com.minhnv.meme_app.data.networking
 
 import com.minhnv.meme_app.data.networking.model.local.MemeTemplate
-import com.minhnv.meme_app.data.networking.model.request.LoginRequest
-import com.minhnv.meme_app.data.networking.model.response.LoginResponse
+import com.minhnv.meme_app.data.networking.model.request.AccessTokenRequest
+import com.minhnv.meme_app.data.networking.model.response.AccessTokenResponse
+import com.minhnv.meme_app.data.networking.model.response.CommunityResponse
 import com.minhnv.meme_app.ui.main.create.meme_template.export.MemeIcon
 
 interface ApiHelper {
-    suspend fun doLogin(loginRequest: LoginRequest): LoginResponse
-
     suspend fun doFetchListMeme(): MutableList<MemeTemplate>
 
     suspend fun doFetchListMemeIcon(): MutableList<MemeIcon>
+
+    suspend fun doRefreshToken(accessTokenRequest: AccessTokenRequest): AccessTokenResponse
+
+    suspend fun doGetListCommunity(
+        section: String,
+        sort: String,
+        page: Int,
+        window: String,
+        token: String
+    ): CommunityResponse
 }

@@ -3,8 +3,8 @@ package com.minhnv.meme_app.data
 import com.minhnv.meme_app.data.data_store.DataStoreHelper
 import com.minhnv.meme_app.data.database.DbHelper
 import com.minhnv.meme_app.data.networking.ApiHelper
-import com.minhnv.meme_app.data.networking.model.request.LoginRequest
-import com.minhnv.meme_app.data.networking.model.response.LoginResponse
+import com.minhnv.meme_app.data.networking.model.request.AccessTokenRequest
+import com.minhnv.meme_app.utils.Constants
 import javax.inject.Inject
 
 class AppDataManager @Inject constructor(
@@ -12,13 +12,6 @@ class AppDataManager @Inject constructor(
     private val dataStoreHelper: DataStoreHelper,
     private val dbHelper: DbHelper
 ) {
-    suspend fun doLogin(loginRequest: LoginRequest): LoginResponse {
-        return apiHelper.doLogin(loginRequest)
-    }
-
-    suspend fun doSaveToken(token: String) {
-        return dataStoreHelper.saveToken(token)
-    }
 
     suspend fun themeSystem() = dataStoreHelper.themeSystem()
 
@@ -29,4 +22,18 @@ class AppDataManager @Inject constructor(
     suspend fun doGetListMemeTemplates() = apiHelper.doFetchListMeme()
 
     suspend fun doGetListMemeIcon() = apiHelper.doFetchListMemeIcon()
+
+    suspend fun doRefreshToken(accessTokenRequest: AccessTokenRequest) =
+        apiHelper.doRefreshToken(accessTokenRequest)
+
+    suspend fun doSaveToken(accessToken: String) {
+        dataStoreHelper.saveToken(accessToken)
+    }
+
+    suspend fun doGetListCommunity(
+        section: String,
+        sort: String,
+        page: Int,
+        window: String
+    ) = apiHelper.doGetListCommunity(section, sort, page, window, Constants.Bearer + dataStoreHelper.token())
 }

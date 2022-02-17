@@ -1,0 +1,32 @@
+package com.minhnv.meme_app.data.networking.model.response
+
+import com.google.gson.annotations.SerializedName
+
+data class Community(
+    @SerializedName("id")
+    val id: String?,
+    @SerializedName("title")
+    val title: String?,
+    @SerializedName("description")
+    val description: String?,
+    @SerializedName("views")
+    val views: Double?,
+    @SerializedName("ups")
+    val ups: Double?,
+    @SerializedName("downs")
+    val downs: Double?,
+    @SerializedName("tags")
+    val tags: MutableList<Tags>?,
+    @SerializedName("images")
+    val images: MutableList<Images>?
+)
+
+data class Tags(
+    @SerializedName("name")
+    val name: String?
+)
+
+data class Images(
+    @SerializedName("link")
+    val link: String?
+)

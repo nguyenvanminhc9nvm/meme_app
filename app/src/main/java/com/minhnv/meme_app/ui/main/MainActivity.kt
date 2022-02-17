@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
+import androidx.activity.viewModels
 import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.LiveData
 import androidx.navigation.NavController
@@ -21,16 +22,14 @@ import com.minhnv.meme_app.utils.Constants
 import com.minhnv.meme_app.utils.setupWithNavController
 import dagger.hilt.android.AndroidEntryPoint
 
-
-
-
-
 @AndroidEntryPoint
 class MainActivity : BaseActivity<ActivityMainBinding>(), INavigatorActivity {
     private var currentNavController: LiveData<NavController>? = null
 
-    override fun setup() {
+    private val viewModel by viewModels<MainViewModel>()
 
+    override fun setup() {
+        viewModel
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
