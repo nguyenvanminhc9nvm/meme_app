@@ -19,4 +19,7 @@ object Constants {
     const val REFRESH_TOKEN = "8d239c51a064ce7d976ede51a5919a0fdf35a48b"
 
     const val Bearer  = "Bearer "
+
+    const val RAPID_API_KEY = "imgur-apiv3.p.rapidapi.com"
+    const val RAPID_API_HOST = "28b98bda83msh5232ceba1c1ec88p1f142fjsn8bd3870ca3b3"
 }

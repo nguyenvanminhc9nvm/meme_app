@@ -125,4 +125,13 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), INavigatorActivity {
         //return result title bar height
         return display.height - v.bottom + rect.top
     }
+
+    override fun visibleToolbar(visible: Boolean) {
+        val visibility = if (visible) {
+            View.VISIBLE
+        } else {
+            View.GONE
+        }
+        binding.collapsingToolbar.visibility = visibility
+    }
 }

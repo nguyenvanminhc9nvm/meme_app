@@ -45,9 +45,12 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
         return requireNotNull(_binding).root
     }
 
+    open var showToolbar: Boolean = true
+
     override fun onResume() {
         super.onResume()
         mINavigatorActivity.setTitleToolbar(title)
+        mINavigatorActivity.visibleToolbar(showToolbar)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

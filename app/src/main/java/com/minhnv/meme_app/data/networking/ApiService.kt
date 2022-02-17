@@ -20,6 +20,6 @@ interface ApiService {
         @Path("sort") sort: String,
         @Path("page") page: Int,
         @Path("window") window: String,
-        @Header("Authorization") token: String
+        @Header("authorization") token: String
     ): CommunityResponse
 }

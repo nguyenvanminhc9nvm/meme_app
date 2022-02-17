@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 class AppApiHelper @Inject constructor(
     private val apiService: ApiService
-): ApiHelper {
+) : ApiHelper {
     override suspend fun doFetchListMeme(): MutableList<MemeTemplate> {
         return memeTemplates
     }
@@ -35,6 +35,12 @@ class AppApiHelper @Inject constructor(
         window: String,
         token: String
     ): CommunityResponse = withContext(Dispatchers.IO) {
-        apiService.doGetListCommunity(section, sort, page, window, token)
+        apiService.doGetListCommunity(
+            section,
+            sort,
+            page,
+            window,
+            token
+        )
     }
 }

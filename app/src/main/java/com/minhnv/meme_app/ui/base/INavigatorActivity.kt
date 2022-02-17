@@ -10,4 +10,6 @@ interface INavigatorActivity {
     fun setTitleToolbar(title: Int)
 
     fun reloadThemes(themes: Int)
+
+    fun visibleToolbar(visible: Boolean)
 }

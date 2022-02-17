@@ -8,7 +8,7 @@
     android:background="@color/white"
     android:layout_marginTop="@dimen/_8sdp"
     android:paddingVertical="@dimen/_8sdp"
-    android:paddingHorizontal="@dimen/_4sdp"
+    android:paddingHorizontal="@dimen/_10sdp"
     android:orientation="vertical">
 
     <androidx.recyclerview.widget.RecyclerView

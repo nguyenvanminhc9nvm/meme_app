@@ -10,7 +10,10 @@ import com.minhnv.meme_app.R
 import com.minhnv.meme_app.databinding.HomeFragmentBinding
 import com.minhnv.meme_app.ui.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 @AndroidEntryPoint
 class HomeFragment : BaseFragment<HomeFragmentBinding>() {
@@ -21,6 +24,8 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>() {
     private val networkDisconnectAdapter = NetworkDisconnectAdapter()
     private lateinit var linearLayoutManager: LinearLayoutManager
     private lateinit var communityAdapter: CommunityAdapter
+
+    override var showToolbar: Boolean = false
 
     override fun setup() {
         linearLayoutManager = LinearLayoutManager(mActivity)
@@ -41,7 +46,10 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>() {
         binding.swipeCommunities.setOnRefreshListener {
             communityAdapter.refresh()
         }
-        lifecycleScope.launchWhenStarted {
+        lifecycleScope.launch(trackingErrorHelper.coroutineExceptionHandler()) {
+            withContext(Dispatchers.Main) {
+                viewModel.doGetAccessToken()
+            }
             viewModel.communities.collect {
                 communityAdapter.submitData(it)
             }

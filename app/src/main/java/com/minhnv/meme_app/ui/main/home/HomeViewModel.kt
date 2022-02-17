@@ -6,6 +6,8 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.cachedIn
 import com.minhnv.meme_app.data.AppDataManager
+import com.minhnv.meme_app.data.networking.model.request.AccessTokenRequest
+import com.minhnv.meme_app.utils.Constants
 import com.minhnv.meme_app.utils.TrackingError
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -14,8 +16,20 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val dataManager: AppDataManager,
     private val trackingErrorHelper: TrackingError
-): ViewModel() {
+) : ViewModel() {
     val communities = Pager(PagingConfig(10)) {
         CommunityDataSource("hot", "viral", "day", dataManager)
     }.flow.cachedIn(viewModelScope)
+
+    suspend fun doGetAccessToken() {
+        val accessTokenRequest = AccessTokenRequest(
+            Constants.REFRESH_TOKEN,
+            Constants.CLIENT_ID,
+            Constants.CLIENT_SECRET,
+            "refresh_token"
+        )
+        dataManager.doRefreshToken(accessTokenRequest).accessToken?.let {
+            dataManager.doSaveToken(it)
+        }
+    }
 }
