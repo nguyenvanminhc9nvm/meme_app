@@ -36,4 +36,8 @@ class AppDataManager @Inject constructor(
         page: Int,
         window: String
     ) = apiHelper.doGetListCommunity(section, sort, page, window, Constants.Bearer + dataStoreHelper.token())
+
+    suspend fun checkTokenIsNotEmpty() : Boolean {
+        return dataStoreHelper.token().isNotEmpty()
+    }
 }

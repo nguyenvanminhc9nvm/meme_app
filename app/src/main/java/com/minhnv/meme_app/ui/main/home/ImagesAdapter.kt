@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.google.android.gms.vision.Frame
@@ -18,6 +19,8 @@ import com.google.mlkit.nl.translate.Translation
 import com.google.mlkit.nl.translate.TranslatorOptions
 import com.minhnv.meme_app.R
 import com.minhnv.meme_app.data.networking.model.response.Images
+import com.minhnv.meme_app.data.networking.model.response.TypeImages.IMAGES_GIF
+import com.minhnv.meme_app.data.networking.model.response.TypeImages.VIDEO_MP4
 import com.minhnv.meme_app.databinding.ItemImagesAdapterBinding
 import java.util.*
 
@@ -46,12 +49,51 @@ class ImagesAdapter(
     inner class ImagesViewHolder(
         private val binding: ItemImagesAdapterBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(images: Images) {
 
-            Glide.with(context).load(images.link).into(binding.imgImages)
+        private var hasVideo = false
+
+        fun didPauseVideo() {
+            if (hasVideo) {
+                binding.vvPreview.pause()
+            }
+        }
+
+        fun didResumeVideo() {
+            if (hasVideo) {
+                binding.vvPreview.start()
+            }
+        }
+
+        fun bind(images: Images) {
+            val glideContext = Glide.with(context)
+            when (images.type) {
+                IMAGES_GIF -> {
+                    binding.imgImages.visibility = View.VISIBLE
+                    binding.constraintVideo.visibility = View.GONE
+                    binding.btnTranslate.visibility = View.VISIBLE
+                    glideContext.asGif().load(images.link).into(binding.imgImages)
+                }
+                VIDEO_MP4 -> {
+                    binding.imgImages.visibility = View.GONE
+                    binding.constraintVideo.visibility = View.VISIBLE
+                    binding.btnTranslate.visibility = View.GONE
+                    binding.vvPreview.setVideoPath(images.link)
+                    binding.vvPreview.start()
+                    hasVideo = true
+                }
+                else -> {
+                    binding.imgImages.visibility = View.VISIBLE
+                    binding.constraintVideo.visibility = View.GONE
+                    binding.btnTranslate.visibility = View.VISIBLE
+                    glideContext.load(images.link).into(binding.imgImages)
+                }
+            }
+
+            glideContext.load(images.link).apply(RequestOptions().override(1000, 1000))
+                .into(binding.imgImages)
             var bitmap: Bitmap? = null
 
-            Glide.with(context).asBitmap().load(images.link)
+            glideContext.asBitmap().load(images.link)
                 .into(object : CustomTarget<Bitmap>() {
                     override fun onResourceReady(
                         resource: Bitmap,

@@ -5,7 +5,6 @@
     android:id="@+id/llCommunity"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
     android:layout_marginTop="@dimen/_8sdp"
     android:paddingVertical="@dimen/_8sdp"
     android:paddingHorizontal="@dimen/_10sdp"

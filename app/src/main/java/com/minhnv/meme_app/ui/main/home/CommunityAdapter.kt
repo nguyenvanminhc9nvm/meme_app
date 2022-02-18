@@ -33,14 +33,19 @@ class CommunityAdapter(
         private val binding: ItemCommunityBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
+        private val layoutManagerImages = LinearLayoutManager(
+            context,
+            LinearLayoutManager.HORIZONTAL,
+            false
+        )
+
         fun bind(community: Community) {
             community.images?.let {
-                val imgAdapter = ImagesAdapter(context, community.images)
+                val imagesAdapter = ImagesAdapter(context, community.images)
                 binding.rycImage.apply {
-                    layoutManager =
-                        LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                    layoutManager = layoutManagerImages
                     setHasFixedSize(true)
-                    adapter = imgAdapter
+                    adapter = imagesAdapter
                 }
             }
             community.tags?.let {
@@ -67,6 +72,20 @@ class CommunityAdapter(
             binding.btnUp.setText(community.ups?.toInt().toString())
             binding.btnDown.setText(community.downs?.toInt().toString())
             binding.btnSee.setText(community.views?.toInt().toString())
+        }
+
+        fun didPauseVideo() {
+            val videoViewHolder = binding.rycImage.findViewHolderForLayoutPosition(
+                0
+            ) as? ImagesAdapter.ImagesViewHolder
+            videoViewHolder?.didPauseVideo()
+        }
+
+        fun didResumeVideo() {
+            val videoViewHolder = binding.rycImage.findViewHolderForLayoutPosition(
+                0
+            ) as? ImagesAdapter.ImagesViewHolder
+            videoViewHolder?.didResumeVideo()
         }
     }
 

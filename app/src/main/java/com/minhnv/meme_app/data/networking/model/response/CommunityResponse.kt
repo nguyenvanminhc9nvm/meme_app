@@ -28,5 +28,14 @@ data class Tags(
 
 data class Images(
     @SerializedName("link")
-    val link: String?
+    val link: String?,
+    @SerializedName("type")
+    val type: String?
 )
+
+object TypeImages {
+    const val IMAGE_JPEG = "image/jpeg"
+    const val IMAGES_PNG = "image/png"
+    const val IMAGES_GIF = "image/gif"
+    const val VIDEO_MP4 = "video/mp4"
+}

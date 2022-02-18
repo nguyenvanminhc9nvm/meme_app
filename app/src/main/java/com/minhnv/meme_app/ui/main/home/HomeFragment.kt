@@ -6,6 +6,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.minhnv.meme_app.R
 import com.minhnv.meme_app.databinding.HomeFragmentBinding
 import com.minhnv.meme_app.ui.base.BaseFragment
@@ -59,6 +60,33 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>() {
         }
         binding.fabAutoScroll.setOnClickListener {
 
+        }
+
+        binding.rycCommunity.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    doResumeOrPauseVideo(true)
+                } else {
+                    doResumeOrPauseVideo(false)
+                }
+            }
+        })
+    }
+
+    private fun doResumeOrPauseVideo(isResumed: Boolean) {
+        val firstIndex = linearLayoutManager.findFirstVisibleItemPosition()
+        val lastIndex = linearLayoutManager.findLastVisibleItemPosition()
+        for (i in firstIndex until lastIndex) {
+            val viewHolder =
+                binding.rycCommunity.findViewHolderForLayoutPosition(
+                    i
+                ) as CommunityAdapter.CommunitiesViewHolder
+            if (isResumed) {
+                viewHolder.didResumeVideo()
+            } else {
+                viewHolder.didPauseVideo()
+            }
         }
     }
 

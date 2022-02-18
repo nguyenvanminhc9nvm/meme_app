@@ -22,14 +22,17 @@ class HomeViewModel @Inject constructor(
     }.flow.cachedIn(viewModelScope)
 
     suspend fun doGetAccessToken() {
-        val accessTokenRequest = AccessTokenRequest(
-            Constants.REFRESH_TOKEN,
-            Constants.CLIENT_ID,
-            Constants.CLIENT_SECRET,
-            "refresh_token"
-        )
-        dataManager.doRefreshToken(accessTokenRequest).accessToken?.let {
-            dataManager.doSaveToken(it)
+        val accessTokenNotEmpty = dataManager.checkTokenIsNotEmpty()
+        if (!accessTokenNotEmpty) {
+            val accessTokenRequest = AccessTokenRequest(
+                Constants.REFRESH_TOKEN,
+                Constants.CLIENT_ID,
+                Constants.CLIENT_SECRET,
+                "refresh_token"
+            )
+            dataManager.doRefreshToken(accessTokenRequest).accessToken?.let {
+                dataManager.doSaveToken(it)
+            }
         }
     }
 }
