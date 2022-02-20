@@ -5,21 +5,103 @@
     android:id="@+id/llCommunity"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/_8sdp"
-    android:paddingVertical="@dimen/_8sdp"
-    android:paddingHorizontal="@dimen/_10sdp"
-    android:orientation="vertical">
+    android:layout_marginHorizontal="@dimen/_4sdp"
+    android:layout_marginTop="@dimen/_4sdp"
+    android:background="?attr/colorError"
+    android:orientation="vertical"
+    android:padding="@dimen/_10sdp">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rycImage"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"/>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rycTag"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_8sdp" />
+        android:layout_height="@dimen/_35sdp"
+        android:layout_marginTop="@dimen/_8sdp">
+
+        <LinearLayout
+            android:id="@+id/linearUp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="NestedWeights">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:src="@drawable/ic_button_up"
+                app:tint="?attr/colorPrimary" />
+
+            <TextView
+                android:id="@+id/btnUp"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="@string/sort" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearDown"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="@id/linearUp"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintStart_toEndOf="@id/linearUp"
+            app:layout_constraintTop_toTopOf="@id/linearUp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:src="@drawable/ic_button_down"
+                app:tint="?attr/colorPrimary" />
+
+            <TextView
+                android:id="@+id/btnDown"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="@string/sort" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="@id/linearDown"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintStart_toEndOf="@id/linearDown"
+            app:layout_constraintTop_toTopOf="@id/linearDown">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                app:tint="?attr/colorPrimary"
+                android:src="@drawable/ic_button_see" />
+
+            <TextView
+                android:id="@+id/btnSee"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="@string/sort" />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     <TextView
         android:id="@+id/tvTitle"
@@ -38,35 +120,9 @@
         android:maxLines="3"
         android:text="@string/description" />
 
-    <LinearLayout
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rycTag"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_40sdp"
-        android:layout_marginTop="@dimen/_8sdp">
-
-        <com.minhnv.meme_app.utils.IconButton
-            android:id="@+id/btnUp"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            app:setIcon="@drawable/ic_button_up"
-            app:setText="@string/sort"
-            tools:ignore="NestedWeights" />
-
-        <com.minhnv.meme_app.utils.IconButton
-            android:id="@+id/btnDown"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginHorizontal="@dimen/_8sdp"
-            android:layout_weight="1"
-            app:setIcon="@drawable/ic_button_down"
-            app:setText="@string/sort" />
-
-        <com.minhnv.meme_app.utils.IconButton
-            android:id="@+id/btnSee"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            app:setIcon="@drawable/ic_button_see"
-            app:setText="@string/sort" />
-    </LinearLayout>
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_8sdp" />
 </LinearLayout>

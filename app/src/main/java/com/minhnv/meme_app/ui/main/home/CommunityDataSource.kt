@@ -18,13 +18,16 @@ class CommunityDataSource(
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Community> {
         return try {
-           val currentLoadingPageKey = params.key ?: 1
-           val response = dataManager.doGetListCommunity(section, sort, currentLoadingPageKey, window)
+            val currentLoadingPageKey = params.key ?: 1
+            val response = dataManager.doGetListCommunity(
+                section,
+                sort,
+                currentLoadingPageKey,
+                window
+            )
             val prevKey = if (currentLoadingPageKey == 1) null else currentLoadingPageKey - 1
-            val communities = mutableListOf<Community>()
-            communities.addAll(response.data ?: mutableListOf())
             LoadResult.Page(
-                data = communities,
+                data = response,
                 prevKey = prevKey,
                 nextKey = currentLoadingPageKey.plus(1)
             )

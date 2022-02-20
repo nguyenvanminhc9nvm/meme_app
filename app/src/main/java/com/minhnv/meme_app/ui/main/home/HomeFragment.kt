@@ -11,10 +11,9 @@ import com.minhnv.meme_app.R
 import com.minhnv.meme_app.databinding.HomeFragmentBinding
 import com.minhnv.meme_app.ui.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.flow.flow
 
 @AndroidEntryPoint
 class HomeFragment : BaseFragment<HomeFragmentBinding>() {
@@ -27,6 +26,7 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>() {
     private lateinit var communityAdapter: CommunityAdapter
 
     override var showToolbar: Boolean = false
+    private val job: Job = Job()
 
     override fun setup() {
         linearLayoutManager = LinearLayoutManager(mActivity)
@@ -58,20 +58,58 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>() {
         binding.fabSortTool.setOnClickListener {
             binding.rycCommunity.smoothScrollToPosition(0)
         }
-        binding.fabAutoScroll.setOnClickListener {
+        binding.progressAutoScroll.mMax = 4
 
+        binding.progressAutoScroll.setOnClickListener { view ->
+            CoroutineScope(Dispatchers.Main + job).launch {
+                flow {
+                    var counter: Long = 0
+                    while (true) {
+                        binding.progressAutoScroll.startAnimator(
+                            duration = 1000L,
+                            start = 0,
+                            end = 4,
+                            repeatCount = counter.toInt()
+                            )
+                        delay(1000L)
+                        emit(counter++)
+                    }
+                }.collect {
+                    binding.rycCommunity.smoothScrollBy(0, 1000)
+                    binding.progressAutoScroll.mProgress = it.toInt()
+                }
+            }
         }
 
         binding.rycCommunity.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
-                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    doResumeOrPauseVideo(true)
-                } else {
-                    doResumeOrPauseVideo(false)
+                when (newState) {
+                    RecyclerView.SCROLL_STATE_IDLE -> {
+                        doResumeOrPauseVideo(true)
+                    }
+                    RecyclerView.SCROLL_STATE_DRAGGING -> {
+                        didStopAutoScroll()
+                    }
+                    else -> {
+                        didSaveItemReadByUser()
+                        doResumeOrPauseVideo(false)
+                    }
                 }
             }
         })
+    }
+
+    private fun didStopAutoScroll() {
+        job.cancelChildren()
+        binding.progressAutoScroll.stopAnimator()
+    }
+
+    private fun didSaveItemReadByUser() {
+        val index = linearLayoutManager.findFirstCompletelyVisibleItemPosition()
+        if (index != -1) {
+
+        }
     }
 
     private fun doResumeOrPauseVideo(isResumed: Boolean) {

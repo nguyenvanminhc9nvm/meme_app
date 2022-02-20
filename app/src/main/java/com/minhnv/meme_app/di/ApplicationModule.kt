@@ -68,6 +68,10 @@ class ApplicationModule {
 
     @Provides
     @Singleton
+    fun providerCommunitiesDao(db: AppDatabase) = db.communitiesDao
+
+    @Provides
+    @Singleton
     fun provideApiService(retrofit: Retrofit): ApiService = retrofit.create(ApiService::class.java)
 
     @Provides

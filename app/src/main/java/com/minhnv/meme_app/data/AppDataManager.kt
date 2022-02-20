@@ -2,9 +2,12 @@ package com.minhnv.meme_app.data
 
 import com.minhnv.meme_app.data.data_store.DataStoreHelper
 import com.minhnv.meme_app.data.database.DbHelper
+import com.minhnv.meme_app.data.database.entity.Communities
 import com.minhnv.meme_app.data.networking.ApiHelper
 import com.minhnv.meme_app.data.networking.model.request.AccessTokenRequest
 import com.minhnv.meme_app.utils.Constants
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class AppDataManager @Inject constructor(
@@ -35,9 +38,29 @@ class AppDataManager @Inject constructor(
         sort: String,
         page: Int,
         window: String
-    ) = apiHelper.doGetListCommunity(section, sort, page, window, Constants.Bearer + dataStoreHelper.token())
+    ) = withContext(Dispatchers.IO) {
+        val response = apiHelper.doGetListCommunity(
+            section,
+            sort,
+            page,
+            window,
+            Constants.Bearer + dataStoreHelper.token()
+        )
+        val communitiesResponse = response.data ?: mutableListOf()
+        val communitiesLocal = dbHelper.communities()
+        val communityNonConflictStrategy = communitiesResponse.filter { community ->
+            communitiesLocal.all { it.idString != community.id }
+        }
+        communityNonConflictStrategy
+    }
 
-    suspend fun checkTokenIsNotEmpty() : Boolean {
+    suspend fun checkTokenIsNotEmpty(): Boolean {
         return dataStoreHelper.token().isNotEmpty()
     }
+
+    suspend fun insertCommunities(communities: Communities) {
+        dbHelper.insertCommunities(communities)
+    }
+
+    suspend fun communities() = dbHelper.communities()
 }

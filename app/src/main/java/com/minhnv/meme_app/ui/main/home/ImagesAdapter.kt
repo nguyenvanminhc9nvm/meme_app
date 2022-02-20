@@ -71,7 +71,8 @@ class ImagesAdapter(
                     binding.imgImages.visibility = View.VISIBLE
                     binding.constraintVideo.visibility = View.GONE
                     binding.btnTranslate.visibility = View.VISIBLE
-                    glideContext.asGif().load(images.link).into(binding.imgImages)
+                    glideContext.asGif().load(images.link).placeholder(R.drawable.ic_place_holder)
+                        .into(binding.imgImages)
                 }
                 VIDEO_MP4 -> {
                     binding.imgImages.visibility = View.GONE
@@ -85,7 +86,8 @@ class ImagesAdapter(
                     binding.imgImages.visibility = View.VISIBLE
                     binding.constraintVideo.visibility = View.GONE
                     binding.btnTranslate.visibility = View.VISIBLE
-                    glideContext.load(images.link).into(binding.imgImages)
+                    glideContext.load(images.link).placeholder(R.drawable.ic_place_holder)
+                        .into(binding.imgImages)
                 }
             }
 
@@ -143,7 +145,8 @@ class ImagesAdapter(
                                         .addOnSuccessListener {
                                             englishGermanTranslator.translate(result)
                                                 .addOnSuccessListener {
-                                                    binding.tvResultTranslate.text = it
+                                                    binding.tvResultTranslate.visibility = View.VISIBLE
+                                                    binding.tvResultTranslate.text = it + "\n"
                                                 }.addOnFailureListener {
                                                     binding.tvResultTranslate.text =
                                                         context.getText(R.string.cant_identify_language)

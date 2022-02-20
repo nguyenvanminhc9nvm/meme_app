@@ -2,14 +2,16 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="?attr/colorError"
+    android:orientation="vertical">
 
     <ImageView
         android:id="@+id/imgImages"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@color/black"
         app:layout_constraintDimensionRatio="1:1"
+        android:background="?attr/colorError"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -18,8 +20,6 @@
         android:id="@+id/constraintVideo"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:visibility="gone"
-        android:background="@color/black"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -27,33 +27,37 @@
 
         <VideoView
             android:id="@+id/vvPreview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_gravity="center"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnTranslate"
-        android:layout_width="@dimen/_150sdp"
+        android:layout_width="@dimen/_30sdp"
         android:layout_height="@dimen/_30sdp"
-        android:layout_marginStart="@dimen/_8sdp"
-        android:background="@drawable/ic_translate"
         android:layout_margin="@dimen/_8sdp"
-        app:layout_constraintTop_toBottomOf="@id/imgImages"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        android:background="@drawable/ic_translate"
+        app:layout_constraintBottom_toBottomOf="@id/imgImages"
+        app:layout_constraintEnd_toEndOf="@id/imgImages"
+        app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintStart_toStartOf="@id/imgImages"
+        app:layout_constraintTop_toTopOf="@id/imgImages"
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/tvResultTranslate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="2"
         android:layout_marginTop="@dimen/_8sdp"
         android:textColor="@color/blue_8"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="@+id/btnTranslate"
         app:layout_constraintStart_toStartOf="@+id/btnTranslate"
-        app:layout_constraintTop_toBottomOf="@+id/btnTranslate" />
+        app:layout_constraintTop_toBottomOf="@+id/imgImages" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

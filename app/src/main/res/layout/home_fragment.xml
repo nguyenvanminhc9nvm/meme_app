@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
+    android:background="?attr/colorAccent"
     tools:context=".ui.main.home.HomeFragment">
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -34,18 +35,26 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.85" />
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fabAutoScroll"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:contentDescription="@string/sort"
-                android:src="@drawable/ic_auto_scroll"
+            <com.minhnv.meme_app.utils.CircleProgressBar
+                android:id="@+id/progressAutoScroll"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:cpb_background_color="#66ffffff"
+                app:cpb_end_color="@color/white"
+                app:cpb_shader="radial"
+                app:cpb_show_value="true"
+                app:cpb_text_size="@dimen/_12sdp"
+                app:cpb_text_color="?attr/colorPrimary"
+                app:cpb_start_color="@color/white"
+                app:cpb_stroke_width="1dp"
+                app:cpb_style="solid"
+                app:layout_constraintDimensionRatio="1:1"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/fabSortTool"
                 app:layout_constraintHorizontal_bias="0.95"
                 app:layout_constraintStart_toStartOf="@+id/fabSortTool"
                 app:layout_constraintTop_toBottomOf="@+id/fabSortTool"
-                app:layout_constraintVertical_bias="0.1" />
+                app:layout_constraintVertical_bias="0.1"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

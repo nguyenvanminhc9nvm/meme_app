@@ -6,10 +6,12 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.cachedIn
 import com.minhnv.meme_app.data.AppDataManager
+import com.minhnv.meme_app.data.database.entity.Communities
 import com.minhnv.meme_app.data.networking.model.request.AccessTokenRequest
 import com.minhnv.meme_app.utils.Constants
 import com.minhnv.meme_app.utils.TrackingError
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -33,6 +35,13 @@ class HomeViewModel @Inject constructor(
             dataManager.doRefreshToken(accessTokenRequest).accessToken?.let {
                 dataManager.doSaveToken(it)
             }
+        }
+    }
+
+    fun saveListReadByUser(id: String) {
+        viewModelScope.launch(trackingErrorHelper.coroutineExceptionHandler()) {
+            dataManager.insertCommunities(Communities(null, id))
+            println("#data: ${dataManager.communities()}")
         }
     }
 }

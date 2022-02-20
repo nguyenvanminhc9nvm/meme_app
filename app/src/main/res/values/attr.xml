@@ -4,4 +4,44 @@
         <attr name="setIcon" format="reference" />
         <attr name="setText" format="string" />
     </declare-styleable>
+
+    <declare-styleable name="CircleProgressBar">
+        <attr name="cpb_line_count" format="integer|reference" />
+        <attr name="cpb_line_width" format="dimension|reference" />
+        <attr name="cpb_start_color" format="color|reference" />
+        <attr name="cpb_end_color" format="color|reference" />
+        <attr name="cpb_text_color" format="color|reference" />
+        <attr name="cpb_text_size" format="dimension|reference" />
+        <attr name="cpb_stroke_width" format="dimension|reference" />
+        <attr name="cpb_background_color" format="color|reference" />
+        <attr name="cpb_start_degree" format="float|reference" />
+        <attr name="cpb_drawBackgroundOutsideProgress" format="boolean|reference" />
+        <attr name="cpb_center_src" format="reference" />
+        <attr name="cpb_center_color" format="color|reference" />
+        <attr name="cpb_show_value" format="boolean|reference" />
+        <attr name="cpb_continuable" format="boolean|reference" />
+        <attr name="cpb_stop_anim_type">
+            <enum name="simple_stop" value="0" />
+            <enum name="reverse_stop" value="1" />
+        </attr>
+
+        <attr name="cpb_style">
+            <enum name="line" value="0" />
+            <enum name="solid" value="1" />
+            <enum name="solid_line" value="2" />
+        </attr>
+
+        <attr name="cpb_shader">
+            <enum name="linear" value="0" />
+            <enum name="radial" value="1" />
+            <enum name="sweep" value="2" />
+        </attr>
+
+        <attr name="cpb_stroke_cap">
+            <enum name="butt" value="0" />
+            <enum name="round" value="1" />
+            <enum name="square" value="2" />
+        </attr>
+
+    </declare-styleable>
 </resources>

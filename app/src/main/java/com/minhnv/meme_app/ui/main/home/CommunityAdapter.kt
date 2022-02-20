@@ -7,12 +7,14 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.minhnv.meme_app.data.networking.model.response.Community
 import com.minhnv.meme_app.databinding.ItemCommunityBinding
+
 
 class CommunityAdapter(
     private val context: Context
@@ -40,6 +42,9 @@ class CommunityAdapter(
         )
 
         fun bind(community: Community) {
+            val snapHelper = PagerSnapHelper()
+            binding.rycImage.onFlingListener = null
+            snapHelper.attachToRecyclerView(binding.rycImage)
             community.images?.let {
                 val imagesAdapter = ImagesAdapter(context, community.images)
                 binding.rycImage.apply {
@@ -69,21 +74,23 @@ class CommunityAdapter(
             } ?: kotlin.run {
                 binding.tvDescription.visibility = View.GONE
             }
-            binding.btnUp.setText(community.ups?.toInt().toString())
-            binding.btnDown.setText(community.downs?.toInt().toString())
-            binding.btnSee.setText(community.views?.toInt().toString())
+            binding.btnUp.text = community.ups?.toInt().toString()
+            binding.btnDown.text = community.downs?.toInt().toString()
+            binding.btnSee.text = community.views?.toInt().toString()
         }
 
         fun didPauseVideo() {
+            val firstIndex = layoutManagerImages.findFirstCompletelyVisibleItemPosition()
             val videoViewHolder = binding.rycImage.findViewHolderForLayoutPosition(
-                0
+                firstIndex
             ) as? ImagesAdapter.ImagesViewHolder
             videoViewHolder?.didPauseVideo()
         }
 
         fun didResumeVideo() {
+            val firstIndex = layoutManagerImages.findFirstCompletelyVisibleItemPosition()
             val videoViewHolder = binding.rycImage.findViewHolderForLayoutPosition(
-                0
+                firstIndex
             ) as? ImagesAdapter.ImagesViewHolder
             videoViewHolder?.didResumeVideo()
         }
