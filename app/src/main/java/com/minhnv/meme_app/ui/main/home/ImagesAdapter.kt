@@ -71,45 +71,52 @@ class ImagesAdapter(
                     binding.imgImages.visibility = View.VISIBLE
                     binding.constraintVideo.visibility = View.GONE
                     binding.btnTranslate.visibility = View.VISIBLE
-                    glideContext.asGif().load(images.link).placeholder(R.drawable.ic_place_holder)
+                    binding.tvResultTranslate.visibility = View.GONE
+                    glideContext.asGif().load(images.link)
+                        .placeholder(R.drawable.ic_place_holder)
+                        .error(R.drawable.ic_place_holder)
                         .into(binding.imgImages)
                 }
                 VIDEO_MP4 -> {
                     binding.imgImages.visibility = View.GONE
                     binding.constraintVideo.visibility = View.VISIBLE
                     binding.btnTranslate.visibility = View.GONE
+                    binding.tvResultTranslate.visibility = View.GONE
                     binding.vvPreview.setVideoPath(images.link)
                     binding.vvPreview.start()
+                    binding.vvPreview.setOnPreparedListener {
+                        binding.vvPreview.start()
+                    }
                     hasVideo = true
                 }
                 else -> {
                     binding.imgImages.visibility = View.VISIBLE
                     binding.constraintVideo.visibility = View.GONE
                     binding.btnTranslate.visibility = View.VISIBLE
-                    glideContext.load(images.link).placeholder(R.drawable.ic_place_holder)
+                    binding.tvResultTranslate.visibility = View.VISIBLE
+                    glideContext.load(images.link).apply(RequestOptions().override(1000, 1000))
+                        .placeholder(R.drawable.ic_place_holder)
+                        .error(R.drawable.ic_place_holder)
                         .into(binding.imgImages)
                 }
             }
 
-            glideContext.load(images.link).apply(RequestOptions().override(1000, 1000))
-                .into(binding.imgImages)
             var bitmap: Bitmap? = null
-
-            glideContext.asBitmap().load(images.link)
-                .into(object : CustomTarget<Bitmap>() {
-                    override fun onResourceReady(
-                        resource: Bitmap,
-                        transition: Transition<in Bitmap>?
-                    ) {
-                        bitmap = resource
-                    }
-
-                    override fun onLoadCleared(placeholder: Drawable?) {
-
-                    }
-                })
-
             binding.btnTranslate.setOnClickListener {
+                glideContext.asBitmap()
+                    .error(R.drawable.ic_place_holder).load(images.link)
+                    .into(object : CustomTarget<Bitmap>() {
+                        override fun onResourceReady(
+                            resource: Bitmap,
+                            transition: Transition<in Bitmap>?
+                        ) {
+                            bitmap = resource
+                        }
+
+                        override fun onLoadCleared(placeholder: Drawable?) {
+
+                        }
+                    })
                 detector = TextRecognizer.Builder(context).build()
                 if (detector.isOperational) {
                     val frame = Frame.Builder().setBitmap(bitmap!!).build()

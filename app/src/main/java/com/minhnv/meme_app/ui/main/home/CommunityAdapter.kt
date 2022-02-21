@@ -15,11 +15,12 @@ import com.google.android.flexbox.FlexboxLayoutManager
 import com.minhnv.meme_app.data.networking.model.response.Community
 import com.minhnv.meme_app.databinding.ItemCommunityBinding
 
+typealias DidSearchTagName = (String) -> Unit
 
 class CommunityAdapter(
     private val context: Context
 ) : PagingDataAdapter<Community, CommunityAdapter.CommunitiesViewHolder>(CommunitiesDifferent) {
-
+    var didSearchTagName: DidSearchTagName? = null
     object CommunitiesDifferent : DiffUtil.ItemCallback<Community>() {
 
         override fun areItemsTheSame(oldItem: Community, newItem: Community): Boolean {
@@ -62,6 +63,20 @@ class CommunityAdapter(
                     }
                     adapter = tagAdapter
                 }
+                tagAdapter.didSearchTag = { nameTag ->
+                    didSearchTagName?.invoke(nameTag)
+                }
+            }
+            binding.linearUp.setOnClickListener {
+                var upCount =  community.ups?.toInt()
+                upCount = upCount?.plus(1)
+                binding.btnUp.text = upCount.toString()
+            }
+
+            binding.linearDown.setOnClickListener {
+                var downCount = community.downs?.toInt()
+                downCount = downCount?.minus(1)
+                binding.btnDown.text = downCount.toString()
             }
 
             community.title?.let {

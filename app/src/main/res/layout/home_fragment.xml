@@ -1,61 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
+    android:id="@+id/swipeCommunities"
     android:background="?attr/colorAccent"
     tools:context=".ui.main.home.HomeFragment">
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swipeCommunities"
+    <androidx.constraintlayout.motion.widget.MotionLayout
+        android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layoutDescription="@xml/home_fragment_xml_constraintlayout_scene">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rycCommunity"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rycCommunity"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fabSortTool"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:contentDescription="@string/sort"
-                android:src="@drawable/ic_button_up"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.95"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.85" />
+        <com.minhnv.meme_app.utils.SortView
+            android:id="@+id/btnSort"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_20sdp"
+            app:cardBackgroundColor="?attr/colorAccent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <com.minhnv.meme_app.utils.CircleProgressBar
-                android:id="@+id/progressAutoScroll"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                app:cpb_background_color="#66ffffff"
-                app:cpb_end_color="@color/white"
-                app:cpb_shader="radial"
-                app:cpb_show_value="true"
-                app:cpb_text_size="@dimen/_12sdp"
-                app:cpb_text_color="?attr/colorPrimary"
-                app:cpb_start_color="@color/white"
-                app:cpb_stroke_width="1dp"
-                app:cpb_style="solid"
-                app:layout_constraintDimensionRatio="1:1"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/fabSortTool"
-                app:layout_constraintHorizontal_bias="0.95"
-                app:layout_constraintStart_toStartOf="@+id/fabSortTool"
-                app:layout_constraintTop_toBottomOf="@+id/fabSortTool"
-                app:layout_constraintVertical_bias="0.1"/>
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnStartAnimation"
+            android:layout_width="@dimen/_50sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:background="@drawable/ic_expaned"
+            app:layout_constraintBottom_toTopOf="@id/btnSort"
+            app:layout_constraintEnd_toEndOf="@id/btnSort"
+            app:layout_constraintStart_toStartOf="@id/btnSort" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-</androidx.core.widget.NestedScrollView>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabSortTool"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/sort"
+            android:src="@drawable/ic_button_up"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.952"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.75" />
+
+        <com.minhnv.meme_app.utils.CircleProgressBar
+            android:id="@+id/progressAutoScroll"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:cpb_background_color="#66ffffff"
+            app:cpb_end_color="@color/white"
+            app:cpb_shader="radial"
+            app:cpb_show_value="true"
+            app:cpb_start_color="@color/white"
+            app:cpb_stroke_width="1dp"
+            app:cpb_style="solid"
+            app:cpb_text_color="?attr/colorPrimary"
+            app:cpb_text_size="@dimen/_12sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="@+id/fabSortTool"
+            app:layout_constraintHorizontal_bias="0.95"
+            app:layout_constraintStart_toStartOf="@+id/fabSortTool"
+            app:layout_constraintTop_toBottomOf="@+id/fabSortTool"
+            app:layout_constraintVertical_bias="0.1" />
+
+    </androidx.constraintlayout.motion.widget.MotionLayout>
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

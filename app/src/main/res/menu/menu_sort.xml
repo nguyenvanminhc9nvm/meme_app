@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/homes"
+        android:id="@+id/section"
         android:icon="@drawable/ic_section"
         android:title="@string/section" />
 
-    <item android:id="@+id/deep"
+    <item android:id="@+id/sort"
         android:icon="@drawable/ic_sort"
         android:contentDescription="@string/sort"
         android:title="@string/sort"/>
 
     <item
-        android:id="@+id/create"
+        android:id="@+id/day"
         android:icon="@drawable/ic_window"
         android:contentDescription="@string/create"
         android:title="@string/window" />
     <item
-        android:id="@+id/profiles"
+        android:id="@+id/search"
         android:icon="@drawable/ic_search"
         android:contentDescription="@string/settings"
         android:title="@string/search" />

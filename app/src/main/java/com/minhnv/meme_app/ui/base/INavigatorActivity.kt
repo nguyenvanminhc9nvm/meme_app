@@ -9,6 +9,8 @@ interface INavigatorActivity {
 
     fun setTitleToolbar(title: Int)
 
+    fun setTitleToolbar(title: String)
+
     fun reloadThemes(themes: Int)
 
     fun visibleToolbar(visible: Boolean)

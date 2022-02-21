@@ -65,6 +65,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), INavigatorActivity {
         binding.collapsingToolbar.title = getString(title)
     }
 
+    override fun setTitleToolbar(title: String) {
+        val typeface = ResourcesCompat.getFont(this, R.font.poppins_medium)
+        binding.collapsingToolbar.setCollapsedTitleTypeface(typeface)
+        binding.collapsingToolbar.title = title
+    }
+
     override fun popBackStackFragment(fragmentId: Int) {
         currentNavController?.value?.popBackStack(fragmentId, false)
     }

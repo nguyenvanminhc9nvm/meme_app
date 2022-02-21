@@ -19,9 +19,18 @@ class HomeViewModel @Inject constructor(
     private val dataManager: AppDataManager,
     private val trackingErrorHelper: TrackingError
 ) : ViewModel() {
+
     val communities = Pager(PagingConfig(10)) {
         CommunityDataSource("hot", "viral", "day", dataManager)
     }.flow.cachedIn(viewModelScope)
+
+    fun didLoadCommunities(
+        section: String,
+        sort: String,
+        window: String
+    ) = Pager(PagingConfig(10)) {
+            CommunityDataSource(section, sort, window, dataManager)
+        }.flow.cachedIn(viewModelScope)
 
     suspend fun doGetAccessToken() {
         val accessTokenNotEmpty = dataManager.checkTokenIsNotEmpty()

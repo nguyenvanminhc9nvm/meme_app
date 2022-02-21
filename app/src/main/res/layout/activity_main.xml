@@ -26,7 +26,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/collapsingToolbarLayoutLargeSize"
                 app:contentScrim="?attr/colorPrimary"
-                app:title="@string/home"
+                app:title="@string/post_to_community"
+                app:maxLines="3"
                 app:expandedTitleTextAppearance="@style/CollapsingToolbar"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
 

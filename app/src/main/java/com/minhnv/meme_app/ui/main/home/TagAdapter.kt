@@ -6,9 +6,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.minhnv.meme_app.data.networking.model.response.Tags
 import com.minhnv.meme_app.databinding.ItemTagsBinding
 
+typealias DidSearchTag = (String) -> Unit
+
 class TagAdapter(
     private val dataSource: MutableList<Tags>
 ): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    var didSearchTag: DidSearchTag? = null
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val view = ItemTagsBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return TagViewHolder(view)
@@ -29,6 +32,9 @@ class TagAdapter(
     ): RecyclerView.ViewHolder(binding.root) {
         fun bind(tags: Tags) {
             binding.tvNameTags.text = String.format("#${tags.name}")
+            binding.root.setOnClickListener {
+                didSearchTag?.invoke(tags.name ?: "")
+            }
         }
     }
 }

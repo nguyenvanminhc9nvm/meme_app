@@ -63,4 +63,16 @@ class AppDataManager @Inject constructor(
     }
 
     suspend fun communities() = dbHelper.communities()
+
+    suspend fun doVotingPost(
+        galleryHash: String,
+        vote: String
+    ) = apiHelper.doVotingPost(galleryHash, vote, Constants.Bearer + dataStoreHelper.token())
+
+    suspend fun doGetTagInfo(
+        tagName: String,
+        sort: String,
+        page: Int,
+        window: String,
+    ) = apiHelper.doGetTagInfo(tagName, sort, page, window, Constants.Bearer + dataStoreHelper.token())
 }

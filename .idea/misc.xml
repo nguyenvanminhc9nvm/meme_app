@@ -33,6 +33,7 @@
         <entry key="app/src/main/res/drawable/ic_edittext.xml" value="0.24802631578947368" />
         <entry key="app/src/main/res/drawable/ic_edittext_meme_template.xml" value="0.24802631578947368" />
         <entry key="app/src/main/res/drawable/ic_expanded_sort.xml" value="0.33076923076923076" />
+        <entry key="app/src/main/res/drawable/ic_expaned.xml" value="0.328" />
         <entry key="app/src/main/res/drawable/ic_gallery.xml" value="0.24802631578947368" />
         <entry key="app/src/main/res/drawable/ic_home.xml" value="0.3927083333333333" />
         <entry key="app/src/main/res/drawable/ic_logo.xml" value="0.24802631578947368" />
@@ -111,11 +112,13 @@
         <entry key="app/src/main/res/layout/item_meme_icon.xml" value="0.23782894736842106" />
         <entry key="app/src/main/res/layout/item_meme_template.xml" value="0.23782894736842106" />
         <entry key="app/src/main/res/layout/item_network_state.xml" value="0.3175213675213675" />
+        <entry key="app/src/main/res/layout/item_sort.xml" value="0.3175213675213675" />
         <entry key="app/src/main/res/layout/item_tags.xml" value="0.3175213675213675" />
         <entry key="app/src/main/res/layout/login_fragment.xml" value="0.38697916666666665" />
         <entry key="app/src/main/res/layout/meme_template_list_fragment.xml" value="0.25" />
         <entry key="app/src/main/res/layout/profile_fragment.xml" value="0.25" />
         <entry key="app/src/main/res/layout/publish_meme_fragment.xml" value="0.23782894736842106" />
+        <entry key="app/src/main/res/layout/tags_fragment.xml" value="0.3175213675213675" />
         <entry key="app/src/main/res/layout/video_to_gif_fragment.xml" value="0.23782894736842106" />
         <entry key="app/src/main/res/menu/menu_app.xml" value="0.3765625" />
         <entry key="app/src/main/res/menu/menu_sort.xml" value="0.3175213675213675" />

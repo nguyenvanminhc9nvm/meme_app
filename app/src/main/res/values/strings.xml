@@ -53,12 +53,13 @@
     <string name="deep">Deep</string>
 
     //home
-    <string name="section">Section</string>
-    <string name="sort">Sort</string>
-    <string name="window">Window</string>
+    <string name="section">Hot</string>
+    <string name="sort">Viral</string>
+    <string name="window">Day</string>
     <string name="search">Search</string>
     <string name="text_form_image">Text form Image</string>
     <string name="no_internet">Network disconnect? try again</string>
     <string name="retry">retry</string>
     <string name="cant_identify_language">Can\'t identify language.</string>
+    <string name="tags">Tags</string>
 </resources>

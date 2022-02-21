@@ -29,3 +29,5 @@ data class ErrorData(
 
 class ErrorResponse : Response<ErrorData>()
 class CommunityResponse: Response<MutableList<Community>>()
+class BasicResponse: Response<Boolean>()
+class TagsResponse: Response<TagInfo>()

@@ -1,5 +1,6 @@
 package com.minhnv.meme_app.ui.main.home
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.minhnv.meme_app.R
 import com.minhnv.meme_app.databinding.HomeFragmentBinding
 import com.minhnv.meme_app.ui.base.BaseFragment
+import com.minhnv.meme_app.utils.Constants
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collect
@@ -98,6 +100,20 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>() {
                 }
             }
         })
+        communityAdapter.didSearchTagName = {
+            val bundle = Bundle()
+            bundle.putString(Constants.ARGUMENT_1, it)
+            switchFragment(R.id.tagsFragment, bundle)
+        }
+
+        binding.btnSort.didSelectedSortListCommunities = { section, sort, day ->
+            lifecycleScope.launch {
+                viewModel.didLoadCommunities(section, sort, day).collect {
+                    communityAdapter.submitData(it)
+                }
+                linearLayoutManager.scrollToPosition(0)
+            }
+        }
     }
 
     private fun didStopAutoScroll() {

@@ -10,4 +10,9 @@
         android:name="com.minhnv.meme_app.ui.main.home.HomeFragment"
         android:label="login_fragment"
         tools:layout="@layout/login_fragment" />
+    <fragment
+        android:id="@+id/tagsFragment"
+        android:name="com.minhnv.meme_app.ui.main.home.tags.TagsFragment"
+        android:label="tags_fragment"
+        tools:layout="@layout/tags_fragment" />
 </navigation>
