@@ -41,7 +41,7 @@
             android:background="@drawable/ic_edittext"
             android:ems="10"
             android:layout_marginHorizontal="@dimen/_15sdp"
-            android:hint="@string/description"
+            android:hint="description"
             android:inputType="textPersonName" />
 
         <androidx.appcompat.widget.AppCompatButton

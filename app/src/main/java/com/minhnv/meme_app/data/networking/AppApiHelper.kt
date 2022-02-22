@@ -2,9 +2,8 @@ package com.minhnv.meme_app.data.networking
 
 import com.minhnv.meme_app.data.networking.model.local.MemeTemplate
 import com.minhnv.meme_app.data.networking.model.request.AccessTokenRequest
-import com.minhnv.meme_app.data.networking.model.response.AccessTokenResponse
-import com.minhnv.meme_app.data.networking.model.response.BasicResponse
-import com.minhnv.meme_app.data.networking.model.response.CommunityResponse
+import com.minhnv.meme_app.data.networking.model.request.DetectionTextRequest
+import com.minhnv.meme_app.data.networking.model.response.*
 import com.minhnv.meme_app.ui.main.create.meme_template.export.MemeIcon
 import com.minhnv.meme_app.ui.main.create.meme_template.export.memeIcons
 import com.minhnv.meme_app.ui.main.create.meme_template.memeTemplates
@@ -63,5 +62,11 @@ class AppApiHelper @Inject constructor(
         token: String
     ) = withContext(Dispatchers.IO) {
         apiService.doGetTagsInfo(tagName, sort, page, window, token)
+    }
+
+    override suspend fun doGetListImages(page: Int, token: String): ImagesResponse {
+        return withContext(Dispatchers.IO) {
+            apiService.doGetListImages(page, token)
+        }
     }
 }

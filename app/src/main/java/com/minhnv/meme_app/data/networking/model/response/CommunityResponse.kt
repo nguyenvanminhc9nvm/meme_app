@@ -27,6 +27,14 @@ data class Tags(
 )
 
 data class Images(
+    @SerializedName("id")
+    val id: String?,
+    @SerializedName("title")
+    val title: String?,
+    @SerializedName("description")
+    val description: String?,
+    @SerializedName("views")
+    val views: Double?,
     @SerializedName("link")
     val link: String?,
     @SerializedName("type")

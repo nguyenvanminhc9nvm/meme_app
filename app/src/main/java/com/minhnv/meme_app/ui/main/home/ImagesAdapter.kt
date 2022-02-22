@@ -101,7 +101,6 @@ class ImagesAdapter(
                 }
             }
 
-            var bitmap: Bitmap? = null
             binding.btnTranslate.setOnClickListener {
                 glideContext.asBitmap()
                     .error(R.drawable.ic_place_holder).load(images.link)
@@ -110,65 +109,65 @@ class ImagesAdapter(
                             resource: Bitmap,
                             transition: Transition<in Bitmap>?
                         ) {
-                            bitmap = resource
+                            detector = TextRecognizer.Builder(context).build()
+                            if (detector.isOperational) {
+                                val frame = Frame.Builder().setBitmap(resource).build()
+                                val textBlocks = detector.detect(frame)
+                                var blocks = ""
+                                for (i in 0 until textBlocks.size()) {
+                                    val tBlock = textBlocks.valueAt(i)
+
+                                    (blocks + tBlock.value + "\n").also { blocks = it }
+                                }
+                                if (textBlocks.size() == 0) {
+                                    binding.btnTranslate.visibility = View.GONE
+                                    binding.tvResultTranslate.visibility = View.GONE
+                                } else {
+                                    binding.btnTranslate.visibility = View.VISIBLE
+                                    binding.tvResultTranslate.visibility = View.VISIBLE
+                                    val result = " $blocks "
+                                    val languageIdentifier = LanguageIdentification.getClient()
+                                    languageIdentifier.identifyLanguage(result)
+                                        .addOnSuccessListener { languageCode ->
+                                            if (languageCode == "und") {
+                                                binding.tvResultTranslate.text =
+                                                    context.getText(R.string.cant_identify_language)
+                                            } else {
+                                                val options = TranslatorOptions.Builder()
+                                                    .setSourceLanguage(languageCode)
+                                                    .setTargetLanguage(Locale.getDefault().language)
+                                                    .build()
+                                                val englishGermanTranslator = Translation.getClient(options)
+                                                val conditions = DownloadConditions.Builder()
+                                                    .requireWifi()
+                                                    .build()
+                                                englishGermanTranslator.downloadModelIfNeeded(conditions)
+                                                    .addOnSuccessListener {
+                                                        englishGermanTranslator.translate(result)
+                                                            .addOnSuccessListener {
+                                                                binding.tvResultTranslate.visibility = View.VISIBLE
+                                                                binding.tvResultTranslate.text = it + "\n"
+                                                            }.addOnFailureListener {
+                                                                binding.tvResultTranslate.text =
+                                                                    context.getText(R.string.cant_identify_language)
+                                                            }
+                                                    }
+                                                    .addOnFailureListener { exception ->
+                                                        binding.tvResultTranslate.text = exception.message
+                                                    }
+                                            }
+                                        }
+                                        .addOnFailureListener {
+                                            binding.tvResultTranslate.text = it.message
+                                        }
+                                }
+                            }
                         }
 
                         override fun onLoadCleared(placeholder: Drawable?) {
 
                         }
                     })
-                detector = TextRecognizer.Builder(context).build()
-                if (detector.isOperational) {
-                    val frame = Frame.Builder().setBitmap(bitmap!!).build()
-                    val textBlocks = detector.detect(frame)
-                    var blocks = ""
-                    for (i in 0 until textBlocks.size()) {
-                        val tBlock = textBlocks.valueAt(i)
-                        (blocks + tBlock.value + "\n").also { blocks = it }
-                    }
-                    if (textBlocks.size() == 0) {
-                        binding.btnTranslate.visibility = View.GONE
-                        binding.tvResultTranslate.visibility = View.GONE
-                    } else {
-                        binding.btnTranslate.visibility = View.VISIBLE
-                        binding.tvResultTranslate.visibility = View.VISIBLE
-                        val result = " $blocks "
-                        val languageIdentifier = LanguageIdentification.getClient()
-                        languageIdentifier.identifyLanguage(result)
-                            .addOnSuccessListener { languageCode ->
-                                if (languageCode == "und") {
-                                    binding.tvResultTranslate.text =
-                                        context.getText(R.string.cant_identify_language)
-                                } else {
-                                    val options = TranslatorOptions.Builder()
-                                        .setSourceLanguage(languageCode)
-                                        .setTargetLanguage(Locale.getDefault().language)
-                                        .build()
-                                    val englishGermanTranslator = Translation.getClient(options)
-                                    val conditions = DownloadConditions.Builder()
-                                        .requireWifi()
-                                        .build()
-                                    englishGermanTranslator.downloadModelIfNeeded(conditions)
-                                        .addOnSuccessListener {
-                                            englishGermanTranslator.translate(result)
-                                                .addOnSuccessListener {
-                                                    binding.tvResultTranslate.visibility = View.VISIBLE
-                                                    binding.tvResultTranslate.text = it + "\n"
-                                                }.addOnFailureListener {
-                                                    binding.tvResultTranslate.text =
-                                                        context.getText(R.string.cant_identify_language)
-                                                }
-                                        }
-                                        .addOnFailureListener { exception ->
-                                            binding.tvResultTranslate.text = exception.message
-                                        }
-                                }
-                            }
-                            .addOnFailureListener {
-                                binding.tvResultTranslate.text = it.message
-                            }
-                    }
-                }
             }
         }
     }

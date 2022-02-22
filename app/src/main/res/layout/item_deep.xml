@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/_4sdp"
+    android:layout_marginTop="@dimen/_4sdp"
+    android:background="?attr/colorError"
+    android:padding="@dimen/_10sdp">
+
+    <ImageView
+        android:id="@+id/imgDeep"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:contentDescription="@string/deep"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvTitleImages"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_bold"
+        android:text="@string/description"
+        android:textSize="@dimen/_12sdp"
+        app:layout_constraintEnd_toEndOf="@id/imgDeep"
+        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintStart_toStartOf="@id/imgDeep"
+        app:layout_constraintTop_toBottomOf="@id/imgDeep" />
+
+    <TextView
+        android:id="@+id/tvDescriptionImages"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:fontFamily="@font/poppins_regular"
+        android:text="@string/description"
+        android:textSize="@dimen/_10sdp"
+        app:layout_constraintEnd_toEndOf="@id/tvTitleImages"
+        app:layout_constraintStart_toStartOf="@id/tvTitleImages"
+        app:layout_constraintTop_toBottomOf="@id/tvTitleImages" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintDimensionRatio="1:0.2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvDescriptionImages">
+
+        <ImageView
+            android:id="@+id/imgViewsDeep"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:src="@drawable/ic_see_10" />
+
+        <androidx.legacy.widget.Space
+            android:layout_width="@dimen/_10sdp"
+            android:layout_height="0dp" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="8"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvViewsDeep"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_bold"
+                android:maxLines="1"
+                android:text="@string/description"
+                android:textSize="@dimen/_12sdp" />
+
+            <TextView
+                android:id="@+id/tvDescriptionViews"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_regular"
+                android:maxLines="1"
+                android:text="@string/description_views_1"
+                android:textSize="@dimen/_9sdp" />
+        </LinearLayout>
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

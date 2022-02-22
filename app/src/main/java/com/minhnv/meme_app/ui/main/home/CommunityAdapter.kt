@@ -21,6 +21,7 @@ class CommunityAdapter(
     private val context: Context
 ) : PagingDataAdapter<Community, CommunityAdapter.CommunitiesViewHolder>(CommunitiesDifferent) {
     var didSearchTagName: DidSearchTagName? = null
+
     object CommunitiesDifferent : DiffUtil.ItemCallback<Community>() {
 
         override fun areItemsTheSame(oldItem: Community, newItem: Community): Boolean {
@@ -68,7 +69,7 @@ class CommunityAdapter(
                 }
             }
             binding.linearUp.setOnClickListener {
-                var upCount =  community.ups?.toInt()
+                var upCount = community.ups?.toInt()
                 upCount = upCount?.plus(1)
                 binding.btnUp.text = upCount.toString()
             }

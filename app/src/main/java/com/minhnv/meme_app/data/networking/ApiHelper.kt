@@ -2,10 +2,7 @@ package com.minhnv.meme_app.data.networking
 
 import com.minhnv.meme_app.data.networking.model.local.MemeTemplate
 import com.minhnv.meme_app.data.networking.model.request.AccessTokenRequest
-import com.minhnv.meme_app.data.networking.model.response.AccessTokenResponse
-import com.minhnv.meme_app.data.networking.model.response.BasicResponse
-import com.minhnv.meme_app.data.networking.model.response.CommunityResponse
-import com.minhnv.meme_app.data.networking.model.response.TagsResponse
+import com.minhnv.meme_app.data.networking.model.response.*
 import com.minhnv.meme_app.ui.main.create.meme_template.export.MemeIcon
 
 interface ApiHelper {
@@ -36,4 +33,9 @@ interface ApiHelper {
         window: String,
         token: String
     ): TagsResponse
+
+    suspend fun doGetListImages(
+        page: Int,
+        token: String
+    ): ImagesResponse
 }

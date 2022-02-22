@@ -75,4 +75,8 @@ class AppDataManager @Inject constructor(
         page: Int,
         window: String,
     ) = apiHelper.doGetTagInfo(tagName, sort, page, window, Constants.Bearer + dataStoreHelper.token())
+
+    suspend fun doGetListImages(
+        page: Int
+    ) = apiHelper.doGetListImages(page, Constants.Bearer + dataStoreHelper.token())
 }

@@ -51,6 +51,7 @@
 
     //deep
     <string name="deep">Deep</string>
+    <string name="description_views_1">this posts caught  the community eye</string>
 
     //home
     <string name="section">Hot</string>

@@ -1,10 +1,7 @@
 package com.minhnv.meme_app.data.networking
 
 import com.minhnv.meme_app.data.networking.model.request.AccessTokenRequest
-import com.minhnv.meme_app.data.networking.model.response.AccessTokenResponse
-import com.minhnv.meme_app.data.networking.model.response.BasicResponse
-import com.minhnv.meme_app.data.networking.model.response.CommunityResponse
-import com.minhnv.meme_app.data.networking.model.response.TagsResponse
+import com.minhnv.meme_app.data.networking.model.response.*
 import retrofit2.http.*
 
 interface ApiService {
@@ -40,4 +37,13 @@ interface ApiService {
         @Path("window") window: String,
         @Header("authorization") token: String
     ): TagsResponse
+
+    @GET("3/account/c9xnvm/images/{page}")
+    suspend fun doGetListImages(
+        @Path("page") page: Int,
+        @Header("authorization") token: String
+    ): ImagesResponse
+
+    @POST("3/upload")
+    suspend fun doUploadFile(): UploadResponse
 }

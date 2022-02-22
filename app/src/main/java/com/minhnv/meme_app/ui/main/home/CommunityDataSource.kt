@@ -26,10 +26,15 @@ class CommunityDataSource(
                 window
             )
             val prevKey = if (currentLoadingPageKey == 1) null else currentLoadingPageKey - 1
+            val nextKey = if (response.isNullOrEmpty()) {
+                null
+            } else {
+                currentLoadingPageKey.plus(1)
+            }
             LoadResult.Page(
                 data = response,
                 prevKey = prevKey,
-                nextKey = currentLoadingPageKey.plus(1)
+                nextKey = nextKey
             )
         } catch (e: Exception) {
             LoadResult.Error(e)
