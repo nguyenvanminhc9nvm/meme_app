@@ -4,8 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewbinding.ViewBinding
-import com.minhnv.meme_app.utils.ProgressDialog
-import com.minhnv.meme_app.utils.TrackingError
+import com.minhnv.meme_app.utils.custom_view.ProgressDialog
+import com.minhnv.meme_app.utils.helper.TrackingError
 import javax.inject.Inject
 
 abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {

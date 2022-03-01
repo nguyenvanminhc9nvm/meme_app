@@ -38,7 +38,9 @@ data class Images(
     @SerializedName("link")
     val link: String?,
     @SerializedName("type")
-    val type: String?
+    val type: String?,
+    @SerializedName("datetime")
+    val createAt: String?
 )
 
 object TypeImages {

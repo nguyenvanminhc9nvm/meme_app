@@ -1,4 +1,4 @@
-package com.minhnv.meme_app.utils
+package com.minhnv.meme_app.utils.custom_view
 
 import android.app.Dialog
 import android.content.Context

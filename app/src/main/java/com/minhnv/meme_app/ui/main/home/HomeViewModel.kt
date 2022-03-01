@@ -8,14 +8,14 @@ import androidx.paging.cachedIn
 import com.minhnv.meme_app.data.AppDataManager
 import com.minhnv.meme_app.data.networking.model.request.AccessTokenRequest
 import com.minhnv.meme_app.utils.Constants
-import com.minhnv.meme_app.utils.TrackingError
+import com.minhnv.meme_app.utils.helper.Status
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.collect
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val dataManager: AppDataManager,
-    private val trackingErrorHelper: TrackingError
+    private val dataManager: AppDataManager
 ) : ViewModel() {
 
     val communities = Pager(PagingConfig(10)) {
@@ -39,8 +39,13 @@ class HomeViewModel @Inject constructor(
                 Constants.CLIENT_SECRET,
                 "refresh_token"
             )
-            dataManager.doRefreshToken(accessTokenRequest).accessToken?.let {
-                dataManager.doSaveToken(it)
+            dataManager.doRefreshToken(accessTokenRequest).collect {
+                when (it.status) {
+                    Status.SUCCESS -> {
+                        it.data?.accessToken?.let { token -> dataManager.doSaveToken(token) }
+                    }
+                    else -> println("refresh Error")
+                }
             }
         }
     }

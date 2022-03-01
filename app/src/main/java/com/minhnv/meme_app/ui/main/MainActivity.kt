@@ -13,6 +13,7 @@ import androidx.lifecycle.LiveData
 import androidx.navigation.NavController
 import androidx.navigation.NavOptions
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.gms.ads.MobileAds
 import com.minhnv.meme_app.BaseApplication
 import com.minhnv.meme_app.R
 import com.minhnv.meme_app.databinding.ActivityMainBinding
@@ -22,6 +23,7 @@ import com.minhnv.meme_app.utils.Constants
 import com.minhnv.meme_app.utils.setupWithNavController
 import dagger.hilt.android.AndroidEntryPoint
 
+
 @AndroidEntryPoint
 class MainActivity : BaseActivity<ActivityMainBinding>(), INavigatorActivity {
     private var currentNavController: LiveData<NavController>? = null
@@ -29,6 +31,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), INavigatorActivity {
     private val viewModel by viewModels<MainViewModel>()
 
     override fun setup() {
+        MobileAds.initialize(
+            this
+        ) { }
         viewModel
     }
 

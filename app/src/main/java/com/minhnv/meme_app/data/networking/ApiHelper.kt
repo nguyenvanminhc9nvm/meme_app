@@ -4,13 +4,16 @@ import com.minhnv.meme_app.data.networking.model.local.MemeTemplate
 import com.minhnv.meme_app.data.networking.model.request.AccessTokenRequest
 import com.minhnv.meme_app.data.networking.model.response.*
 import com.minhnv.meme_app.ui.main.create.meme_template.export.MemeIcon
+import com.minhnv.meme_app.utils.helper.Resource
+import kotlinx.coroutines.flow.Flow
+import okhttp3.MultipartBody
 
 interface ApiHelper {
     suspend fun doFetchListMeme(): MutableList<MemeTemplate>
 
     suspend fun doFetchListMemeIcon(): MutableList<MemeIcon>
 
-    suspend fun doRefreshToken(accessTokenRequest: AccessTokenRequest): AccessTokenResponse
+    suspend fun doRefreshToken(accessTokenRequest: AccessTokenRequest): Flow<Resource<AccessTokenResponse>>
 
     suspend fun doGetListCommunity(
         section: String,
@@ -38,4 +41,11 @@ interface ApiHelper {
         page: Int,
         token: String
     ): ImagesResponse
+
+    suspend fun doUploadFile(
+        title: String?,
+        description: String?,
+        file: MultipartBody.Part,
+        token: String
+    ): Flow<Resource<UploadResponse>>
 }

@@ -12,14 +12,20 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayoutManager
+import com.google.android.gms.ads.AdLoader
+import com.google.android.gms.ads.AdRequest
 import com.minhnv.meme_app.data.networking.model.response.Community
+import com.minhnv.meme_app.databinding.GntMediumTemplateViewBinding
 import com.minhnv.meme_app.databinding.ItemCommunityBinding
+import com.minhnv.meme_app.utils.Constants
 
 typealias DidSearchTagName = (String) -> Unit
 
 class CommunityAdapter(
     private val context: Context
-) : PagingDataAdapter<Community, CommunityAdapter.CommunitiesViewHolder>(CommunitiesDifferent) {
+) : PagingDataAdapter<Community, RecyclerView.ViewHolder>(CommunitiesDifferent) {
+    private val itemViewTypeAD = 0
+    private val itemViewTypeCommunities = 1
     var didSearchTagName: DidSearchTagName? = null
 
     object CommunitiesDifferent : DiffUtil.ItemCallback<Community>() {
@@ -112,12 +118,54 @@ class CommunityAdapter(
         }
     }
 
-    override fun onBindViewHolder(holder: CommunitiesViewHolder, position: Int) {
-        getItem(position)?.let { holder.bind(it) }
+
+    inner class NativeAdLoadedViewHolder(
+        private val binding: GntMediumTemplateViewBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
+
+        fun bind() {
+            AdLoader.Builder(context, Constants.AD_MOD_ID)
+                .forNativeAd {
+                    binding.nativeAdView.setNativeAd(it)
+                }.build().loadAd(AdRequest.Builder().build())
+        }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CommunitiesViewHolder {
-        val view = ItemCommunityBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return CommunitiesViewHolder(view)
+    override fun getItemViewType(position: Int): Int {
+        return when (position) {
+            0 -> itemViewTypeAD
+            else -> itemViewTypeCommunities
+        }
+    }
+
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        when (holder) {
+            is NativeAdLoadedViewHolder -> {
+                holder.bind()
+            }
+            is CommunitiesViewHolder -> {
+                getItem(position)?.let { holder.bind(it) }
+            }
+            else -> throw Exception("unknown viewHolder")
+        }
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return when (viewType) {
+            itemViewTypeAD -> NativeAdLoadedViewHolder(
+                GntMediumTemplateViewBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                )
+            )
+            else -> CommunitiesViewHolder(
+                ItemCommunityBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                )
+            )
+        }
     }
 }

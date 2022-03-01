@@ -63,4 +63,6 @@
     <string name="retry">retry</string>
     <string name="cant_identify_language">Can\'t identify language.</string>
     <string name="tags">Tags</string>
+    <string name="auto_scroll_mes">Scroll after: </string>
+    <string name="auto_scroll_mes_second">second</string>
 </resources>

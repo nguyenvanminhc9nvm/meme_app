@@ -1,4 +1,4 @@
-package com.minhnv.meme_app.utils
+package com.minhnv.meme_app.utils.custom_view
 
 import android.content.Context
 import android.util.AttributeSet

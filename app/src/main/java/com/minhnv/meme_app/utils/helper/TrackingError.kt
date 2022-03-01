@@ -1,4 +1,4 @@
-package com.minhnv.meme_app.utils
+package com.minhnv.meme_app.utils.helper
 
 import android.content.Context
 import android.widget.Toast
@@ -29,7 +29,6 @@ class TrackingError @Inject constructor(
             is ValidateException -> {
                 Toast.makeText(applicationContext, exception.message, Toast.LENGTH_SHORT).show()
             }
-
         }
     }
 }

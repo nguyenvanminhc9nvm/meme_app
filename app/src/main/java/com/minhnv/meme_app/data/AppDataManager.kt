@@ -8,6 +8,7 @@ import com.minhnv.meme_app.data.networking.model.request.AccessTokenRequest
 import com.minhnv.meme_app.utils.Constants
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import okhttp3.MultipartBody
 import javax.inject.Inject
 
 class AppDataManager @Inject constructor(
@@ -74,9 +75,26 @@ class AppDataManager @Inject constructor(
         sort: String,
         page: Int,
         window: String,
-    ) = apiHelper.doGetTagInfo(tagName, sort, page, window, Constants.Bearer + dataStoreHelper.token())
+    ) = apiHelper.doGetTagInfo(
+        tagName,
+        sort,
+        page,
+        window,
+        Constants.Bearer + dataStoreHelper.token()
+    )
 
     suspend fun doGetListImages(
         page: Int
     ) = apiHelper.doGetListImages(page, Constants.Bearer + dataStoreHelper.token())
+
+    suspend fun doUploadFile(
+        title: String?,
+        description: String?,
+        file: MultipartBody.Part,
+    ) = apiHelper.doUploadFile(
+        title,
+        description,
+        file,
+        Constants.Bearer + dataStoreHelper.token()
+    )
 }

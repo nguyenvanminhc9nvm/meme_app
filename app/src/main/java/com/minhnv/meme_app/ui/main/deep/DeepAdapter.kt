@@ -8,6 +8,8 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.request.target.Target
 import com.minhnv.meme_app.R
 import com.minhnv.meme_app.data.networking.model.response.Images
 import com.minhnv.meme_app.databinding.ItemDeepBinding
@@ -32,6 +34,8 @@ class DeepAdapter(
     ): RecyclerView.ViewHolder(binding.root) {
         fun bind(images: Images) {
             Glide.with(context).load(images.link)
+                .apply(RequestOptions().override(1000, 1000))
+                .override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
                 .placeholder(R.drawable.ic_place_holder)
                 .error(R.drawable.ic_place_holder).into(binding.imgDeep)
             val visibility = if (images.title.isNullOrEmpty()) {
@@ -48,8 +52,9 @@ class DeepAdapter(
             binding.tvDescriptionImages.visibility = visibilityDesc
             binding.tvTitleImages.text = images.title
             binding.tvDescriptionImages.text = images.description
-            binding.tvViewsDeep.text = String.format("${images.views?.toInt()} views")
-            val imgDrawable = when (images.views?.toInt() ?: 0) {
+            val views = images.views?.toInt() ?: 0
+            binding.tvViewsDeep.text = String.format("$views views")
+            val imgDrawable = when (views) {
                 in 0..10 -> {
                     R.drawable.ic_see_10
                 }

@@ -7,8 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
-import com.minhnv.meme_app.utils.ProgressDialog
-import com.minhnv.meme_app.utils.TrackingError
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.minhnv.meme_app.R
+import com.minhnv.meme_app.utils.custom_view.ProgressDialog
+import com.minhnv.meme_app.utils.helper.TrackingError
 import javax.inject.Inject
 
 abstract class BaseFragment<VB : ViewBinding> : Fragment() {
@@ -68,13 +70,13 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
         _binding = null
     }
 
-    private fun showLoading() {
+    fun showLoading() {
         if (!progressDialog.isShowing) {
             progressDialog.show()
         }
     }
 
-    private fun hideLoading() {
+    fun hideLoading() {
         if (progressDialog.isShowing) {
             progressDialog.dismiss()
         }
@@ -90,5 +92,13 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
 
     fun reloadThemes(themes: Int) {
         mINavigatorActivity.reloadThemes(themes)
+    }
+
+    fun showDialog(message: String) {
+        MaterialAlertDialogBuilder(mActivity)
+            .setMessage(message)
+            .setNegativeButton(R.string.ok, null)
+            .setPositiveButton(R.string.cancel, null)
+            .show()
     }
 }

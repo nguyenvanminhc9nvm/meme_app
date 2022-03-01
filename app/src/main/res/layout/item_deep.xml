@@ -48,7 +48,7 @@
         android:layout_marginTop="@dimen/_10sdp"
         android:gravity="center"
         android:orientation="horizontal"
-        app:layout_constraintDimensionRatio="1:0.2"
+        app:layout_constraintDimensionRatio="1:0.15"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvDescriptionImages">

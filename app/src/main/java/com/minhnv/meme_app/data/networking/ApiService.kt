@@ -2,6 +2,7 @@ package com.minhnv.meme_app.data.networking
 
 import com.minhnv.meme_app.data.networking.model.request.AccessTokenRequest
 import com.minhnv.meme_app.data.networking.model.response.*
+import okhttp3.MultipartBody
 import retrofit2.http.*
 
 interface ApiService {
@@ -38,12 +39,17 @@ interface ApiService {
         @Header("authorization") token: String
     ): TagsResponse
 
-    @GET("3/account/c9xnvm/images/{page}")
+    @GET("3/account/me/images")
     suspend fun doGetListImages(
-        @Path("page") page: Int,
         @Header("authorization") token: String
     ): ImagesResponse
 
-    @POST("3/upload")
-    suspend fun doUploadFile(): UploadResponse
+    @Multipart
+    @POST("3/image")
+    suspend fun doUploadFile(
+        @Query("title") title: String?,
+        @Query("description") description: String?,
+        @Part file: MultipartBody.Part,
+        @Header("authorization") token: String
+    ): UploadResponse
 }

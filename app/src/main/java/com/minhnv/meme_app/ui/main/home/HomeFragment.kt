@@ -3,6 +3,7 @@ package com.minhnv.meme_app.ui.main.home
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
@@ -16,6 +17,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
+import java.util.concurrent.TimeUnit
 
 @AndroidEntryPoint
 class HomeFragment : BaseFragment<HomeFragmentBinding>() {
@@ -26,7 +29,7 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>() {
     private val networkDisconnectAdapter = NetworkDisconnectAdapter()
     private lateinit var linearLayoutManager: LinearLayoutManager
     private lateinit var communityAdapter: CommunityAdapter
-
+    private var duration = 1000L
     override var showToolbar: Boolean = false
     private val job: Job = Job()
 
@@ -62,21 +65,32 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>() {
         }
         binding.progressAutoScroll.mMax = 4
 
-        binding.progressAutoScroll.setOnClickListener { view ->
-            CoroutineScope(Dispatchers.Main + job).launch {
+        binding.progressAutoScroll.setOnClickListener {
+            duration += 1000L
+            job.cancelChildren()
+            Toast.makeText(
+                mActivity,
+                "${getString(R.string.auto_scroll_mes)} ${TimeUnit.MILLISECONDS.toSeconds(duration)} ${
+                    getString(
+                        R.string.auto_scroll_mes_second
+                    )
+                }",
+                Toast.LENGTH_SHORT
+            ).show()
+            CoroutineScope(Dispatchers.IO + job).launch {
                 flow {
                     var counter: Long = 0
                     while (true) {
                         binding.progressAutoScroll.startAnimator(
-                            duration = 1000L,
+                            duration = duration,
                             start = 0,
                             end = 4,
                             repeatCount = counter.toInt()
-                            )
-                        delay(1000L)
+                        )
+                        delay(duration)
                         emit(counter++)
                     }
-                }.collect {
+                }.flowOn(Dispatchers.Main).collect {
                     binding.rycCommunity.smoothScrollBy(0, 1000)
                     binding.progressAutoScroll.mProgress = it.toInt()
                 }
@@ -118,7 +132,9 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>() {
 
     private fun didStopAutoScroll() {
         job.cancelChildren()
+        duration = 1000
         binding.progressAutoScroll.stopAnimator()
+        binding.progressAutoScroll.mProgress = 0
     }
 
     private fun didSaveItemReadByUser() {
@@ -135,11 +151,11 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>() {
             val viewHolder =
                 binding.rycCommunity.findViewHolderForLayoutPosition(
                     i
-                ) as CommunityAdapter.CommunitiesViewHolder
+                ) as? CommunityAdapter.CommunitiesViewHolder
             if (isResumed) {
-                viewHolder.didResumeVideo()
+                viewHolder?.didResumeVideo()
             } else {
-                viewHolder.didPauseVideo()
+                viewHolder?.didPauseVideo()
             }
         }
     }

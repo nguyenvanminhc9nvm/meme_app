@@ -1,14 +1,23 @@
 package com.minhnv.meme_app.data.networking
 
+import com.google.gson.Gson
 import com.minhnv.meme_app.data.networking.model.local.MemeTemplate
 import com.minhnv.meme_app.data.networking.model.request.AccessTokenRequest
-import com.minhnv.meme_app.data.networking.model.request.DetectionTextRequest
-import com.minhnv.meme_app.data.networking.model.response.*
+import com.minhnv.meme_app.data.networking.model.response.BasicResponse
+import com.minhnv.meme_app.data.networking.model.response.CommunityResponse
+import com.minhnv.meme_app.data.networking.model.response.ErrorResponse
+import com.minhnv.meme_app.data.networking.model.response.UploadResponse
 import com.minhnv.meme_app.ui.main.create.meme_template.export.MemeIcon
 import com.minhnv.meme_app.ui.main.create.meme_template.export.memeIcons
 import com.minhnv.meme_app.ui.main.create.meme_template.memeTemplates
+import com.minhnv.meme_app.utils.helper.Resource
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.withContext
+import okhttp3.MultipartBody
+import retrofit2.HttpException
 import javax.inject.Inject
 
 class AppApiHelper @Inject constructor(
@@ -22,11 +31,16 @@ class AppApiHelper @Inject constructor(
         return memeIcons
     }
 
-    override suspend fun doRefreshToken(accessTokenRequest: AccessTokenRequest): AccessTokenResponse {
-        return withContext(Dispatchers.IO) {
-            apiService.doRefreshToken(accessTokenRequest)
+    override suspend fun doRefreshToken(
+        accessTokenRequest: AccessTokenRequest
+    ) = flow {
+        emit(Resource.loading(data = null))
+        try {
+            emit(Resource.success(data = apiService.doRefreshToken(accessTokenRequest)))
+        } catch (e: Exception) {
+            emit(errorMes(e))
         }
-    }
+    }.flowOn(Dispatchers.IO)
 
     override suspend fun doGetListCommunity(
         section: String,
@@ -64,9 +78,51 @@ class AppApiHelper @Inject constructor(
         apiService.doGetTagsInfo(tagName, sort, page, window, token)
     }
 
-    override suspend fun doGetListImages(page: Int, token: String): ImagesResponse {
-        return withContext(Dispatchers.IO) {
-            apiService.doGetListImages(page, token)
+    override suspend fun doGetListImages(
+        page: Int,
+        token: String
+    ) = withContext(Dispatchers.IO) {
+        apiService.doGetListImages(token)
+    }
+
+    override suspend fun doUploadFile(
+        title: String?,
+        description: String?,
+        file: MultipartBody.Part,
+        token: String
+    ): Flow<Resource<UploadResponse>> {
+        return flow {
+            emit(Resource.loading(data = null))
+            try {
+                emit(
+                    Resource.success(
+                        data = apiService.doUploadFile(
+                            title,
+                            description,
+                            file,
+                            token
+                        )
+                    )
+                )
+            } catch (exception: Exception) {
+                emit(errorMes(exception))
+            }
         }
+    }
+
+    private fun errorMes(exception: Exception) = when (exception) {
+        is HttpException -> {
+            val gson = Gson()
+            val errorBody = exception.response()?.errorBody()?.string()
+            val response = gson.fromJson(errorBody, ErrorResponse::class.java)
+            Resource.error(
+                data = null,
+                message = response.data?.data ?: "Error Occurred!"
+            )
+        }
+        else -> Resource.error(
+            data = null,
+            message = exception.message ?: "Error Occurred!"
+        )
     }
 }

@@ -24,12 +24,15 @@ import com.minhnv.meme_app.data.networking.model.response.TypeImages.VIDEO_MP4
 import com.minhnv.meme_app.databinding.ItemImagesAdapterBinding
 import java.util.*
 
+typealias DidDetectionTextError = () -> Unit
+
 class ImagesAdapter(
     private val context: Context,
     private val dataSource: MutableList<Images>
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private lateinit var detector: TextRecognizer
+    var didDetectionTextError: DidDetectionTextError? = null
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val view =
             ItemImagesAdapterBinding.inflate(LayoutInflater.from(parent.context), parent, false)

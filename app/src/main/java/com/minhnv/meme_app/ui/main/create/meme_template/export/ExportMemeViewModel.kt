@@ -1,5 +1,6 @@
 package com.minhnv.meme_app.ui.main.create.meme_template.export
 
+import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
@@ -12,6 +13,9 @@ import androidx.lifecycle.viewModelScope
 import com.minhnv.meme_app.data.AppDataManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
 import javax.inject.Inject
 
 
@@ -22,7 +26,7 @@ class ExportMemeViewModel @Inject constructor(
     private val _memeIcons = MutableLiveData<MutableList<MemeIcon>>()
     val memeIcons get() = _memeIcons
 
-    private val _finalMeme = MutableLiveData<Bitmap>()
+    private val _finalMeme = MutableLiveData<String>()
     val finalMeme get() = _finalMeme
 
     private val _memeEdtValue = MutableLiveData<MutableMap<Int, Pair<Int, Rect>>>()
@@ -41,7 +45,7 @@ class ExportMemeViewModel @Inject constructor(
         _memeEdtValue.value = memeEdtValueMaple
     }
 
-    fun getBitmapFromView(view: View) {
+    fun storeAndGetPathImage(view: View, context: Context): String {
         val returnedBitmap = Bitmap.createBitmap(
             view.width,
             view.height,
@@ -55,6 +59,33 @@ class ExportMemeViewModel @Inject constructor(
             canvas.drawColor(Color.WHITE)
         }
         view.draw(canvas)
-        _finalMeme.value = returnedBitmap
+        return storeImage(returnedBitmap, context)
+    }
+
+    private fun storeImage(image: Bitmap, context: Context): String {
+        val pictureFile = getOutputMediaFile(context) ?: return ""
+        return try {
+            val fos = FileOutputStream(pictureFile)
+            image.compress(Bitmap.CompressFormat.JPEG, 100, fos)
+            fos.close()
+            pictureFile.path
+        } catch (e: IOException) {
+            ""
+        }
+    }
+
+    private fun getOutputMediaFile(context: Context): File? {
+        val mediaStorageDir = File(context.filesDir.path)
+        if (!mediaStorageDir.exists()) {
+            if (!mediaStorageDir.mkdirs()) {
+                return null
+            }
+        } else {
+            mediaStorageDir.delete()
+        }
+        val mediaFile: File
+        val mImageName = "MI_meme_created.jpg"
+        mediaFile = File(mediaStorageDir.path + File.separator.toString() + mImageName)
+        return mediaFile
     }
 }

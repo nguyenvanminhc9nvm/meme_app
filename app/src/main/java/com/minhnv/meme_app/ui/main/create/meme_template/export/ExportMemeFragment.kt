@@ -2,7 +2,6 @@ package com.minhnv.meme_app.ui.main.create.meme_template.export
 
 import android.app.AlertDialog
 import android.app.Dialog
-import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.Rect
 import android.os.Bundle
@@ -10,7 +9,6 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.view.size
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -23,7 +21,6 @@ import com.minhnv.meme_app.ui.main.MainActivity
 import com.minhnv.meme_app.ui.main.create.meme_template.ItemDecorationAlbumColumns
 import com.minhnv.meme_app.utils.Constants
 import dagger.hilt.android.AndroidEntryPoint
-import java.io.ByteArrayOutputStream
 
 @AndroidEntryPoint
 class ExportMemeFragment : BaseFragment<ExportMemeFragmentBinding>() {
@@ -101,16 +98,9 @@ class ExportMemeFragment : BaseFragment<ExportMemeFragmentBinding>() {
         }
 
         binding.btnExportMeme.setOnClickListener {
-            viewModel.getBitmapFromView(binding.memeEdt)
+            val path = viewModel.storeAndGetPathImage(binding.memeEdt, mActivity)
+            bundle.putString(Constants.ARGUMENT_1, path)
             switchFragment(R.id.publishMemeFragment, bundle)
-        }
-
-        viewModel.finalMeme.observe(viewLifecycleOwner) {
-            if (it != null) {
-                val stream = ByteArrayOutputStream()
-                it.compress(Bitmap.CompressFormat.JPEG, 100, stream)
-                bundle.putByteArray(Constants.ARGUMENT_1, stream.toByteArray())
-            }
         }
 
         binding.vpToolIcon.apply {
@@ -175,11 +165,9 @@ class ExportMemeFragment : BaseFragment<ExportMemeFragmentBinding>() {
         }
 
         viewModel.memeEdtValue.observe(viewLifecycleOwner) { list ->
-            println("#memeMaple: $list")
             list.forEach {
                 binding.memeEdt.addIcon(mActivity, it.value.first, it.value.second)
             }
-            println("#memeMaple ${binding.memeEdt.size}")
         }
     }
 
