@@ -23,7 +23,8 @@
         <activity
             android:name="com.minhnv.meme_app.ui.main.MainActivity"
             android:exported="true"
-            android:windowSoftInputMode="adjustPan">
+            android:windowSoftInputMode="adjustPan"
+            tools:ignore="Instantiatable">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -35,13 +36,10 @@
             android:value="cloudinary://691223655121158:jLRbKlzZQwuNzXZRJnrGbrgG34Q@minhnv"/>
 
         <!-- Sample AdMob app ID: ca-app-pub-3940256099942544~3347511713 -->
+        <!-- ID TEST-->
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-3940256099942544~3347511713"/>
-
-<!--        <meta-data-->
-<!--            android:name="com.google.android.gms.ads.APPLICATION_ID"-->
-<!--            android:value="ca-app-pub-6581122158863040~3066270599"/>-->
+            android:value="${admobId}"/>
     </application>
 
 </manifest>
