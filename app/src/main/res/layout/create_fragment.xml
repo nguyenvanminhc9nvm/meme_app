@@ -115,7 +115,8 @@
                 android:textStyle="bold" />
         </LinearLayout>
 
-        <LinearLayout
+        <com.google.android.gms.ads.nativead.NativeAdView
+            android:id="@+id/nativeAdCreate"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_gravity="center"
@@ -127,24 +128,56 @@
             app:layout_constraintStart_toStartOf="@id/llMemeTemplate"
             app:layout_constraintTop_toBottomOf="@id/llMemeTemplate">
 
-            <ImageView
-                android:id="@+id/imageView4"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="9"
-                android:background="@drawable/ic_background_corner"
-                android:padding="@dimen/_30sdp"
-                android:src="@drawable/ic_gallery" />
+                android:layout_height="match_parent">
 
-            <com.google.android.material.textview.MaterialTextView
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:text="@string/discovery"
-                android:textSize="@dimen/_12sdp"
-                android:textStyle="bold" />
-        </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/llNativeAd"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="@dimen/_20sdp"
+                    android:background="@drawable/ic_background_corner"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/imgIcon"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:padding="@dimen/_15sdp"
+                        android:src="@drawable/ic_gallery"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/imgContent"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:padding="@dimen/_5sdp" />
+
+                </LinearLayout>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tvHeadline"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:text="@string/discovery"
+                    android:textAlignment="center"
+                    android:textSize="@dimen/_12sdp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/llNativeAd" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </com.google.android.gms.ads.nativead.NativeAdView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

@@ -9,6 +9,11 @@ import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
+import com.google.android.gms.ads.AdListener
+import com.google.android.gms.ads.AdLoader
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.nativead.NativeAdOptions
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.minhnv.meme_app.R
 import com.minhnv.meme_app.databinding.CreateFragmentBinding
@@ -51,6 +56,22 @@ class CreateFragment : BaseFragment<CreateFragmentBinding>() {
                 }
             }
         }
+        AdLoader.Builder(mActivity, Constants.ADMOB_NATIVE_ID)
+            .forNativeAd { ad ->
+                binding.imgContent.setImageDrawable(ad.mediaContent?.mainImage)
+                binding.imgIcon.setImageDrawable(ad.icon?.drawable)
+                binding.tvHeadline.text = ad.headline
+            }
+            .withAdListener(object : AdListener() {
+                override fun onAdFailedToLoad(p0: LoadAdError) {
+                    super.onAdFailedToLoad(p0)
+                }
+            })
+            .withNativeAdOptions(
+                NativeAdOptions.Builder()
+                    .build()
+            )
+            .build().loadAd(AdRequest.Builder().build())
     }
 
     private val requestPermissionStorage = registerForActivityResult(

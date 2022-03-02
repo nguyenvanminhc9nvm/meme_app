@@ -10,13 +10,19 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
+import com.google.android.gms.ads.AdListener
+import com.google.android.gms.ads.AdLoader
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.nativead.NativeAdOptions
 import com.minhnv.meme_app.R
 import com.minhnv.meme_app.data.networking.model.response.Images
+import com.minhnv.meme_app.databinding.AdUnifiedBinding
 import com.minhnv.meme_app.databinding.ItemDeepBinding
 
 class DeepAdapter(
     private val context: Context
-) : PagingDataAdapter<Images, DeepAdapter.DeepViewHolder>(DeepDifferent) {
+) : PagingDataAdapter<Images, RecyclerView.ViewHolder>(DeepDifferent) {
 
     object DeepDifferent : DiffUtil.ItemCallback<Images>() {
 
@@ -76,12 +82,84 @@ class DeepAdapter(
         }
     }
 
-    override fun onBindViewHolder(holder: DeepViewHolder, position: Int) {
-        getItem(position)?.let { holder.bind(it) }
+    inner class NativeAdLoadedViewHolder(
+        private val binding: AdUnifiedBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
+
+        fun bind() {
+            val adRequest = AdRequest.Builder().build()
+            val adLoader = AdLoader.Builder(context, "ca-app-pub-3940256099942544/2247696110")
+                .forNativeAd { ad ->
+                    binding.adBody.text = ad.body
+                    binding.adAppIcon.setImageDrawable(ad.icon?.drawable)
+                    binding.adPrice.text = ad.price
+                    binding.adCallToAction.text = ad.callToAction
+                    binding.adStore.text = ad.store
+                    ad.mediaContent?.let {
+                        binding.adMedia.visibility = View.VISIBLE
+                        binding.adMedia.setImageDrawable(it.mainImage)
+                    } ?: kotlin.run {
+                        binding.adMedia.visibility = View.GONE
+                    }
+                    binding.adHeadline.text = ad.headline
+                    binding.adStars.rating = ad.starRating?.toFloat() ?: 0F
+                    binding.adAdvertiser.text = ad.advertiser
+                    binding.nativeAdView.setNativeAd(ad)
+                }
+                .withAdListener(object : AdListener() {
+                    override fun onAdFailedToLoad(p0: LoadAdError) {
+                        super.onAdFailedToLoad(p0)
+                    }
+                })
+                .withNativeAdOptions(
+                    NativeAdOptions.Builder()
+                        // Methods in the NativeAdOptions.Builder class can be
+                        // used here to specify individual options settings.
+                        .build()
+                )
+                .build()
+
+            adLoader.loadAd(adRequest)
+        }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DeepViewHolder {
-        val view = ItemDeepBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return DeepViewHolder(view)
+    private val itemViewTypeAD = 0
+    private val itemViewTypeDeep = 1
+
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        when (holder) {
+            is NativeAdLoadedViewHolder -> {
+                holder.bind()
+            }
+            is DeepViewHolder -> {
+                getItem(position)?.let { holder.bind(it) }
+            }
+            else -> throw Exception("unknown viewHolder")
+        }
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return when (viewType) {
+            itemViewTypeAD -> NativeAdLoadedViewHolder(
+                AdUnifiedBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                )
+            )
+            else -> DeepViewHolder(
+                ItemDeepBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            )
+        }
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return when (position) {
+            2 -> itemViewTypeAD
+            22 -> itemViewTypeAD
+            42 -> itemViewTypeAD
+            62 -> itemViewTypeAD
+            else -> itemViewTypeDeep
+        }
     }
 }

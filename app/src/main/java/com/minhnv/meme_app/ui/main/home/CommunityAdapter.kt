@@ -12,10 +12,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayoutManager
+import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdLoader
 import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.nativead.NativeAdOptions
 import com.minhnv.meme_app.data.networking.model.response.Community
-import com.minhnv.meme_app.databinding.GntMediumTemplateViewBinding
+import com.minhnv.meme_app.databinding.AdUnifiedBinding
 import com.minhnv.meme_app.databinding.ItemCommunityBinding
 import com.minhnv.meme_app.utils.Constants
 
@@ -118,22 +121,48 @@ class CommunityAdapter(
         }
     }
 
-
     inner class NativeAdLoadedViewHolder(
-        private val binding: GntMediumTemplateViewBinding
+        private val binding: AdUnifiedBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind() {
-            AdLoader.Builder(context, Constants.AD_MOD_ID)
-                .forNativeAd {
-                    binding.nativeAdView.setNativeAd(it)
-                }.build().loadAd(AdRequest.Builder().build())
+            AdLoader.Builder(context, Constants.ADMOB_NATIVE_ID)
+                .forNativeAd { ad ->
+                    binding.adBody.text = ad.body
+                    binding.adAppIcon.setImageDrawable(ad.icon?.drawable)
+                    binding.adPrice.text = ad.price
+                    binding.adCallToAction.text = ad.callToAction
+                    binding.adStore.text = ad.store
+                    ad.mediaContent?.let {
+                        binding.adMedia.visibility = View.VISIBLE
+                        binding.adMedia.setImageDrawable(it.mainImage)
+                    } ?: kotlin.run {
+                        binding.adMedia.visibility = View.GONE
+                    }
+                    binding.adHeadline.text = ad.headline
+                    binding.adStars.rating = ad.starRating?.toFloat() ?: 0F
+                    binding.adAdvertiser.text = ad.advertiser
+                    binding.nativeAdView.setNativeAd(ad)
+                }
+                .withAdListener(object : AdListener() {
+                    override fun onAdFailedToLoad(p0: LoadAdError) {
+                        super.onAdFailedToLoad(p0)
+                    }
+                })
+                .withNativeAdOptions(
+                    NativeAdOptions.Builder()
+                        .build()
+                )
+                .build().loadAd(AdRequest.Builder().build())
         }
     }
 
     override fun getItemViewType(position: Int): Int {
         return when (position) {
-            0 -> itemViewTypeAD
+            2 -> itemViewTypeAD
+            22 -> itemViewTypeAD
+            42 -> itemViewTypeAD
+            62 -> itemViewTypeAD
             else -> itemViewTypeCommunities
         }
     }
@@ -153,7 +182,7 @@ class CommunityAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             itemViewTypeAD -> NativeAdLoadedViewHolder(
-                GntMediumTemplateViewBinding.inflate(
+                AdUnifiedBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent,
                     false

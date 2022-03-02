@@ -24,5 +24,9 @@ object Constants {
     const val RAPID_API_KEY = "imgur-apiv3.p.rapidapi.com"
     const val RAPID_API_HOST = "28b98bda83msh5232ceba1c1ec88p1f142fjsn8bd3870ca3b3"
 
-    const val AD_MOD_ID = "ca-app-pub-3940256099942544~3347511713"
+    const val ADMOB_NATIVE_ID = "ca-app-pub-3940256099942544/2247696110"
+    const val InterstitialAd = "ca-app-pub-3940256099942544/1033173712"
+
+//    const val ADMOB_NATIVE_ID = "ca-app-pub-6581122158863040/7302960708"
+//    const val InterstitialAd = "ca-app-pub-6581122158863040/9149065852"
 }

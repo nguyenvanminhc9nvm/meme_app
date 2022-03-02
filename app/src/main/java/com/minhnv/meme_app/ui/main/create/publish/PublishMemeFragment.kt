@@ -3,11 +3,18 @@ package com.minhnv.meme_app.ui.main.create.publish
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.ads.RequestConfiguration
+import com.google.android.gms.ads.interstitial.InterstitialAd
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.minhnv.meme_app.R
 import com.minhnv.meme_app.databinding.PublishMemeFragmentBinding
 import com.minhnv.meme_app.ui.base.BaseFragment
@@ -26,6 +33,11 @@ class PublishMemeFragment : BaseFragment<PublishMemeFragmentBinding>() {
     private val viewModel by viewModels<PublishMemeViewModel>()
 
     override fun setup() {
+        MobileAds.setRequestConfiguration(
+            RequestConfiguration.Builder()
+                .setTestDeviceIds(listOf("ABCDEF012345"))
+                .build()
+        )
         arguments?.run {
             getString(Constants.ARGUMENT_1)?.let {
                 path = it
@@ -60,7 +72,7 @@ class PublishMemeFragment : BaseFragment<PublishMemeFragmentBinding>() {
                 when (it.status) {
                     Status.SUCCESS -> {
                         hideLoading()
-                        findNavController().popBackStack()
+                        loadAd()
                     }
                     Status.ERROR -> {
                         showDialog(it.message ?: "")
@@ -75,6 +87,30 @@ class PublishMemeFragment : BaseFragment<PublishMemeFragmentBinding>() {
                 }
             }
         }
+    }
+
+    private fun loadAd() {
+        val adRequest = AdRequest.Builder().build()
+
+        InterstitialAd.load(
+            mActivity, Constants.InterstitialAd, adRequest,
+            object : InterstitialAdLoadCallback() {
+                override fun onAdFailedToLoad(adError: LoadAdError) {
+                    val error = "domain: ${adError.domain}, code: ${adError.code}, " +
+                            "message: ${adError.message}"
+                    Toast.makeText(
+                        mActivity,
+                        "onAdFailedToLoad() with error $error",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+
+                override fun onAdLoaded(interstitialAd: InterstitialAd) {
+                    interstitialAd.show(mActivity)
+                    findNavController().popBackStack()
+                }
+            }
+        )
     }
 
     override val title: Int
