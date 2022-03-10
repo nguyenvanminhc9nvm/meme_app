@@ -19,6 +19,7 @@ import com.minhnv.meme_app.R
 import com.minhnv.meme_app.data.networking.model.response.Images
 import com.minhnv.meme_app.databinding.AdUnifiedBinding
 import com.minhnv.meme_app.databinding.ItemDeepBinding
+import com.minhnv.meme_app.utils.Constants
 
 class DeepAdapter(
     private val context: Context
@@ -88,7 +89,7 @@ class DeepAdapter(
 
         fun bind() {
             val adRequest = AdRequest.Builder().build()
-            val adLoader = AdLoader.Builder(context, "ca-app-pub-3940256099942544/2247696110")
+            val adLoader = AdLoader.Builder(context, Constants.ADMOB_NATIVE_ID)
                 .forNativeAd { ad ->
                     binding.adBody.text = ad.body
                     binding.adAppIcon.setImageDrawable(ad.icon?.drawable)
@@ -157,8 +158,14 @@ class DeepAdapter(
         return when (position) {
             2 -> itemViewTypeAD
             22 -> itemViewTypeAD
+            35 -> itemViewTypeAD
             42 -> itemViewTypeAD
+            55 -> itemViewTypeAD
             62 -> itemViewTypeAD
+            72 -> itemViewTypeAD
+            82 -> itemViewTypeAD
+            92 -> itemViewTypeAD
+            102 -> itemViewTypeAD
             else -> itemViewTypeDeep
         }
     }

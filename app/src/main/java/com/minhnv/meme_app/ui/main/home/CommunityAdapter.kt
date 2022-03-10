@@ -1,6 +1,7 @@
 package com.minhnv.meme_app.ui.main.home
 
 import android.content.Context
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -161,8 +162,14 @@ class CommunityAdapter(
         return when (position) {
             2 -> itemViewTypeAD
             22 -> itemViewTypeAD
+            35 -> itemViewTypeAD
             42 -> itemViewTypeAD
+            55 -> itemViewTypeAD
             62 -> itemViewTypeAD
+            72 -> itemViewTypeAD
+            82 -> itemViewTypeAD
+            92 -> itemViewTypeAD
+            102 -> itemViewTypeAD
             else -> itemViewTypeCommunities
         }
     }
