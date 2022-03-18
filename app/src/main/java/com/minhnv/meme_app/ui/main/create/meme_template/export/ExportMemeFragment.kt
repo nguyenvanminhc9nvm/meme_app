@@ -17,7 +17,6 @@ import com.minhnv.meme_app.R
 import com.minhnv.meme_app.data.networking.model.local.MemeTemplate
 import com.minhnv.meme_app.databinding.ExportMemeFragmentBinding
 import com.minhnv.meme_app.ui.base.BaseFragment
-import com.minhnv.meme_app.ui.main.MainActivity
 import com.minhnv.meme_app.ui.main.create.meme_template.ItemDecorationAlbumColumns
 import com.minhnv.meme_app.utils.Constants
 import dagger.hilt.android.AndroidEntryPoint
@@ -47,8 +46,6 @@ class ExportMemeFragment : BaseFragment<ExportMemeFragmentBinding>() {
             arguments?.getSerializable(Constants.ARGUMENT_SERIALIZABLE) as? MemeTemplate
         binding.memeEdt.loadImage(mActivity, memeTemplate?.memeUrl!!)
         binding.memeEdt.set(mActivity, memeTemplate.getListRect())
-        binding.memeEdt.collapsingToolbarLayoutHeight =
-            (mActivity as MainActivity).collapsingToolbarHeight
         binding.memeEdt.selectEditText = { selected ->
             binding.btnChange.isEnabled = selected
         }

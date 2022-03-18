@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.gms.ads.nativead.NativeAdView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/nativeAdDetailCommunity"
+    android:background="@color/black">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/imgAdMedial"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:contentDescription="@string/community_detail"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvHeadline"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_16sdp"
+            android:maxLines="5"
+            android:text="@string/time"
+            android:textColor="@color/white"
+            android:textAlignment="textEnd"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnCallToAction" />
+
+        <TextView
+            android:id="@+id/tvAdvertiser"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:maxLines="5"
+            android:text="@string/time"
+            android:textColor="@color/white"
+            android:textAlignment="textEnd"
+            app:layout_constraintEnd_toEndOf="@id/tvHeadline"
+            app:layout_constraintStart_toStartOf="@+id/tvHeadline"
+            app:layout_constraintTop_toBottomOf="@+id/tvHeadline" />
+
+        <RatingBar
+            android:id="@+id/ratingBar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:rating="2"
+            android:theme="@style/RatingBar"
+            app:layout_constraintEnd_toEndOf="@+id/tvAdvertiser"
+            app:layout_constraintTop_toBottomOf="@+id/tvAdvertiser" />
+
+        <TextView
+            android:id="@+id/tvBody"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:maxLines="5"
+            android:text="@string/time"
+            android:textColor="@color/white"
+            android:textAlignment="textEnd"
+            app:layout_constraintEnd_toEndOf="@id/tvAdvertiser"
+            app:layout_constraintStart_toStartOf="@+id/tvAdvertiser"
+            app:layout_constraintTop_toBottomOf="@+id/ratingBar" />
+
+        <Button
+            android:id="@+id/btnCallToAction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.931"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.75" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:background="#FFCC66"
+            android:text="AD"
+            android:textColor="#FFFFFF"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/imgAppIcon"
+            app:layout_constraintEnd_toStartOf="@+id/imgAppIcon"
+            app:layout_constraintTop_toTopOf="@+id/imgAppIcon" />
+
+
+        <ImageView
+            android:id="@+id/imgAppIcon"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            app:layout_constraintBottom_toBottomOf="@+id/btnCallToAction"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@+id/btnCallToAction"
+            app:layout_constraintTop_toTopOf="@+id/btnCallToAction" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.gms.ads.nativead.NativeAdView>

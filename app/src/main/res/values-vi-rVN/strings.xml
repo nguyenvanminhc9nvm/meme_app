@@ -54,4 +54,6 @@
     <string name="tags">Thẻ</string>
     <string name="auto_scroll_mes">"Cuộn sau: "</string>
     <string name="auto_scroll_mes_second">giây</string>
+    <string name="community_detail">Community detail</string>
+    <string name="number">10.0 K</string>
 </resources>

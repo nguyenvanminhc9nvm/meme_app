@@ -21,8 +21,10 @@ import com.minhnv.meme_app.data.networking.model.response.Community
 import com.minhnv.meme_app.databinding.AdUnifiedBinding
 import com.minhnv.meme_app.databinding.ItemCommunityBinding
 import com.minhnv.meme_app.utils.Constants
+import com.minhnv.meme_app.utils.options.formatNumber
 
 typealias DidSearchTagName = (String) -> Unit
+typealias DidSelectedItem = (Int) -> Unit
 
 class CommunityAdapter(
     private val context: Context
@@ -30,6 +32,7 @@ class CommunityAdapter(
     private val itemViewTypeAD = 0
     private val itemViewTypeCommunities = 1
     var didSearchTagName: DidSearchTagName? = null
+    var didSelectedItem: DidSelectedItem? = null
 
     object CommunitiesDifferent : DiffUtil.ItemCallback<Community>() {
 
@@ -53,6 +56,9 @@ class CommunityAdapter(
         )
 
         fun bind(community: Community) {
+            binding.root.setOnClickListener {
+                didSelectedItem?.invoke(layoutPosition)
+            }
             val snapHelper = PagerSnapHelper()
             binding.rycImage.onFlingListener = null
             snapHelper.attachToRecyclerView(binding.rycImage)
@@ -99,9 +105,9 @@ class CommunityAdapter(
             } ?: kotlin.run {
                 binding.tvDescription.visibility = View.GONE
             }
-            binding.btnUp.text = community.ups?.toInt().toString()
-            binding.btnDown.text = community.downs?.toInt().toString()
-            binding.btnSee.text = community.views?.toInt().toString()
+            binding.btnUp.text = community.ups?.let { formatNumber(it.toLong()) }
+            binding.btnDown.text = community.downs?.let { formatNumber(it.toLong()) }
+            binding.btnSee.text = community.views?.let { formatNumber(it.toLong()) }
         }
 
         fun didPauseVideo() {

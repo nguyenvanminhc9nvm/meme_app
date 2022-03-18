@@ -21,7 +21,7 @@ class TagsFragment : BaseFragment<TagsFragmentBinding>() {
     override val inflaterBinding: (LayoutInflater, ViewGroup?, Boolean) -> TagsFragmentBinding
         get() = TagsFragmentBinding::inflate
 
-    private val viewModel by viewModels<TagsViewModel>()
+    private val viewModel by viewModels<TagsViewModel>({ requireActivity() })
     private lateinit var tagAdapter : CommunityAdapter
     private val networkDisconnectAdapter = NetworkDisconnectAdapter()
     private lateinit var linearLayoutManager : LinearLayoutManager
@@ -48,7 +48,6 @@ class TagsFragment : BaseFragment<TagsFragmentBinding>() {
             setHasFixedSize(true)
             adapter = tagAdapter.withLoadStateFooter(networkDisconnectAdapter)
         }
-
         tagAdapter.didSearchTagName = {
             linearLayoutManager.scrollToPosition(0)
             tagNameTitle = it

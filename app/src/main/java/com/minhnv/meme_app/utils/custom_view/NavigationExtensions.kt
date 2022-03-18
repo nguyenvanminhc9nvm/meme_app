@@ -1,7 +1,9 @@
-package com.minhnv.meme_app.utils
+package com.minhnv.meme_app.utils.custom_view
 
 import android.content.Intent
+import android.os.Build
 import android.util.SparseArray
+import androidx.annotation.RequiresApi
 import androidx.core.util.forEach
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LiveData
@@ -16,6 +18,7 @@ import com.minhnv.meme_app.R
  *
  * This sample is a workaround until the Navigation Component supports multiple back stacks.
  */
+@RequiresApi(Build.VERSION_CODES.S)
 fun BottomNavigationView.setupWithNavController(
     navGraphIds: List<Int>,
     fragmentManager: FragmentManager,
@@ -220,7 +223,7 @@ private fun obtainNavHostFragment(
     return navHostFragment
 }
 
-private fun FragmentManager.isOnBackStack(backStackName: String): Boolean {
+fun FragmentManager.isOnBackStack(backStackName: String): Boolean {
     val backStackCount = backStackEntryCount
     for (index in 0 until backStackCount) {
         if (getBackStackEntryAt(index).name == backStackName) {

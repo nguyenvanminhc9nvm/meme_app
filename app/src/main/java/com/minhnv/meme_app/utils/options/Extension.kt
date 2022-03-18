@@ -1,9 +1,11 @@
-package com.minhnv.meme_app.utils
+package com.minhnv.meme_app.utils.options
 
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import java.util.concurrent.TimeUnit
+import kotlin.math.ln
+import kotlin.math.pow
 
 fun interval(timeInMillis: Long, timeUnit: TimeUnit): Flow<Long> = flow {
 
@@ -23,5 +25,10 @@ fun interval(timeInMillis: Long, timeUnit: TimeUnit): Flow<Long> = flow {
         delay(delayTime)
         emit(counter++)
     }
+}
 
+fun formatNumber(count: Long): String {
+    if (count < 1000) return "" + count
+    val exp = (ln(count.toDouble()) / ln(1000.0)).toInt()
+    return String.format("%.1f %c", count / 1000.0.pow(exp.toDouble()), "KMGTPE"[exp - 1])
 }

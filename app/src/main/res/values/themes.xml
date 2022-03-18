@@ -263,4 +263,9 @@
         <item name="colorControlActivated">@color/white</item>
     </style>
 
+    <style name="RatingBar" parent="Theme.AppCompat">
+        <item name="colorControlNormal">@color/white</item>
+        <item name="colorControlActivated">#FFEB3B</item>
+    </style>
+
 </resources>

@@ -25,7 +25,7 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>() {
     override val inflaterBinding: (LayoutInflater, ViewGroup?, Boolean) -> HomeFragmentBinding
         get() = HomeFragmentBinding::inflate
 
-    private val viewModel by viewModels<HomeViewModel>()
+    private val viewModel by viewModels<HomeViewModel>(ownerProducer = { requireActivity() })
     private val networkDisconnectAdapter = NetworkDisconnectAdapter()
     private lateinit var linearLayoutManager: LinearLayoutManager
     private lateinit var communityAdapter: CommunityAdapter
@@ -34,6 +34,7 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>() {
     private val job: Job = Job()
 
     override fun setup() {
+        println("#viewModel: $viewModel")
         linearLayoutManager = LinearLayoutManager(mActivity)
         communityAdapter = CommunityAdapter(mActivity)
         binding.rycCommunity.apply {
@@ -127,6 +128,13 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>() {
                 }
                 linearLayoutManager.scrollToPosition(0)
             }
+        }
+        communityAdapter.didSelectedItem = {
+            viewModel.setPosition(it)
+            switchFragment(R.id.communityDetailFragment)
+        }
+        viewModel.position.observe(viewLifecycleOwner) {
+            linearLayoutManager.scrollToPosition(it)
         }
     }
 

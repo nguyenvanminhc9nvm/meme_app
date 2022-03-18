@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
 import com.google.android.material.color.DynamicColors
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
@@ -19,6 +20,7 @@ class BaseApplication: Application() {
 
     override fun onCreate() {
         super.onCreate()
+        FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(!BuildConfig.DEBUG)
         sharedPreferences = applicationContext.getSharedPreferences("BaseApplication", Context.MODE_PRIVATE)
         sharedPreferencesEditor = sharedPreferences.edit()
         mContext = applicationContext

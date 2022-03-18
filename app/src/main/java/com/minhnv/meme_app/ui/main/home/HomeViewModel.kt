@@ -1,5 +1,7 @@
 package com.minhnv.meme_app.ui.main.home
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
@@ -17,6 +19,12 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val dataManager: AppDataManager
 ) : ViewModel() {
+    private val _position: MutableLiveData<Int> = MutableLiveData()
+    val position: LiveData<Int> get() = _position
+
+    fun setPosition(newPos: Int) {
+        _position.value = newPos
+    }
 
     val communities = Pager(PagingConfig(10)) {
         CommunityDataSource("hot", "viral", "day", dataManager)

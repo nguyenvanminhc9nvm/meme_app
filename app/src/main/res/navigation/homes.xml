@@ -15,4 +15,9 @@
         android:name="com.minhnv.meme_app.ui.main.home.tags.TagsFragment"
         android:label="tags_fragment"
         tools:layout="@layout/tags_fragment" />
+    <fragment
+        android:id="@+id/communityDetailFragment"
+        android:name="com.minhnv.meme_app.ui.main.home.detail.CommunityDetailFragment"
+        android:label="community_detail_fragment"
+        tools:layout="@layout/community_detail_fragment" />
 </navigation>

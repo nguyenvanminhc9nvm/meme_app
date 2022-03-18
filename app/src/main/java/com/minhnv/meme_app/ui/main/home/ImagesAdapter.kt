@@ -11,17 +11,20 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
-import com.google.android.gms.vision.Frame
-import com.google.android.gms.vision.text.TextRecognizer
 import com.google.mlkit.common.model.DownloadConditions
 import com.google.mlkit.nl.languageid.LanguageIdentification
 import com.google.mlkit.nl.translate.Translation
 import com.google.mlkit.nl.translate.TranslatorOptions
+import com.google.mlkit.vision.common.InputImage
+import com.google.mlkit.vision.text.TextRecognizer
 import com.minhnv.meme_app.R
 import com.minhnv.meme_app.data.networking.model.response.Images
 import com.minhnv.meme_app.data.networking.model.response.TypeImages.IMAGES_GIF
 import com.minhnv.meme_app.data.networking.model.response.TypeImages.VIDEO_MP4
 import com.minhnv.meme_app.databinding.ItemImagesAdapterBinding
+import com.minhnv.meme_app.utils.text_recognizer.CardType
+import com.minhnv.meme_app.utils.text_recognizer.TextRecognitionProcessor
+import com.minhnv.meme_app.utils.text_recognizer.TextType
 import java.util.*
 
 typealias DidDetectionTextError = () -> Unit
@@ -112,59 +115,21 @@ class ImagesAdapter(
                             resource: Bitmap,
                             transition: Transition<in Bitmap>?
                         ) {
-                            detector = TextRecognizer.Builder(context).build()
-                            if (detector.isOperational) {
-                                val frame = Frame.Builder().setBitmap(resource).build()
-                                val textBlocks = detector.detect(frame)
-                                var blocks = ""
-                                for (i in 0 until textBlocks.size()) {
-                                    val tBlock = textBlocks.valueAt(i)
+                            val textRecognitionProcessor = TextRecognitionProcessor.Builder()
+                                .setContext(context)
+                                .setCardType(CardType.CARD_TYPE_1)
+                                .setLangType(TextType.TEXT_RECOGNITION_JP)
+                                .build()
+                            textRecognitionProcessor.detect(InputImage.fromBitmap(resource, 0))
+                                .addOnCanceledListener {
 
-                                    (blocks + tBlock.value + "\n").also { blocks = it }
+                                }.addOnSuccessListener { result ->
+                                    didTranslateText(result.text, {
+                                        binding.tvResultTranslate.text = it
+                                    }, {
+                                        binding.tvResultTranslate.text = it
+                                    })
                                 }
-                                if (textBlocks.size() == 0) {
-                                    binding.btnTranslate.visibility = View.GONE
-                                    binding.tvResultTranslate.visibility = View.GONE
-                                } else {
-                                    binding.btnTranslate.visibility = View.VISIBLE
-                                    binding.tvResultTranslate.visibility = View.VISIBLE
-                                    val result = " $blocks "
-                                    val languageIdentifier = LanguageIdentification.getClient()
-                                    languageIdentifier.identifyLanguage(result)
-                                        .addOnSuccessListener { languageCode ->
-                                            if (languageCode == "und") {
-                                                binding.tvResultTranslate.text =
-                                                    context.getText(R.string.cant_identify_language)
-                                            } else {
-                                                val options = TranslatorOptions.Builder()
-                                                    .setSourceLanguage(languageCode)
-                                                    .setTargetLanguage(Locale.getDefault().language)
-                                                    .build()
-                                                val englishGermanTranslator = Translation.getClient(options)
-                                                val conditions = DownloadConditions.Builder()
-                                                    .requireWifi()
-                                                    .build()
-                                                englishGermanTranslator.downloadModelIfNeeded(conditions)
-                                                    .addOnSuccessListener {
-                                                        englishGermanTranslator.translate(result)
-                                                            .addOnSuccessListener {
-                                                                binding.tvResultTranslate.visibility = View.VISIBLE
-                                                                binding.tvResultTranslate.text = it + "\n"
-                                                            }.addOnFailureListener {
-                                                                binding.tvResultTranslate.text =
-                                                                    context.getText(R.string.cant_identify_language)
-                                                            }
-                                                    }
-                                                    .addOnFailureListener { exception ->
-                                                        binding.tvResultTranslate.text = exception.message
-                                                    }
-                                            }
-                                        }
-                                        .addOnFailureListener {
-                                            binding.tvResultTranslate.text = it.message
-                                        }
-                                }
-                            }
                         }
 
                         override fun onLoadCleared(placeholder: Drawable?) {
@@ -172,6 +137,44 @@ class ImagesAdapter(
                         }
                     })
             }
+        }
+
+        private fun didTranslateText(
+            value: String,
+            onSuccess: (String) -> Unit,
+            onFailed: (String) -> Unit
+        ) {
+            val languageIdentifier = LanguageIdentification.getClient()
+            languageIdentifier.identifyLanguage(value)
+                .addOnSuccessListener { languageCode ->
+                    if (languageCode == "und") {
+                        onFailed.invoke(context.getString(R.string.cant_identify_language))
+                    } else {
+                        val options = TranslatorOptions.Builder()
+                            .setSourceLanguage(languageCode)
+                            .setTargetLanguage(Locale.getDefault().language)
+                            .build()
+                        val englishGermanTranslator = Translation.getClient(options)
+                        val conditions = DownloadConditions.Builder()
+                            .requireWifi()
+                            .build()
+                        englishGermanTranslator.downloadModelIfNeeded(conditions)
+                            .addOnSuccessListener {
+                                englishGermanTranslator.translate(value)
+                                    .addOnSuccessListener {
+                                        onSuccess.invoke(it)
+                                    }.addOnFailureListener {
+                                        onFailed.invoke(context.getString(R.string.cant_identify_language))
+                                    }
+                            }
+                            .addOnFailureListener { exception ->
+                                onFailed.invoke(exception.message ?: "")
+                            }
+                    }
+                }
+                .addOnFailureListener {
+                    onFailed.invoke(it.message ?: "")
+                }
         }
     }
 }

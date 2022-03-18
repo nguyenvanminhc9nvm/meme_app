@@ -1,5 +1,6 @@
 package com.minhnv.meme_app.ui.main.home.tags
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
@@ -16,6 +17,13 @@ import javax.inject.Inject
 class TagsViewModel @Inject constructor(
     private val dataManager: AppDataManager
 ): ViewModel() {
+
+    private val _position = MutableLiveData<Int>()
+    val position get() = _position
+
+    fun setPosition(newPos: Int) {
+        _position.value = newPos
+    }
 
     val tags: (String) -> Flow<PagingData<Community>> = {
         Pager(PagingConfig(10)) {

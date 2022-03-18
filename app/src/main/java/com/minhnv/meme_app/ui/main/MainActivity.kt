@@ -1,13 +1,10 @@
 package com.minhnv.meme_app.ui.main
 
-import android.content.Context
-import android.graphics.Rect
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import android.view.Window
-import android.view.WindowManager
-import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
 import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.LiveData
 import androidx.navigation.NavController
@@ -20,7 +17,7 @@ import com.minhnv.meme_app.databinding.ActivityMainBinding
 import com.minhnv.meme_app.ui.base.BaseActivity
 import com.minhnv.meme_app.ui.base.INavigatorActivity
 import com.minhnv.meme_app.utils.Constants
-import com.minhnv.meme_app.utils.setupWithNavController
+import com.minhnv.meme_app.utils.custom_view.setupWithNavController
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -28,15 +25,13 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : BaseActivity<ActivityMainBinding>(), INavigatorActivity {
     private var currentNavController: LiveData<NavController>? = null
 
-    private val viewModel by viewModels<MainViewModel>()
-
     override fun setup() {
         MobileAds.initialize(
             this
         ) { }
-        viewModel
     }
 
+    @RequiresApi(Build.VERSION_CODES.S)
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(
             (application as BaseApplication).preferenceGetInteger(
@@ -82,11 +77,13 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), INavigatorActivity {
 
     override val inflater: (LayoutInflater) -> ActivityMainBinding = ActivityMainBinding::inflate
 
+    @RequiresApi(Build.VERSION_CODES.S)
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
         setupBottomNavigationBar()
     }
 
+    @RequiresApi(Build.VERSION_CODES.S)
     private fun setupBottomNavigationBar() {
         val navGraphIds = listOf(
             R.navigation.homes,
@@ -94,7 +91,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), INavigatorActivity {
             R.navigation.create,
             R.navigation.profiles
         )
-
         val controller = binding.bottomNavigationView.setupWithNavController(
             navGraphIds = navGraphIds,
             fragmentManager = supportFragmentManager,
@@ -121,20 +117,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), INavigatorActivity {
         val application = application as BaseApplication
         application.preferencePutInteger(Constants.KEY_THEMES, themes)
         recreate()
-    }
-
-    val collapsingToolbarHeight get() = binding.collapsingToolbar.height + statusBarHeight()
-
-    private fun statusBarHeight() : Int {
-        val rect = Rect()
-        val window: Window = window
-        window.decorView.getWindowVisibleDisplayFrame(rect)
-        val v: View = window.findViewById(Window.ID_ANDROID_CONTENT)
-        val display =
-            (getSystemService(Context.WINDOW_SERVICE) as WindowManager).defaultDisplay
-
-        //return result title bar height
-        return display.height - v.bottom + rect.top
     }
 
     override fun visibleToolbar(visible: Boolean) {

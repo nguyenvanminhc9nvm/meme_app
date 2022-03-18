@@ -59,6 +59,14 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:visibility="visible"
         app:labelVisibilityMode="labeled"
         app:menu="@menu/menu_app" />
+
+    <com.minhnv.meme_app.utils.custom_view.BottomNavigationBarVertical
+        android:id="@+id/bottomNavigationViewVertical"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:layout_weight="1" />
 </LinearLayout>
