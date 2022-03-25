@@ -3,7 +3,6 @@ package com.minhnv.meme_app.ui.main.create.publish
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -96,13 +95,7 @@ class PublishMemeFragment : BaseFragment<PublishMemeFragmentBinding>() {
             mActivity, Constants.InterstitialAd, adRequest,
             object : InterstitialAdLoadCallback() {
                 override fun onAdFailedToLoad(adError: LoadAdError) {
-                    val error = "domain: ${adError.domain}, code: ${adError.code}, " +
-                            "message: ${adError.message}"
-                    Toast.makeText(
-                        mActivity,
-                        "onAdFailedToLoad() with error $error",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    findNavController().popBackStack()
                 }
 
                 override fun onAdLoaded(interstitialAd: InterstitialAd) {

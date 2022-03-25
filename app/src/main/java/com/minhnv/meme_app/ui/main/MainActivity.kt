@@ -3,7 +3,6 @@ package com.minhnv.meme_app.ui.main
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.LiveData
@@ -120,11 +119,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), INavigatorActivity {
     }
 
     override fun visibleToolbar(visible: Boolean) {
-        val visibility = if (visible) {
-            View.VISIBLE
-        } else {
-            View.GONE
-        }
-        binding.collapsingToolbar.visibility = visibility
+
     }
 }

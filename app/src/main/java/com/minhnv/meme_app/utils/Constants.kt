@@ -27,4 +27,5 @@ object Constants {
 
     const val ADMOB_NATIVE_ID = BuildConfig.NATIVE_ID
     const val InterstitialAd = BuildConfig.INTERSTITIAL_AD_ID
+    const val BANNER_ID = BuildConfig.BANNER_AD_ID
 }

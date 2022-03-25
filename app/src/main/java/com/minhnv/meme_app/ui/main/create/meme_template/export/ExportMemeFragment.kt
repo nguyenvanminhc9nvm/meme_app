@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -74,12 +73,10 @@ class ExportMemeFragment : BaseFragment<ExportMemeFragmentBinding>() {
             binding.nsvExportMeme.requestDisallowInterceptTouchEvent(isMove)
         }
         binding.memeEdt.notifyUserSelectView = {
-            Toast.makeText(mActivity, getString(R.string.select_image_to_move), Toast.LENGTH_SHORT)
-                .show()
+
         }
         binding.memeEdt.notifyUserSelectEditView = {
-            Toast.makeText(mActivity, getString(R.string.select_text_to_edit), Toast.LENGTH_SHORT)
-                .show()
+
         }
         binding.memeEdt.didIconAddIntoView = { memeIcon, rect ->
             viewModel.setMemeEdtValue(memeIcon, rect)

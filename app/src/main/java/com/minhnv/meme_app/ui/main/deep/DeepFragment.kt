@@ -2,6 +2,7 @@ package com.minhnv.meme_app.ui.main.deep
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
@@ -16,6 +17,7 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import java.util.concurrent.TimeUnit
 
 @AndroidEntryPoint
 class DeepFragment : BaseFragment<DeepFragmentBinding>() {
@@ -64,6 +66,15 @@ class DeepFragment : BaseFragment<DeepFragmentBinding>() {
         binding.progressAutoScroll.setOnClickListener { view ->
             duration += 1000L
             job.cancelChildren()
+            Toast.makeText(
+                mActivity,
+                "${getString(R.string.auto_scroll_mes)} ${TimeUnit.MILLISECONDS.toSeconds(duration)} ${
+                    getString(
+                        R.string.auto_scroll_mes_second
+                    )
+                }",
+                Toast.LENGTH_SHORT
+            ).show()
             CoroutineScope(Dispatchers.IO + job).launch {
                 flow {
                     var counter: Long = 0

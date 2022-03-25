@@ -1,7 +1,6 @@
 package com.minhnv.meme_app.ui.main.home
 
 import android.content.Context
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,13 +12,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayoutManager
-import com.google.android.gms.ads.AdListener
-import com.google.android.gms.ads.AdLoader
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.*
 import com.google.android.gms.ads.nativead.NativeAdOptions
 import com.minhnv.meme_app.data.networking.model.response.Community
 import com.minhnv.meme_app.databinding.AdUnifiedBinding
+import com.minhnv.meme_app.databinding.BannerAdviewBinding
 import com.minhnv.meme_app.databinding.ItemCommunityBinding
 import com.minhnv.meme_app.utils.Constants
 import com.minhnv.meme_app.utils.options.formatNumber
@@ -31,6 +28,7 @@ class CommunityAdapter(
     private val context: Context
 ) : PagingDataAdapter<Community, RecyclerView.ViewHolder>(CommunitiesDifferent) {
     private val itemViewTypeAD = 0
+    private val itemViewTypeBannerAD = 2
     private val itemViewTypeCommunities = 1
     var didSearchTagName: DidSearchTagName? = null
     var didSelectedItem: DidSelectedItem? = null
@@ -166,16 +164,17 @@ class CommunityAdapter(
 
     override fun getItemViewType(position: Int): Int {
         return when (position) {
-            2 -> itemViewTypeAD
+            2 -> itemViewTypeBannerAD
+            12 -> itemViewTypeBannerAD
             22 -> itemViewTypeAD
             35 -> itemViewTypeAD
-            42 -> itemViewTypeAD
+            42 -> itemViewTypeBannerAD
             55 -> itemViewTypeAD
             62 -> itemViewTypeAD
-            72 -> itemViewTypeAD
+            72 -> itemViewTypeBannerAD
             82 -> itemViewTypeAD
             92 -> itemViewTypeAD
-            102 -> itemViewTypeAD
+            102 -> itemViewTypeBannerAD
             else -> itemViewTypeCommunities
         }
     }
@@ -183,6 +182,9 @@ class CommunityAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is NativeAdLoadedViewHolder -> {
+                holder.bind()
+            }
+            is BannerAdViewHolder -> {
                 holder.bind()
             }
             is CommunitiesViewHolder -> {
@@ -201,6 +203,9 @@ class CommunityAdapter(
                     false
                 )
             )
+            itemViewTypeBannerAD -> BannerAdViewHolder(
+                BannerAdviewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            )
             else -> CommunitiesViewHolder(
                 ItemCommunityBinding.inflate(
                     LayoutInflater.from(parent.context),
@@ -208,6 +213,19 @@ class CommunityAdapter(
                     false
                 )
             )
+        }
+    }
+
+    inner class BannerAdViewHolder(
+        private val binding: BannerAdviewBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
+        fun bind() {
+            val adView = AdView(context)
+            adView.adSize = AdSize.BANNER
+            adView.adUnitId = Constants.BANNER_ID
+            val ad = AdRequest.Builder().build()
+            adView.loadAd(ad)
+            binding.adView.addView(adView)
         }
     }
 }

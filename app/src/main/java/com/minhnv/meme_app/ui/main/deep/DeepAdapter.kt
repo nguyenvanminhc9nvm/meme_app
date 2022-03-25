@@ -10,14 +10,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
-import com.google.android.gms.ads.AdListener
-import com.google.android.gms.ads.AdLoader
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.*
 import com.google.android.gms.ads.nativead.NativeAdOptions
 import com.minhnv.meme_app.R
 import com.minhnv.meme_app.data.networking.model.response.Images
 import com.minhnv.meme_app.databinding.AdUnifiedBinding
+import com.minhnv.meme_app.databinding.BannerAdviewBinding
 import com.minhnv.meme_app.databinding.ItemDeepBinding
 import com.minhnv.meme_app.utils.Constants
 
@@ -125,11 +123,15 @@ class DeepAdapter(
     }
 
     private val itemViewTypeAD = 0
+    private val itemViewTypeBannerAD = 2
     private val itemViewTypeDeep = 1
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is NativeAdLoadedViewHolder -> {
+                holder.bind()
+            }
+            is BannerAdViewHolder -> {
                 holder.bind()
             }
             is DeepViewHolder -> {
@@ -148,6 +150,9 @@ class DeepAdapter(
                     false
                 )
             )
+            itemViewTypeBannerAD -> BannerAdViewHolder(
+                BannerAdviewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            )
             else -> DeepViewHolder(
                 ItemDeepBinding.inflate(LayoutInflater.from(parent.context), parent, false)
             )
@@ -156,17 +161,34 @@ class DeepAdapter(
 
     override fun getItemViewType(position: Int): Int {
         return when (position) {
-            2 -> itemViewTypeAD
+            2 -> itemViewTypeBannerAD
+            12 -> itemViewTypeBannerAD
             22 -> itemViewTypeAD
-            35 -> itemViewTypeAD
+            32 -> itemViewTypeAD
+            35 -> itemViewTypeBannerAD
             42 -> itemViewTypeAD
-            55 -> itemViewTypeAD
+            52 -> itemViewTypeAD
+            55 -> itemViewTypeBannerAD
             62 -> itemViewTypeAD
-            72 -> itemViewTypeAD
+            72 -> itemViewTypeBannerAD
             82 -> itemViewTypeAD
-            92 -> itemViewTypeAD
+            92 -> itemViewTypeBannerAD
             102 -> itemViewTypeAD
+            112 -> itemViewTypeBannerAD
             else -> itemViewTypeDeep
+        }
+    }
+
+    inner class BannerAdViewHolder(
+        private val binding: BannerAdviewBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
+        fun bind() {
+            val adView = AdView(context)
+            adView.adSize = AdSize.BANNER
+            adView.adUnitId = Constants.BANNER_ID
+            val ad = AdRequest.Builder().build()
+            adView.loadAd(ad)
+            binding.adView.addView(adView)
         }
     }
 }

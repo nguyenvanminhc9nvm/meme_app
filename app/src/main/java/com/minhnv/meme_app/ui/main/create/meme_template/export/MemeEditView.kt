@@ -56,47 +56,51 @@ class MemeEditView @JvmOverloads constructor(
     }
 
     private fun addViewWithRect(context: Context, rect: Rect?) {
-        val displayMetrics = DisplayMetrics()
-        (context as MainActivity).windowManager.defaultDisplay.getMetrics(displayMetrics)
-        val widthScreen = displayMetrics.widthPixels
-        val baseWidth = 1070 * 1.0
-        val baseHeight = 1070 * 1.0
-        val oldLeft = rect?.left ?: 0
-        val oldTop = rect?.top ?: 0
-        val oldRight = rect?.right ?: 0
-        val oldBottom = rect?.bottom ?: 0
-        val ratioLeft = if (oldLeft == 0) 0.0 else (baseWidth / oldLeft)
-        val ratioRight = if (oldRight == 0) 0.0 else (baseWidth / oldRight)
-        val ratioTop = if (oldTop == 0) 0.0 else (baseHeight / oldTop)
-        val ratioBottom = if (oldBottom == 0) 0.0 else (baseHeight / oldBottom)
-        val left = if (ratioLeft == 0.0) 0 else widthScreen / ratioLeft
-        val top = if (ratioTop == 0.0) 0 else widthScreen / ratioTop
-        val right = if (ratioRight == 0.0) 0 else widthScreen / ratioRight
-        val bottom = if (ratioBottom == 0.0) 0 else widthScreen / ratioBottom
-        val newRect = Rect(left.toInt(), top.toInt(), right.toInt(), bottom.toInt())
-        println("#positionInfo rect: left: $left, top: $top, right: $right, bottom: $bottom")
-        if (rect == null) {
-            return
-        }
-        val editText = EdittextResizeAuto(context)
-        editText.setBackgroundResource(R.drawable.ic_edittext)
-        editText.setOnFocusChangeListener { view, b ->
-            selectEditText?.invoke(b)
-            if (b) {
-                edittextAttention = view as EdittextResizeAuto
+        try {
+            val displayMetrics = DisplayMetrics()
+            (context as MainActivity).windowManager.defaultDisplay.getMetrics(displayMetrics)
+            val widthScreen = displayMetrics.widthPixels
+            val baseWidth = 1070 * 1.0
+            val baseHeight = 1070 * 1.0
+            val oldLeft = rect?.left ?: 0
+            val oldTop = rect?.top ?: 0
+            val oldRight = rect?.right ?: 0
+            val oldBottom = rect?.bottom ?: 0
+            val ratioLeft = if (oldLeft == 0) 0.0 else (baseWidth / oldLeft)
+            val ratioRight = if (oldRight == 0) 0.0 else (baseWidth / oldRight)
+            val ratioTop = if (oldTop == 0) 0.0 else (baseHeight / oldTop)
+            val ratioBottom = if (oldBottom == 0) 0.0 else (baseHeight / oldBottom)
+            val left = if (ratioLeft == 0.0) 0 else widthScreen / ratioLeft
+            val top = if (ratioTop == 0.0) 0 else widthScreen / ratioTop
+            val right = if (ratioRight == 0.0) 0 else widthScreen / ratioRight
+            val bottom = if (ratioBottom == 0.0) 0 else widthScreen / ratioBottom
+            val newRect = Rect(left.toInt(), top.toInt(), right.toInt(), bottom.toInt())
+            println("#positionInfo rect: left: $left, top: $top, right: $right, bottom: $bottom")
+            if (rect == null) {
+                return
             }
+            val editText = EdittextResizeAuto(context)
+            editText.setBackgroundResource(R.drawable.ic_edittext)
+            editText.setOnFocusChangeListener { view, b ->
+                selectEditText?.invoke(b)
+                if (b) {
+                    edittextAttention = view as EdittextResizeAuto
+                }
+            }
+            val idView = (rect.top + rect.bottom + rect.left + rect.right) / 4
+            editText.id = idView
+            // Measure the view at the exact dimensions (otherwise the text won't center correctly)
+            val widthSpec = MeasureSpec.makeMeasureSpec(newRect.width(), MeasureSpec.EXACTLY)
+            val heightSpec = MeasureSpec.makeMeasureSpec(newRect.height(), MeasureSpec.EXACTLY)
+            val params = LayoutParams(widthSpec, heightSpec)
+            editText.layoutParams = params
+            editText.setPadding(5)
+            editText.translationX = newRect.left.toFloat()
+            editText.translationY = newRect.top.toFloat()
+            this.addView(editText)
+        } catch (e: Exception) {
+            println("error: ${e.message}")
         }
-        val idView = (rect.top + rect.bottom + rect.left + rect.right) / 4
-        editText.id = idView
-        // Measure the view at the exact dimensions (otherwise the text won't center correctly)
-        val widthSpec = MeasureSpec.makeMeasureSpec(newRect.width(), MeasureSpec.EXACTLY)
-        val heightSpec = MeasureSpec.makeMeasureSpec(newRect.height(), MeasureSpec.EXACTLY)
-        val params = LayoutParams(widthSpec, heightSpec)
-        editText.layoutParams = params
-        editText.setPadding(5)
-        editText.translationX = newRect.left.toFloat()
-        editText.translationY = newRect.top.toFloat()
-        this.addView(editText)
     }
 
     fun changeColor(color: Int, colorShadow: Int) {

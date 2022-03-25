@@ -14,8 +14,8 @@ android {
         applicationId "com.minhnv.meme_app"
         minSdk 24
         targetSdk 31
-        versionCode 6
-        versionName "1.5"
+        versionCode 7
+        versionName "1.6"
         ndk {
             abiFilters 'armeabi-v7a', 'arm64-v8a', 'x86_64'
         }
@@ -36,11 +36,13 @@ android {
         Prod {
             buildConfigField 'String', 'NATIVE_ID', '"ca-app-pub-6581122158863040/7302960708"'
             buildConfigField 'String', 'INTERSTITIAL_AD_ID', '"ca-app-pub-6581122158863040/9149065852"'
+            buildConfigField 'String', 'BANNER_AD_ID', '"ca-app-pub-6581122158863040/3462548349"'
             manifestPlaceholders = [ admobId: "ca-app-pub-6581122158863040~3066270599"]
         }
         Dev {
             buildConfigField 'String', 'NATIVE_ID', '"ca-app-pub-3940256099942544/2247696110"'
             buildConfigField 'String', 'INTERSTITIAL_AD_ID', '"ca-app-pub-3940256099942544/1033173712"'
+            buildConfigField 'String', 'BANNER_AD_ID', '"ca-app-pub-3940256099942544/6300978111"'
             manifestPlaceholders = [ admobId:"ca-app-pub-3940256099942544~3347511713"]
         }
     }
